@@ -1,16 +1,12 @@
 import React from 'react'
-
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-
-import { StyleSheet, Text, View, Button } from 'react-native'
-
-const Stack = createStackNavigator()
+import { StyleSheet, View } from 'react-native'
+import { Text, Button } from 'react-native-elements';
 
 export default function HomePageScreen(props) {
   return (
     <View style={ styles.container }>
-      <Text>HomePageScreen</Text>
+    <Text h3 style={ styles.title }>Rocket Investing</Text>
+    <Text style={ styles.text }>L'application boursière qui facilite vos investissements long termes</Text>
       <Button title="Introduction"
         onPress={() => props.navigation.navigate('IntroductionScreen')}
       />
@@ -21,8 +17,13 @@ export default function HomePageScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'pink'
   },
+  title: {
+    marginTop: 50
+  },
+  text: {
+    marginBottom: 130
+  },
+
 })

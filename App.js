@@ -14,17 +14,15 @@ const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <View style={ styles.container }>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomePageScreen" component={ HomePageScreen } />
+          <Stack.Screen name="HomePageScreen" component={ HomePageScreen } options={{ headerShown: false}} />
           <Stack.Screen name="IntroductionScreen" component={ IntroductionScreen } />
           <Stack.Screen name="PortfolioScreen" component={ PortfolioScreen } />
           <Stack.Screen name="StrategyListScreen" component={ StrategyListScreen } />
           <Stack.Screen name="WishListScreen" component={ WishListScreen } />
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
   )
 }
 
