@@ -13,9 +13,9 @@ export default function IntroductionScreen(props) {
     <View style={ styles.container }>
       <Text style={ styles.titleText }>Bonjour "PRENOM" !</Text>
           <View style={ styles.paragraphs }>
-      <Text style={ styles.paragraph}>Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
-      <Text style={ styles.paragraph}> Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
-      <Text style={ styles.paragraph}> Laissez-nous vous guider pas à pas dans la définition de votre stratégie boursière long terme et appliquez facilement nos conseils pour placer votre argent.</Text>
+      <Text style={ styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
+      <Text style={ styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
+      <Text style={ styles.paragraph}>    Laissez-nous vous guider pas à pas dans la définition de votre stratégie boursière long terme et appliquez facilement nos conseils pour placer votre argent.</Text>
           </View>
 
           <View   style={styles.button1}>
@@ -40,25 +40,25 @@ export default function IntroductionScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 20,
   },
 
   button1 : {
+    width: 250,
     padding: 10,
-    backgroundColor: 'green',
   },
 
   button2 : {
+    width: 250,
     padding: 10,
-    backgroundColor: 'yellow',
   },
 
   titleText: {
     padding: 10,
-    fontSize : 20,
-    marginBottom :30,
+    fontSize: 20,
+    marginBottom: 10,
     fontWeight: "bold",
   },
 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
 
   paragraph: {
     padding: 15,
-    backgroundColor: 'blue',
     fontSize : 15,
+    textAlign: 'justify',
   },
 })
