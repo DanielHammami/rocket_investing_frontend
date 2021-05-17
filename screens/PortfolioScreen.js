@@ -46,18 +46,18 @@ export default function PortfolioScreen(props) {
               <Text style={{fontSize: 15,fontWeight: "bold"}}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
               <Text style={{fontSize: 15,fontWeight: "bold"}}>Composition du portefeuille : {"\n"}</Text>
 
-              {/* {dataBDD.actifs.map((data, i) => {
-                  return  <Text key={i}>Actif {i+1}: {"\n"}
+              {dataBDD.selectBS.map((data, i) => {
+                  return  <Text key={i}>Actif à {data.action} {"\n"}
                                           Description: {data.description} {"\n"}
                                           Ticker : ({data.ticker}) {"\n"} 
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
                           </Text>
-                  })} */}
+                  })}
+
                   <Text>Total répartition des actifs = 100% {"\n"}</Text>
                   <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage du portefeuille tous les 01 du mois.</Text>
             </Card>
-    
   }
 
   return (
@@ -93,6 +93,7 @@ export default function PortfolioScreen(props) {
           <Text>{dataBDD.description5}</Text>
           <Text>{dataBDD.description6}</Text>
           <Text>{dataBDD.description7}</Text>
+          <Text>{dataBDD.description8}</Text>
         </Card>
 
         <Badge status="error" value="Allocation d'actif"/>
