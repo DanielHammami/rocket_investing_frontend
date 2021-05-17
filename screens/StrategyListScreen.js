@@ -1,18 +1,22 @@
 import React from 'react'
 
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
+import RNPickerSelect from "react-native-picker-select"
 
 import { StyleSheet, Text, View, Button } from 'react-native'
 
-const Stack = createStackNavigator()
-
 export default function StrategyListScreen(props) {
   return (
-    <View style={styles.container}>
-      <Text>StrategyListScreen</Text>
-      <Button title="Portfolio"
-        onPress={() => props.navigation.navigate('PortfolioScreen')}
+    <View style = { styles.container }>
+      <RNPickerSelect
+        onValueChange={(value) => console.log(value)}
+        items={[
+          { label: "JavaScript", value: "JavaScript" },
+          { label: "TypeStript", value: "TypeStript" },
+          { label: "Python", value: "Python" },
+          { label: "Java", value: "Java" },
+          { label: "C++", value: "C++" },
+          { label: "C", value: "C" },
+        ]}
       />
     </View>
   )
@@ -24,5 +28,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'relative'
   },
+  picker: {
+    position: 'absolute',
+    top: '0',
+    borderColor: 'red'
+  }
 })
