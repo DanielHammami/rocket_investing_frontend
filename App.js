@@ -1,3 +1,6 @@
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+
 import React from 'react'
 
 import { StyleSheet, Text, View, Button } from 'react-native'

@@ -1,54 +1,107 @@
 import React, { useState, useEffect } from 'react';
-// import { NavigationContainer } from '@react-navigation/native'
-// import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, View, ScrollView } from 'react-native'
-import { Text, Card, Overlay, Button, Icon } from 'react-native-elements';
+import { Text, Card, Overlay, Button, Icon, Badge } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
-import IconIonic from 'react-native-vector-icons/Ionicons';
-
-// const Stack = createStackNavigator()
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
+  const [dataBDD, setdataBDD] = useState([]);
+
+  useEffect(() => {
+    const findPortofolio = async () => {
+      const dataPortofolio = await fetch('http://192.168.1.13:3000/portofolio')
+      const body = await dataPortofolio.json()
+      setdataBDD(body.portofolios)
+    }
+
+    findPortofolio()
+  },[])
+
+  console.log("dataBDD :", dataBDD)
+
+  let passif = [];
+  let actif = [];
+  if(dataBDD && dataBDD.strategy === "passive") {
+
+    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+              <Text style={{fontSize: 15,fontWeight: "bold"}}>Composition du portefeuille : {"\n"}</Text>
+
+              {dataBDD.actifs.map((data, i) => {
+                  return  <Text key={i}>Actif {i+1}: {"\n"}
+                                          Description: {data.description} {"\n"}
+                                          Ticker : ({data.ticker}) {"\n"} 
+                                          Répartition : {data.repartition} % {"\n"}
+                                          type : {data.type} {"\n"}
+                          </Text>
+                  })}
+                  <Text>Total répartition des actifs = 100% {"\n"}</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les même proportions.</Text>
+            </Card>
+
+  } else if (dataBDD.strategy === "active") {
+
+    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+              <Text style={{fontSize: 15,fontWeight: "bold"}}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
+              <Text style={{fontSize: 15,fontWeight: "bold"}}>Composition du portefeuille : {"\n"}</Text>
+
+              {/* {dataBDD.actifs.map((data, i) => {
+                  return  <Text key={i}>Actif {i+1}: {"\n"}
+                                          Description: {data.description} {"\n"}
+                                          Ticker : ({data.ticker}) {"\n"} 
+                                          Répartition : {data.repartition} % {"\n"}
+                                          type : {data.type} {"\n"}
+                          </Text>
+                  })} */}
+                  <Text>Total répartition des actifs = 100% {"\n"}</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage du portefeuille tous les 01 du mois.</Text>
+            </Card>
+    
+  }
 
   return (
     <View style={styles.container}>
-    <Text h4 style={{ textAlign: 'center', height: 40, marginTop: 15  }}>Portfefeuille : xxx</Text> 
+    <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
+      Portfefeuille {"\n"}{dataBDD.name}
+    </Text> 
       <ScrollView>
-      
-        <Card containerStyle={{ }}>
+
+        <Badge status="error" value="Graphique"/>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
           <Text>Graphique...</Text>
         </Card>
 
-        <Card containerStyle={{ }}>
-          <Text>Performance </Text>
-          <Text>1 an : </Text>
-          <Text>2 ans : </Text>
-          <Text>5 ans : </Text>
-          <Text>Max : </Text>
+        <Badge status="error" value="Performances"/>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+          <Text>1 an :  <Badge status="success" value={dataBDD.perf1}/></Text>
+          <Text>2 ans :  <Badge status="success" value={dataBDD.perf2}/></Text>
+          <Text>5 ans :  <Badge status="success" value={dataBDD.perf5}/></Text>
+          <Text>Max :  <Badge status="success" value={dataBDD.perfmax}/></Text>
+          <Text>Type de stratégie:  <Badge status="success" value={dataBDD.strategy}/></Text>
+          <Text>Type de profil:  <Badge status="success" value={dataBDD.risk}/></Text>
+          <Text>Perte maximum:  <Badge status="success" value={dataBDD.maxloss}/></Text>
+          <Text>Volatilité:  <Badge status="success" value={dataBDD.volatility}/></Text>
         </Card>
 
-        <Card containerStyle={{ }}>
-          <Text>Description... </Text>
+        <Badge status="error" value="Description"/>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+          <Text>{dataBDD.description1}</Text>
+          <Text>{dataBDD.description2}</Text>
+          <Text>{dataBDD.description3}</Text>
+          <Text>{dataBDD.description4}</Text>
+          <Text>{dataBDD.description5}</Text>
+          <Text>{dataBDD.description6}</Text>
+          <Text>{dataBDD.description7}</Text>
         </Card>
 
-        <Card containerStyle={{ }}>
-          <Text>Allocation d'actif : Mois en cours </Text>
-          <Text>Du 01/05/21 au 30/05/21 </Text>
-        </Card>
+        <Badge status="error" value="Allocation d'actif"/>
+        {passif}
+        {actif}
 
-        <Card containerStyle={{ }}>
-          <Text>Composition du portefeuille : </Text>
-          <Text>Acheter:  </Text>
-          <Text>Vendre:  </Text>
-        </Card>
-
-        <Button containerStyle={{ width: '100%', marginTop: 50 }}
-          icon={{
-            // name: "arrow-right",
+        <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
+          buttonStyle={{ backgroundColor: "#3F9ADB" }}
+          icon={{ 
             name: "check-circle",
             size: 30,
             color: "white"
@@ -58,7 +111,7 @@ export default function PortfolioScreen(props) {
           onPress={() => setVisible(true)}
         />
 
-        <Button containerStyle={{ width: '100%', marginTop: 15 }}
+        <Button containerStyle={{ width: '100%', marginTop: 15, marginBottom: 50 }}
           title="retour"
           type="clear"
           onPress={() => props.navigation.navigate('StrategyListScreen')}
@@ -66,13 +119,11 @@ export default function PortfolioScreen(props) {
 
         <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{width: '80%', alignItems: 'center'}}>
             
-            <Icon 
-                  // name= "arrow-right"
-                  name="medal"
-                  size= '100'
-                  type='font-awesome'
-                  color= "red"
-            />
+            <FontAwesome5 style={{ marginTop: 30, marginBottom: 20}}
+                  name="medal" 
+                  size={100} 
+                  color="red" 
+                  />
 
             <Text h4 style={{ textAlign: 'center', marginTop: 15  }}>Félicitation John</Text>
             <Text style={{ textAlign: 'center', marginTop: 15  }}>Votre stratégie est enregistrée !</Text>
