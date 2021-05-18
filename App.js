@@ -13,10 +13,18 @@ import PortfolioScreen from "./screens/PortfolioScreen"
 import StrategyListScreen from "./screens/StrategyListScreen"
 import WishListScreen from "./screens/WishListScreen"
 
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import wishlist from './reducers/wishlist';
+import token from './reducers/token';
+
+const store = createStore(combineReducers({ wishlist, token }));
+
 const Stack = createStackNavigator()
 
 export default function App() {
   return (
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="HomePageScreen" component={ HomePageScreen } options={{ headerShown: false}} />
@@ -26,6 +34,7 @@ export default function App() {
           <Stack.Screen name="WishListScreen" component={ WishListScreen } />
         </Stack.Navigator>
       </NavigationContainer>
+    </Provider>
   )
 }
 

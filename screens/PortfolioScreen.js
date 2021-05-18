@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native'
-import { Text, Card, Overlay, Button, Icon, Badge } from 'react-native-elements';
+import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
-
+import { connect } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-export default function PortfolioScreen(props) {
+function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
   const [dataBDD, setdataBDD] = useState([]);
 
@@ -56,15 +56,30 @@ export default function PortfolioScreen(props) {
                   })}
 
                   <Text>Total répartition des actifs = 100% {"\n"}</Text>
-                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage du portefeuille tous les 01 du mois.</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
             </Card>
+  }
+
+  var saveToWishlist = async () => {
+
+    const reqWishlist = await fetch('http://192.168.1.13:3000/wishlist', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `_idFront=${dataBDD._id}&token=${props.token}`
+    })
+
   }
 
   return (
     <View style={styles.container}>
+    <Header
+      containerStyle={{ backgroundColor: '#2c2c2c', height: 110 }}
+      leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
+      rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+    />
     <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
       Portfefeuille {"\n"}{dataBDD.name}
-    </Text> 
+    </Text>
       <ScrollView>
 
         <Badge status="error" value="Graphique"/>
@@ -109,7 +124,7 @@ export default function PortfolioScreen(props) {
           }}
           title=" Enregistrer cette stratégie"
           type="solid"
-          onPress={() => setVisible(true)}
+          onPress={() => {saveToWishlist(), setVisible(true)}}
         />
 
         <Button containerStyle={{ width: '100%', marginTop: 15, marginBottom: 50 }}
@@ -132,7 +147,7 @@ export default function PortfolioScreen(props) {
             <Button style={{ width: 50, marginTop: 30, marginBottom: 20}}
             title="ok"
             type="solid"
-            onPress={() => {props.navigation.navigate('WishListScreen'), setVisible(false)}}
+            onPress={() => {props.onSave(dataBDD._id), props.navigation.navigate('WishListScreen'), setVisible(false)}}
             />
 
         </Overlay>
@@ -150,3 +165,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onSave: function (data_id) {
+      dispatch({ type: 'saveWishlist', data_id : data_id })
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PortfolioScreen);
