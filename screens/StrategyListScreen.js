@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { StyleSheet, Text, View } from 'react-native'
 import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
 export default function StrategyListScreen(props) {
-
   const [visibleStrategy, setVisibleStrategy] = useState(false)
   const [visiblePrudent, setVisiblePrudent] = useState(false)
   const [visibleEquilibre, setVisibleEquilibre] = useState(false)
   const [visibleAudacieux, setVisibleAudacieux] = useState(false)
+
+  const [strategyValue, setStrategyValue] = useState('')
 
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
@@ -27,10 +28,21 @@ export default function StrategyListScreen(props) {
     setVisibleAudacieux(!visibleAudacieux)
   }
 
+  // Send Strategy to backend
+  var handleStrategy = async () => {
+    const data = await fetch('http://192.168.1.10:3000/strategy', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `strategy=${ strategyValue }`
+    })
+
+    //const body = await data.json()
+  }
+
   return (
     <View style = { styles.container }>
 
-    <Header
+      <Header
         containerStyle={{ backgroundColor: '#2c2c2c' }}
         leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
         rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
@@ -46,11 +58,12 @@ export default function StrategyListScreen(props) {
           value: null
         }}
         style={{ ...pickerSelectStyles }}
-        onValueChange={(value) => console.log(value)}
+        onValueChange={ (value) => setStrategyValue(value) }
         items={[
-          { label: "Stratégie ACTIVE", value: "Stratégie ACTIVE" },
-          { label: "Stratégie PASSIVE", value: "Stratégie PASSIVE" }
+          { label: "Stratégie ACTIVE", value: "active" },
+          { label: "Stratégie PASSIVE", value: "passive" },
         ]}
+        onDonePress={ () => handleStrategy() }
       />
 
       <Text
