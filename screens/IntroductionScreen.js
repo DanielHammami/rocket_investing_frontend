@@ -7,6 +7,19 @@ import { StyleSheet, Text, View} from 'react-native'
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
+const [dataUsers, setdataUsers] = useState([]);
+
+useEffect(() => {
+  const findUsername = async () => {
+    const dataUsers = await fetch('http://192.168.1.172:3000/introduction')
+    const body = await dataUsers.json()
+    // setdataUsers(body.users) 
+    console.log("--------------------------Body:-----------------------------", body)
+  }
+  findUsername()
+},[])
+
+console.log("--------------------------Users:-----------------------------", dataUsers)
 
 export default function IntroductionScreen(props) {
   return (
