@@ -12,19 +12,19 @@ export default function StrategyListScreen(props) {
   const [visibleAudacieux, setVisibleAudacieux] = useState(false)
 
   const toggleOverlayStrategy = () => {
-    setVisibleStrategy(!visibleStrategy);
+    setVisibleStrategy(!visibleStrategy)
   }
 
   const toggleOverlayPrudent = () => {
-    setVisiblePrudent(!visiblePrudent);
+    setVisiblePrudent(!visiblePrudent)
   }
 
   const toggleOverlayEquilibre = () => {
-    setVisibleEquilibre(!visibleEquilibre);
+    setVisibleEquilibre(!visibleEquilibre)
   }
 
   const toggleOverlayAudacieux = () => {
-    setVisibleAudacieux(!visibleAudacieux);
+    setVisibleAudacieux(!visibleAudacieux)
   }
 
   return (
@@ -297,4 +297,4 @@ const pickerSelectStyles = StyleSheet.create({
     color: 'black',
     textAlign: 'center'
   },
-});
+})

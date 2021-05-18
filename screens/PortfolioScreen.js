@@ -11,7 +11,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch('http://192.168.1.30:3000/portofolio')
+      const dataPortofolio = await fetch('http://192.168.1.10:3000/portofolio')
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -31,7 +31,7 @@ function PortfolioScreen(props) {
               {dataBDD.actifs.map((data, i) => {
                   return  <Text key={i}>Actif {i+1}: {"\n"}
                                           Description: {data.description} {"\n"}
-                                          Ticker : ({data.ticker}) {"\n"} 
+                                          Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
                           </Text>
@@ -49,7 +49,7 @@ function PortfolioScreen(props) {
               {dataBDD.selectBS.map((data, i) => {
                   return  <Text key={i}>Actif à {data.action} {"\n"}
                                           Description: {data.description} {"\n"}
-                                          Ticker : ({data.ticker}) {"\n"} 
+                                          Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
                           </Text>
@@ -62,7 +62,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('http://192.168.1.30:3000/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.10:3000/wishlist', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `_idFront=${dataBDD._id}&token=${props.token}`
@@ -119,7 +119,7 @@ function PortfolioScreen(props) {
 
         <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
           buttonStyle={{ backgroundColor: "#3F9ADB" }}
-          icon={{ 
+          icon={{
             name: "check-circle",
             size: 30,
             color: "white"
@@ -136,11 +136,11 @@ function PortfolioScreen(props) {
         />
 
         <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{width: '80%', alignItems: 'center'}}>
-            
+
             <FontAwesome5 style={{ marginTop: 30, marginBottom: 20}}
-                  name="medal" 
-                  size={100} 
-                  color="red" 
+                  name="medal"
+                  size={100}
+                  color="red"
                   />
 
             <Text h4 style={{ textAlign: 'center', marginTop: 15  }}>Félicitation John</Text>
@@ -153,7 +153,7 @@ function PortfolioScreen(props) {
             />
 
         </Overlay>
-        
+
       </ScrollView>
     </View>
   )
