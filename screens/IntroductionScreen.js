@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View} from 'react-native'
 import { Button } from 'react-native-elements';
 
@@ -25,7 +25,7 @@ export default function IntroductionScreen(props) {
 
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour "PRENOM" !</Text>
+      <Text style={ styles.titleText }> Bonjour {dataUsers} ! </Text>
           <View style={ styles.paragraphs }>
       <Text style={ styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
       <Text style={ styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
@@ -59,16 +59,20 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 
+
+  // ----------------------------- bouton Accès aux portefeuilles -----------------------------//
   button1 : {
-    width: 250,
+    width: "80%",
     padding: 10,
   },
 
+  // ----------------------------- bouton Deconnexion -----------------------------//
   button2 : {
-    width: 250,
+    width: "80%",
     padding: 10,
   },
 
+   // ----------------------------- titre de la page -----------------------------//
   titleText: {
     padding: 10,
     fontSize: 20,
@@ -76,15 +80,35 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+   // ----------------------------- div contenant les paragraphes -----------------------------//
   paragraphs: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 15,
   },
 
+   // ----------------------------- paragraphes -----------------------------//
   paragraph: {
     padding: 15,
     fontSize : 15,
     textAlign: 'justify',
   },
 })
+
+
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     onSave: function (data_id) {
+//       dispatch({ type: 'saveWishlist', data_id : data_id })
+//     }
+//   }
+// }
+
+export default connect(
+  mapStateToProps,    //state//
+  null   //dispatch//
+)(IntroductionScreen);
