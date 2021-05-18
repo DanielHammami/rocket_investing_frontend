@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
 
-export default function HomePageScreen(props) {
+function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
@@ -118,7 +118,7 @@ export default function HomePageScreen(props) {
         <Button
           buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80,height:50, alignSelf: 'center' }}
           title="Go"
-          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }} 
+          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }}
           />
       </Overlay>
     </View>
