@@ -7,6 +7,27 @@ import { Button, Divider, Overlay } from 'react-native-elements'
 export default function StrategyListScreen(props) {
   const [visible, setVisible] = useState(false)
 
+  const [visibleStrategy, setVisibleStrategy] = useState(false)
+  const [visiblePrudent, setVisiblePrudent] = useState(false)
+  const [visibleEquilibre, setVisibleEquilibre] = useState(false)
+  const [visibleAudacieux, setVisibleAudacieux] = useState(false)
+
+  const toggleOverlayStrategy = () => {
+    setVisibleStrategy(!visibleStrategy);
+  }
+
+  const toggleOverlayPrudent = () => {
+    setVisiblePrudent(!visiblePrudent);
+  }
+
+  const toggleOverlayEquilibre = () => {
+    setVisibleEquilibre(!visibleEquilibre);
+  }
+
+  const toggleOverlayAudacieux = () => {
+    setVisibleAudacieux(!visibleAudacieux);
+  }
+
   const toggleOverlay = () => {
     setVisible(!visible);
   }
@@ -16,6 +37,7 @@ export default function StrategyListScreen(props) {
       <Text style = { styles.title }>Liste des Stratégies</Text>
       <Text style = { styles.title }>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
+
       <RNPickerSelect
         placeholder={{
           label: 'Select Stratégie...',
@@ -28,16 +50,17 @@ export default function StrategyListScreen(props) {
           { label: "Stratégie PASSIVE", value: "Stratégie PASSIVE" }
         ]}
       />
+
       <Text
         style = { styles.text }
-        onPress={ toggleOverlay }
+        onPress={ toggleOverlayStrategy }
       >
         Voir détails stratégie
       </Text>
 
       <Overlay
-        isVisible={ visible }
-        onBackdropPress={ toggleOverlay }
+        isVisible={ visibleStrategy }
+        onBackdropPress={ toggleOverlayStrategy }
         overlayStyle={{
           width: 300,
           height: 300,
@@ -56,9 +79,9 @@ export default function StrategyListScreen(props) {
             width: 80,
             height: 50,
             marginTop: 40,
-            backgroundColor: '#D3455B'
+            backgroundColor: '#e1191d'
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayStrategy }
         />
       </Overlay>
 
@@ -69,14 +92,14 @@ export default function StrategyListScreen(props) {
             marginLeft: 20,
             marginBottom: 10
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayPrudent }
         >
           Profil prudent ?
         </Text>
 
         <Overlay
-          isVisible={ visible }
-          onBackdropPress={ toggleOverlay }
+          isVisible={ visiblePrudent }
+          onBackdropPress={ toggleOverlayPrudent }
           overlayStyle={{
             width: 300,
             height: 300,
@@ -93,9 +116,9 @@ export default function StrategyListScreen(props) {
             width: 80,
             height: 50,
             marginTop: 40,
-            backgroundColor: '#D3455B'
+            backgroundColor: '#e1191d'
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayPrudent }
         />
       </Overlay>
 
@@ -104,7 +127,7 @@ export default function StrategyListScreen(props) {
           <Button
             title="détails"
             buttonStyle={{
-              backgroundColor: '#D3455B',
+              backgroundColor: '#e1191d',
               width: 80,
               height: 50
             }}
@@ -120,14 +143,14 @@ export default function StrategyListScreen(props) {
             marginLeft: 20,
             marginBottom: 10
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayEquilibre }
         >
           Profil équilibré ?
         </Text>
 
         <Overlay
-          isVisible={ visible }
-          onBackdropPress={ toggleOverlay }
+          isVisible={ visibleEquilibre }
+          onBackdropPress={ toggleOverlayEquilibre }
           overlayStyle={{
             width: 300,
             height: 300,
@@ -144,9 +167,9 @@ export default function StrategyListScreen(props) {
               width: 80,
               height: 50,
               marginTop: 40,
-              backgroundColor: '#D3455B'
+              backgroundColor: '#e1191d'
             }}
-            onPress={ toggleOverlay }
+            onPress={ toggleOverlayEquilibre }
           />
         </Overlay>
 
@@ -155,7 +178,7 @@ export default function StrategyListScreen(props) {
           <Button
             title="détails"
             buttonStyle={{
-              backgroundColor: '#D3455B',
+              backgroundColor: '#e1191d',
               width: 80,
               height: 50
             }}
@@ -171,14 +194,14 @@ export default function StrategyListScreen(props) {
             marginLeft: 20,
             marginBottom: 10
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayAudacieux }
         >
           Profil audacieux ?
         </Text>
 
         <Overlay
-          isVisible={ visible }
-          onBackdropPress={ toggleOverlay }
+          isVisible={ visibleAudacieux }
+          onBackdropPress={ toggleOverlayAudacieux }
           overlayStyle={{
             width: 300,
             height: 300,
@@ -195,9 +218,9 @@ export default function StrategyListScreen(props) {
             width: 80,
             height: 50,
             marginTop: 40,
-            backgroundColor: '#D3455B'
+            backgroundColor: '#e1191d'
           }}
-          onPress={ toggleOverlay }
+          onPress={ toggleOverlayAudacieux }
         />
       </Overlay>
 
@@ -206,7 +229,7 @@ export default function StrategyListScreen(props) {
           <Button
             title="détails"
             buttonStyle={{
-              backgroundColor: '#D3455B',
+              backgroundColor: '#e1191d',
               width: 80,
               height: 50
             }}
@@ -219,8 +242,8 @@ export default function StrategyListScreen(props) {
         style={{
           color: 'blue',
           textAlign: 'center',
-          marginTop: 70,
-          paddingBottom: 20
+          marginTop: 60,
+          paddingBottom: 100
         }}
         onPress={ () => props.navigation.navigate('IntroductionScreen') }
       >
