@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default function HomePageScreen(props) {
+function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
@@ -13,8 +14,8 @@ export default function HomePageScreen(props) {
   const [signInUsername, setSignInUsername] = useState('')
   const [signInPassword, setSignInPassword] = useState('')
   const [userExists, setUserExists] = useState(false)
-  const [listErrorsSignin, setErrorsSignin] = useState([])
-  const [listErrorsSignup, setErrorsSignup] = useState([])
+  const [listErrorsSignIn, setErrorsSignIn] = useState([])
+  const [listErrorsSignUp, setErrorsSignUp] = useState([])
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
@@ -27,14 +28,16 @@ export default function HomePageScreen(props) {
     console.log(body, 'SIGN UP')
 
     if (body.result == true) {
+      props.addToken(body.token)
+      console.log('TOKEN SIGN UP : ',body.token )
       setUserExists(true)
     } else {
-      setErrorsSignup(body.error)
+      setErrorsSignUp(body.error)
     }
   }
 
   // ------------------------------------- Gestion Sign In -------------------------------------
-  var handleSubmitSignin = async () => {
+  var handleSubmitSignIn = async () => {
     const data = await fetch('http://192.168.1.30:3000/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -44,19 +47,21 @@ export default function HomePageScreen(props) {
     console.log(body, 'SIGN IN')
 
     if (body.result == true) {
+      props.addToken(body.token)
+      console.log('TOKEN SIGN IN : ',body.token )
       setUserExists(true)
     } else {
-      setErrorsSignin(body.error)
+      setErrorsSignIn(body.error)
     }
   }
 
   // -------------------------------------- Gestion des erreurs ----------------------------------
-  if (userExists) {
-    var tabErrorsSignin = listErrorsSignin.map((error, i) => {
+  if(userExists){
+    var tabErrorsSignIn = listErrorsSignIn.map((error, i) => {
       return (<Text style={{ color: 'red' }}>{error}</Text>
       )
     })
-    var tabErrorsSignup = listErrorsSignup.map((error, i) => {
+    var tabErrorsSignUp = listErrorsSignUp.map((error, i) => {
       return (<Text style={{ color: 'red' }}>{error}</Text>)
     })
   }
@@ -83,20 +88,18 @@ export default function HomePageScreen(props) {
 
       {/* ----------------------------------- BOUTON SIGN UP -------------------------------------- */}
       <Button
-        buttonStyle={{ backgroundColor: "#e1191d", marginTop: 90, width: 300, alignSelf: 'center' }}
+        buttonStyle={{ backgroundColor: "#e1191d",alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
         title="Sign Up"
+        titleStyle={{paddingTop:5}}
         onPress={() => setSignUpVisible(true)}
       />
-      <Overlay isVisible={signUpVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 400, height: 400 }} onBackdropPress={toggleOverlaySignUp}>
+      <Overlay isVisible={signUpVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignUp}>
         <Text h4>Sign Up</Text>
         <Text>Entrez votre nom et mot de passe</Text>
-        <Input containerStyle={{ marginTop: 30, width: 300 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
-        <Input containerStyle={{ width: 300 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
-
-        {tabErrorsSignup}
-
+        <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
+        <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
         <Button
-          buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 300, alignSelf: 'center' }}
+          buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height:50, alignSelf: 'center' }}
           title="Go"
           onPress={() => { handleSubmitSignUp(), props.navigation.navigate('IntroductionScreen'), setSignUpVisible(false) }}
         />
@@ -105,23 +108,20 @@ export default function HomePageScreen(props) {
       {/* ----------------------------------- BOUTON SIGN IN -------------------------------------- */}
       <Button
         type="outline"
-        buttonStyle={{ backgroundColor: '#fff', marginTop: 40, width: 300, alignSelf: 'center', borderColor: '#e1191d' }}
+        buttonStyle={{ backgroundColor: '#fff', marginTop: 20, width: 250,height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
         title="Sign In"
         titleStyle={{ color: '#e1191d' }}
         onPress={() => setSignInVisible(true)}
       />
-      <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 400, height: 400 }} onBackdropPress={toggleOverlaySignin}>
+      <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignin}>
         <Text h4>Sign In</Text>
         <Text>Entrez votre nom et mot de passe</Text>
-        <Input containerStyle={{ marginTop: 30, width: 300 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
-        <Input containerStyle={{ width: 300 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
-
-        {tabErrorsSignin}
-
+        <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
+        <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
         <Button
-          buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 300, alignSelf: 'center' }}
+          buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80,height:50, alignSelf: 'center' }}
           title="Go"
-          onPress={() => { handleSubmitSignin(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }} 
+          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }}
           />
       </Overlay>
     </View>
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
     fontFamily: 'open sans'
   },
   title: {
-    marginTop: 70,
+    marginTop: 80,
     textAlign: 'center'
   },
   text: {
-    marginTop: 70,
+    marginTop: 40,
     marginLeft: 80,
     marginRight: 80,
-    marginBottom: 60,
+    marginBottom: 40,
     textAlign: 'center'
   },
   image: {
@@ -152,3 +152,16 @@ const styles = StyleSheet.create({
     height: 300
   }
 })
+
+function mapDispatchToProps(dispatch){
+  return {
+    addToken: function(token){
+      dispatch({type: 'saveToken', token: token})
+    }
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(HomePageScreen)

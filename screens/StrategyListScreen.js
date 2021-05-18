@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { StyleSheet, Text, View } from 'react-native'
-import { Button, Divider, Overlay } from 'react-native-elements'
+import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
 export default function StrategyListScreen(props) {
-  const [visible, setVisible] = useState(false)
 
   const [visibleStrategy, setVisibleStrategy] = useState(false)
   const [visiblePrudent, setVisiblePrudent] = useState(false)
@@ -28,13 +27,16 @@ export default function StrategyListScreen(props) {
     setVisibleAudacieux(!visibleAudacieux);
   }
 
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  }
-
   return (
     <View style = { styles.container }>
-      <Text style = { styles.title }>Liste des Stratégies</Text>
+
+    <Header
+        containerStyle={{ backgroundColor: '#2c2c2c' }}
+        leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+      />
+
+      <Text style = { styles.title, {marginTop:20} }>Liste des Stratégies</Text>
       <Text style = { styles.title }>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
 
@@ -88,8 +90,7 @@ export default function StrategyListScreen(props) {
       <View>
         <Text
           style={{
-            marginTop: 20,
-            marginLeft: 20,
+            marginTop: 50,
             marginBottom: 10
           }}
           onPress={ toggleOverlayPrudent }
@@ -140,7 +141,6 @@ export default function StrategyListScreen(props) {
         <Text
           style={{
             marginTop: 20,
-            marginLeft: 20,
             marginBottom: 10
           }}
           onPress={ toggleOverlayEquilibre }
@@ -191,7 +191,6 @@ export default function StrategyListScreen(props) {
         <Text
           style={{
             marginTop: 20,
-            marginLeft: 20,
             marginBottom: 10
           }}
           onPress={ toggleOverlayAudacieux }
@@ -231,7 +230,7 @@ export default function StrategyListScreen(props) {
             buttonStyle={{
               backgroundColor: '#e1191d',
               width: 80,
-              height: 50
+              height: 50,
             }}
             onPress={ () => props.navigation.navigate('PortfolioScreen') }
           />
@@ -242,8 +241,8 @@ export default function StrategyListScreen(props) {
         style={{
           color: 'blue',
           textAlign: 'center',
-          marginTop: 60,
-          paddingBottom: 100
+          marginTop: 50,
+          paddingBottom: 300
         }}
         onPress={ () => props.navigation.navigate('IntroductionScreen') }
       >
@@ -256,14 +255,16 @@ export default function StrategyListScreen(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    paddingVertical: 30,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   title: {
     textAlign: 'center',
   },
   text: {
     marginTop: 10,
-    marginLeft: 20,
     color: 'blue',
     textAlign: 'left',
   },
@@ -272,8 +273,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   portefeuil: {
-    width: 260,
-    marginLeft: 20,
     borderWidth: 1,
     borderColor: 'gray',
     fontSize: 18,
@@ -290,11 +289,10 @@ const pickerSelectStyles = StyleSheet.create({
     paddingTop: 13,
     paddingHorizontal: 10,
     paddingBottom: 12,
-    marginTop: 40,
+    marginTop: 10,
     marginHorizontal: 20,
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 4,
     backgroundColor: 'white',
     color: 'black',
     textAlign: 'center'
