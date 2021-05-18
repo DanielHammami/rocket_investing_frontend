@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 
 function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
