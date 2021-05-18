@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default function HomePageScreen(props) {
+function HomePageScreen(props) {
+<<<<<<< HEAD
   // ------------------------------------- ETATS Overlay -------------------------------------
+=======
+  //xport default  ------------------------------------- ETATS Overlay -------------------------------------
+>>>>>>> homepage
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
 
@@ -28,6 +33,7 @@ export default function HomePageScreen(props) {
 
     if (body.result == true) {
       props.addToken(body.token)
+      console.log('TOKEN SIGN UP : ',body.token )
       setUserExists(true)
     } else {
       setErrorsSignUp(body.error)
@@ -46,6 +52,7 @@ export default function HomePageScreen(props) {
 
     if (body.result == true) {
       props.addToken(body.token)
+      console.log('TOKEN SIGN IN : ',body.token )
       setUserExists(true)
     } else {
       setErrorsSignIn(body.error)
@@ -118,7 +125,7 @@ export default function HomePageScreen(props) {
         <Button
           buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80,height:50, alignSelf: 'center' }}
           title="Go"
-          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }} 
+          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }}
           />
       </Overlay>
     </View>
@@ -137,7 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   text: {
-    marginTop: 70,
+    marginTop: 40,
     marginLeft: 80,
     marginRight: 80,
     marginBottom: 40,
