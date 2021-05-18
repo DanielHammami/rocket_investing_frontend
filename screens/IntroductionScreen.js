@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -7,21 +7,22 @@ import { StyleSheet, Text, View} from 'react-native'
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
-const [dataUsers, setdataUsers] = useState([]);
-
-useEffect(() => {
-  const findUsername = async () => {
-    const dataUsers = await fetch('http://192.168.1.172:3000/introduction')
-    const body = await dataUsers.json()
-    // setdataUsers(body.users) 
-    console.log("--------------------------Body:-----------------------------", body)
-  }
-  findUsername()
-},[])
-
-console.log("--------------------------Users:-----------------------------", dataUsers)
 
 export default function IntroductionScreen(props) {
+  const [dataUsers, setdataUsers] = useState([]);
+
+  useEffect(() => {
+    const findUsername = async () => {
+      const dataUsers = await fetch('http://192.168.1.172:3000/introduction')
+      const body = await dataUsers.json()
+      // setdataUsers(body.users)
+      console.log("--------------------------Body:-----------------------------", body)
+    }
+    findUsername()
+  },[])
+
+  console.log("--------------------------Users:-----------------------------", dataUsers)
+
   return (
     <View style={ styles.container }>
       <Text style={ styles.titleText }>Bonjour "PRENOM" !</Text>
@@ -32,7 +33,7 @@ export default function IntroductionScreen(props) {
           </View>
 
           <View   style={styles.button1}>
-                <Button  
+                <Button
                   title="Accès aux portefeuilles"
                   type="solid"
                   onPress={() => props.navigation.navigate('StrategyListScreen')}
@@ -45,14 +46,14 @@ export default function IntroductionScreen(props) {
                   type="outline"
                   onPress={() => props.navigation.navigate('HomePageScreen')}
                 />
-          </View> 
+          </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
