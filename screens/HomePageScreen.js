@@ -108,7 +108,7 @@ function HomePageScreen(props) {
       {/* ----------------------------------- BOUTON SIGN IN -------------------------------------- */}
       <Button
         type="outline"
-        buttonStyle={{ backgroundColor: '#fff', marginTop: 20, width: 250,height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
+        buttonStyle={{ backgroundColor: '#fff', marginTop: 15, width: 250,height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
         title="Sign In"
         titleStyle={{ color: '#e1191d' }}
         onPress={() => setSignInVisible(true)}
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
     fontFamily: 'open sans'
   },
   title: {
-    marginTop: 80,
+    marginTop: 50,
     textAlign: 'center'
   },
   text: {
-    marginTop: 40,
+    marginTop: 30,
     marginLeft: 80,
     marginRight: 80,
-    marginBottom: 40,
+    marginBottom: 20,
     textAlign: 'center'
   },
   image: {
