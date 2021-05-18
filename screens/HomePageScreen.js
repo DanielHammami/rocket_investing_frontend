@@ -7,6 +7,7 @@ function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
+  const [errorIsVisible, setErrorIsVisible] = useState(false);
 
   // ------------------------------------- ETATS SignUp/In -----------------------------------
   const [signUpUsername, setSignUpUsername] = useState('')
@@ -31,8 +32,10 @@ function HomePageScreen(props) {
       props.addToken(body.token)
       console.log('TOKEN SIGN UP : ',body.token )
       setUserExists(true)
+      props.navigation.navigate('IntroductionScreen')
     } else {
       setErrorsSignUp(body.error)
+      console.log("SIGN UP ERROR",body.error)
     }
   }
 
@@ -50,29 +53,22 @@ function HomePageScreen(props) {
       props.addToken(body.token)
       console.log('TOKEN SIGN IN : ',body.token )
       setUserExists(true)
+      props.navigation.navigate('WishListScreen')
     } else {
       setErrorsSignIn(body.error)
+      console.log("SIGN IN ERROR",body.error)
     }
-  }
-
-  // -------------------------------------- Gestion des erreurs ----------------------------------
-  if(userExists){
-    var tabErrorsSignIn = listErrorsSignIn.map((error, i) => {
-      return (<Text style={{ color: 'red' }}>{error}</Text>
-      )
-    })
-    var tabErrorsSignUp = listErrorsSignUp.map((error, i) => {
-      return (<Text style={{ color: 'red' }}>{error}</Text>)
-    })
   }
 
   // -------------------------------------- Overlay setter -----------------------------------------
   const toggleOverlaySignUp = () => {
     setSignUpVisible(false);
   };
+
   const toggleOverlaySignin = () => {
     setSignInVisible(false);
   };
+
 
   // -------------------------------------------------------------------------------------------------
   // -------------------------------------- RETURN ---------------------------------------------------
@@ -98,10 +94,11 @@ function HomePageScreen(props) {
         <Text>Entrez votre nom et mot de passe</Text>
         <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
         <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
+        {listErrorsSignUp}
         <Button
           buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height:50, alignSelf: 'center' }}
           title="Go"
-          onPress={() => { handleSubmitSignUp(), props.navigation.navigate('IntroductionScreen'), setSignUpVisible(false) }}
+          onPress={() => { handleSubmitSignUp(); setSignUpVisible(false) }}
         />
       </Overlay>
 
@@ -118,10 +115,11 @@ function HomePageScreen(props) {
         <Text>Entrez votre nom et mot de passe</Text>
         <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
         <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
+        {listErrorsSignIn}
         <Button
           buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80,height:50, alignSelf: 'center' }}
           title="Go"
-          onPress={() => { handleSubmitSignIn(), props.navigation.navigate('WishListScreen'), setSignInVisible(false) }}
+          onPress={() => { handleSubmitSignIn(); setSignInVisible(false) }}
           />
       </Overlay>
     </View>
@@ -131,6 +129,9 @@ function HomePageScreen(props) {
 // ----------------------- STYLE --------------------------
 const styles = StyleSheet.create({
   container: {
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'space-around',
     flex: 1,
     backgroundColor: '#fff',
     fontFamily: 'open sans'
@@ -140,10 +141,10 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   text: {
-    marginTop: 30,
+    // marginTop: 30,
     marginLeft: 80,
     marginRight: 80,
-    marginBottom: 20,
+    // marginBottom: 20,
     textAlign: 'center'
   },
   image: {

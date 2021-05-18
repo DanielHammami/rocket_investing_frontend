@@ -13,7 +13,7 @@ export default function IntroductionScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch('http://192.168.1.172:3000/introduction')
+      const dataUsers = await fetch('http://192.168.1.30:3000/introduction')
       const body = await dataUsers.json()
       // setdataUsers(body.users)
       console.log("--------------------------Body:-----------------------------", body)
