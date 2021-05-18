@@ -78,13 +78,14 @@ function HomePageScreen(props) {
     <View style={styles.container}>
 
       <Text h1 style={styles.title}>Rocket Investing</Text>
+
       <Text style={styles.text}>L'application boursière qui facilite vos investissements long termes</Text>
 
       <Image source={require('../assets/Rocket_logo.png')} style={styles.image} />
-      <View style={{marginBottom:20}}>
+      <View style={{marginBottom:80}}>
         {/* ----------------------------------- BOUTON SIGN UP -------------------------------------- */}
         <Button
-          buttonStyle={{ backgroundColor: "#e1191d", marginBottom:20, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
+          buttonStyle={{ backgroundColor: "#e1191d", marginBottom:15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
           title="Sign Up"
           titleStyle={{ paddingTop: 5 }}
           onPress={() => setSignUpVisible(true)}
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   text: {
+    marginTop:-20,
     marginLeft: 75,
     marginRight: 75,
     textAlign: 'center',
