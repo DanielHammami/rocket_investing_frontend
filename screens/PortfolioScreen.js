@@ -73,7 +73,7 @@ function PortfolioScreen(props) {
   return (
     <View style={styles.container}>
     <Header
-      containerStyle={{ backgroundColor: '#2c2c2c', height: 110 }}
+      containerStyle={{ backgroundColor: '#2c2c2c' }}
       leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
       rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
     />
