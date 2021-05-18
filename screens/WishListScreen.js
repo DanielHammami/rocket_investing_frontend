@@ -1,17 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
-
+import { connect } from 'react-redux';
 
 const Stack = createStackNavigator()
 
-export default function WishListScreen(props) {
+function WishListScreen(props) {
+  const [dataUsers, setdataUsers] = useState('');
+
+useEffect(() => {
+  const findUsername = async () => {
+    console.log("--------------------------Props.token:-----------------------------", props.token)
+    const dataUsers = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
+    const body = await dataUsers.json()
+    // setdataUsers(body.username) 
+    console.log("--------------------------Body:-----------------------------", body)
+  }
+  findUsername()
+  console.log("--------------------------Users:-----------------------------", dataUsers)
+ 
+},[props.token])
+
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour, "PRENOM"</Text>
+      <Text style={ styles.titleText }>Bonjour, </Text>
           <View style={ styles.paragraphs }>
           <Text style={ styles.titleFavorite }>Mes favoris :</Text>
                 <View style={ styles.listButton}>    
@@ -115,3 +130,20 @@ const styles = StyleSheet.create({
   },
 })
 
+
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     onSave: function (data_id) {
+//       dispatch({ type: 'saveWishlist', data_id : data_id })
+//     }
+//   }
+// }
+
+export default connect(
+  mapStateToProps,    //state//
+  null   //dispatch//
+)(WishListScreen);

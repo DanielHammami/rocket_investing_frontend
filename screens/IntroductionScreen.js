@@ -2,30 +2,29 @@ import React, { useState, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View} from 'react-native'
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
 
-export default function IntroductionScreen(props) {
-
-  const [dataUsers, setdataUsers] = useState([]);
+function IntroductionScreen(props) {
+  const [dataUsers, setdataUsers] = useState('');
 
 useEffect(() => {
   const findUsername = async () => {
-    const dataUsers = await fetch('http://192.168.1.172:3000/introduction')
+    const dataUsers = await fetch(`http://192.168.1.172:3000/introduction?token=${props.token}`)
     const body = await dataUsers.json()
-    // setdataUsers(body.users) 
-    console.log("--------------------------Body:-----------------------------", body)
+    setdataUsers(body.username) 
   }
   findUsername()
-  console.log("--------------------------Users:-----------------------------", dataUsers)
-},[])
+ },[props.token])
+
+ 
 
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour !</Text>
+      <Text style={ styles.titleText }> Bonjour {dataUsers} ! </Text>
           <View style={ styles.paragraphs }>
       <Text style={ styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
       <Text style={ styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
@@ -94,3 +93,21 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
   },
 })
+
+
+function mapStateToProps(state){
+  return {token: state.token}
+}
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     onSave: function (data_id) {
+//       dispatch({ type: 'saveWishlist', data_id : data_id })
+//     }
+//   }
+// }
+
+export default connect(
+  mapStateToProps,    //state//
+  null   //dispatch//
+)(IntroductionScreen);
