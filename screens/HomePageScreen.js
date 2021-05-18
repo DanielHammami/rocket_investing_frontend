@@ -4,11 +4,7 @@ import { Text, Overlay, Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 function HomePageScreen(props) {
-<<<<<<< HEAD
   // ------------------------------------- ETATS Overlay -------------------------------------
-=======
-  //xport default  ------------------------------------- ETATS Overlay -------------------------------------
->>>>>>> homepage
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
 
