@@ -4,13 +4,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
+import compFirstname from "../composant/compFirstname"
 
 const Stack = createStackNavigator()
 
 export default function WishListScreen(props) {
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour "PRENOM" !</Text>
+      <Text style={ styles.titleText }>{compFirstname}</Text>
           <View style={ styles.paragraphs }>
           <Text style={ styles.titleFavorite }>Mes favoris :</Text>
                 <View style={ styles.listButton}>    
@@ -70,17 +71,17 @@ const styles = StyleSheet.create({
 
   button1 : {
     padding: 10,
-    width: 250,
+    width: "80%",
   },
 
   button2 : {
     padding: 10,
-    width: 250,
+    width: "80%",
   },
 
   button3 : {
     padding: 10,
-    width: 250,
+    width: "80%",
   },
 
   listButton : {
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
     justifyContent: 'center',
     paddingBottom: 15,
-    width: 250,
+    width: "80%",
   },
 
   paragraph: {

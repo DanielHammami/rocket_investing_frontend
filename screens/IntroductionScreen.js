@@ -45,16 +45,20 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 
+
+  // ----------------------------- bouton Accès aux portefeuilles -----------------------------//
   button1 : {
-    width: 250,
+    width: "80%",
     padding: 10,
   },
 
+  // ----------------------------- bouton Deconnexion -----------------------------//
   button2 : {
-    width: 250,
+    width: "80%",
     padding: 10,
   },
 
+   // ----------------------------- titre de la page -----------------------------//
   titleText: {
     padding: 10,
     fontSize: 20,
@@ -62,12 +66,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
+   // ----------------------------- div contenant les paragraphes -----------------------------//
   paragraphs: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 15,
   },
 
+   // ----------------------------- paragraphes -----------------------------//
   paragraph: {
     padding: 15,
     fontSize : 15,
