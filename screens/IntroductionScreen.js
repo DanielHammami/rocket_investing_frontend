@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -7,7 +7,10 @@ import { StyleSheet, Text, View} from 'react-native'
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
-const [dataUsers, setdataUsers] = useState([]);
+
+export default function IntroductionScreen(props) {
+
+  const [dataUsers, setdataUsers] = useState([]);
 
 useEffect(() => {
   const findUsername = async () => {
@@ -17,14 +20,12 @@ useEffect(() => {
     console.log("--------------------------Body:-----------------------------", body)
   }
   findUsername()
+  console.log("--------------------------Users:-----------------------------", dataUsers)
 },[])
 
-console.log("--------------------------Users:-----------------------------", dataUsers)
-
-export default function IntroductionScreen(props) {
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour "PRENOM" !</Text>
+      <Text style={ styles.titleText }>Bonjour !</Text>
           <View style={ styles.paragraphs }>
       <Text style={ styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
       <Text style={ styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
