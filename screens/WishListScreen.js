@@ -4,14 +4,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
-import compFirstname from "../composant/compFirstname"
+
 
 const Stack = createStackNavigator()
 
 export default function WishListScreen(props) {
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>{compFirstname}</Text>
+      <Text style={ styles.titleText }>Bonjour, "PRENOM"</Text>
           <View style={ styles.paragraphs }>
           <Text style={ styles.titleFavorite }>Mes favoris :</Text>
                 <View style={ styles.listButton}>    

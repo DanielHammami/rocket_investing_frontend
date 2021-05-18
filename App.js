@@ -1,3 +1,6 @@
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']);
+
 import React from 'react'
 
 import { StyleSheet, Text, View, Button } from 'react-native'
@@ -10,32 +13,29 @@ import PortfolioScreen from "./screens/PortfolioScreen"
 import StrategyListScreen from "./screens/StrategyListScreen"
 import WishListScreen from "./screens/WishListScreen"
 
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import wishlist from './reducers/wishlist';
+import token from './reducers/token';
+
+const store = createStore(combineReducers({ wishlist, token }));
+
 const Stack = createStackNavigator()
 
 export default function App() {
-  // return (
-// <<<<<<< HEAD
-//     <NavigationContainer screenOptions={{ headerShown: false }}>
-//       <Stack.Navigator>
-//         <Stack.Screen name="HomePageScreen" component={ HomePageScreen } />
-//         <Stack.Screen name="IntroductionScreen" component={ IntroductionScreen } />
-//         <Stack.Screen name="PortfolioScreen" component={ PortfolioScreen } />
-//         <Stack.Screen name="StrategyListScreen" component={ StrategyListScreen } />
-//         <Stack.Screen name="WishListScreen" component={ WishListScreen } />
-//       </Stack.Navigator>
-//     </NavigationContainer>
-// =======
-//       <NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen name="HomePageScreen" component={ HomePageScreen } options={{ headerShown: false}} />
-//           <Stack.Screen name="IntroductionScreen" component={ IntroductionScreen } />
-//           <Stack.Screen name="PortfolioScreen" component={ PortfolioScreen } />
-//           <Stack.Screen name="StrategyListScreen" component={ StrategyListScreen } />
-//           <Stack.Screen name="WishListScreen" component={ WishListScreen } />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-// >>>>>>> homepage
-  // )
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="HomePageScreen" component={ HomePageScreen } options={{ headerShown: false}} />
+          <Stack.Screen name="IntroductionScreen" component={ IntroductionScreen } />
+          <Stack.Screen name="PortfolioScreen" component={ PortfolioScreen } />
+          <Stack.Screen name="StrategyListScreen" component={ StrategyListScreen } />
+          <Stack.Screen name="WishListScreen" component={ WishListScreen } />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  )
 }
 
 const styles = StyleSheet.create({
