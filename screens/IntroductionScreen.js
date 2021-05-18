@@ -8,20 +8,20 @@ import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
 
-export default function IntroductionScreen(props) {
-  const [dataUsers, setdataUsers] = useState([]);
+function IntroductionScreen(props) {
+  const [dataUsers, setdataUsers] = useState("");
 
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch('http://192.168.1.30:3000/introduction')
+      const dataUsers = await fetch(`http://192.168.1.13:3000/introduction?token=${props.token}`)
       const body = await dataUsers.json()
-      // setdataUsers(body.users)
-      console.log("--------------------------Body:-----------------------------", body)
+      setdataUsers(body.username)
+      // console.log("--------------------------Body:-----------------------------", body)
     }
     findUsername()
-  },[])
+  },[props.token])
 
-  console.log("--------------------------Users:-----------------------------", dataUsers)
+  // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   return (
     <View style={ styles.container }>

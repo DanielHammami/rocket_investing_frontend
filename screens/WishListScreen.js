@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
-
+import { useIsFocused } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 
@@ -10,27 +10,54 @@ const Stack = createStackNavigator()
 
 function WishListScreen(props) {
   const [dataUsers, setdataUsers] = useState('');
+  const [dataPortofolio, setDataPortofolio] = useState('');
+
+  const isFocused = useIsFocused();
 
 useEffect(() => {
   const findUsername = async () => {
-    console.log("--------------------------Props.token:-----------------------------", props.token)
-    const dataUsers = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
+    // console.log("--------------------------Props.token:-----------------------------", props.token)
+    const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
     const body = await dataUsers.json()
-    // setdataUsers(body.username) 
-    console.log("--------------------------Body:-----------------------------", body)
+    setdataUsers(body)
+    setDataPortofolio(body.portofolios.portofoliosId)
   }
   findUsername()
-  console.log("--------------------------Users:-----------------------------", dataUsers)
- 
-},[props.token])
+},[isFocused])
+
+// console.log("--------------------------Users:-----------------------------", dataUsers)
+
+let portefeuille = [];
+if(dataPortofolio && dataUsers.result && isFocused) {
+
+  portefeuille = <View>
+                  {dataPortofolio.map((data, i) => {
+            return  <View  key={i}  style={styles.button3}>
+                      <Button 
+                        style={styles.button3}
+                        title={data.name}
+                        type="outline"
+                        onPress={() => props.navigation.navigate('StrategyListScreen')}
+                      />
+                    </View>
+                    })}
+                  </View>
+// console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
+// console.log("test1 :", dataPortofolio)
+} else {
+  portefeuille = <Text style={{fontSize: 15, marginTop: 250, fontWeight: "bold"}}>Aucun portefeuille enregistré</Text>
+}
 
   return (
     <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour, </Text>
-          <View style={ styles.paragraphs }>
-          <Text style={ styles.titleFavorite }>Mes favoris :</Text>
-                <View style={ styles.listButton}>    
-                        <View style={styles.button3}>  
+      <Text style={ styles.titleText }>Bonjour {dataUsers.username}, </Text>
+          <ScrollView style={ styles.paragraphs }>
+          <Text style={ styles.titleFavorite }>Mes portefeuilles favoris :</Text>
+                <View style={ styles.listButton}>
+
+                        {portefeuille}
+
+                        {/* <View style={styles.button3}>  
                               <Button  
                                       style={styles.button3}
                                       title="Portefeuille 1"
@@ -53,9 +80,9 @@ useEffect(() => {
                                        type="outline"
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
                                     /> 
-                        </View>
+                        </View> */}
                 </View>
-          </View>
+          </ScrollView>
 
           <View   style={styles.button1}>
                 <Button  
@@ -85,6 +112,7 @@ const styles = StyleSheet.create({
   },
 
   button1 : {
+    marginTop: 20,
     padding: 10,
     width: "80%",
   },
@@ -92,37 +120,40 @@ const styles = StyleSheet.create({
   button2 : {
     padding: 10,
     width: "80%",
+    marginBottom: 20,
   },
 
   button3 : {
-    padding: 10,
-    width: "80%",
+    padding: 5,
+    width: 270,
   },
 
-  listButton : {
-    flexDirection: "column",
-    justifyContent: "space-around",
-    paddingBottom: 20,
-  },
+  // listButton : {
+  //   flexDirection: "column",
+  //   justifyContent: "space-around",
+  //   paddingBottom: 20,
+  // },
 
   titleFavorite : {
-    fontSize: 15,
+    fontSize: 20,
     paddingBottom: 15,
+    textAlign: 'center',
   },
 
   titleText: {
     padding: 10,
     fontSize: 20,
+    marginTop: 15,
     marginBottom: 30,
     fontWeight: "bold",
   },
 
-  paragraphs: {
-    alignItems: 'baseline',
-    justifyContent: 'center',
-    paddingBottom: 15,
-    width: "80%",
-  },
+  // paragraphs: {
+  //   alignItems: 'baseline',
+  //   justifyContent: 'center',
+  //   paddingBottom: 15,
+  //   width: "80%",
+  // },
 
   paragraph: {
     padding: 15,

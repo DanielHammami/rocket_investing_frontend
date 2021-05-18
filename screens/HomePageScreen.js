@@ -20,43 +20,43 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
-    var rawData = await fetch('http://192.168.1.10:3000/sign-up', {
+    var rawData = await fetch('http://192.168.1.13:3000/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
     })
     const body = await rawData.json()
-    console.log(body, 'SIGN UP')
+    // console.log(body, 'SIGN UP')
 
     if (body.result == true) {
       props.addToken(body.token)
-      console.log('TOKEN SIGN UP : ', body.token)
+      // console.log('TOKEN SIGN UP : ', body.token)
       setUserExists(true)
       props.navigation.navigate('IntroductionScreen')
     } else {
       setErrorsSignUp(body.error)
-      console.log("SIGN UP ERROR", body.error)
+      // console.log("SIGN UP ERROR", body.error)
     }
   }
 
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
-    const data = await fetch('http://192.168.1.10:3000/sign-in', {
+    const data = await fetch('http://192.168.1.13:3000/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
     })
     const body = await data.json()
-    console.log(body, 'SIGN IN')
+    // console.log(body, 'SIGN IN')
 
     if (body.result == true) {
       props.addToken(body.token)
-      console.log('TOKEN SIGN IN : ', body.token)
+      // console.log('TOKEN SIGN IN : ', body.token)
       setUserExists(true)
       props.navigation.navigate('WishListScreen')
     } else {
       setErrorsSignIn(body.error)
-      console.log("SIGN IN ERROR", body.error)
+      // console.log("SIGN IN ERROR", body.error)
     }
   }
 

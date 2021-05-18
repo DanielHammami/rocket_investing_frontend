@@ -30,7 +30,7 @@ export default function StrategyListScreen(props) {
 
   // Send Strategy to backend
   var handleStrategy = async () => {
-    const data = await fetch('http://192.168.1.10:3000/strategy', {
+    const data = await fetch('http://192.168.1.13:3000/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `strategy=${ strategyValue }`
