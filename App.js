@@ -26,8 +26,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="HomePageScreen" component={ HomePageScreen } options={{ headerShown: false}} />
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="HomePageScreen" component={ HomePageScreen } />
           <Stack.Screen name="IntroductionScreen" component={ IntroductionScreen } />
           <Stack.Screen name="PortfolioScreen" component={ PortfolioScreen } />
           <Stack.Screen name="StrategyListScreen" component={ StrategyListScreen } />

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { StyleSheet, Text, View } from 'react-native'
-import { Button, Divider, Overlay } from 'react-native-elements'
+import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
 export default function StrategyListScreen(props) {
 
@@ -29,7 +29,14 @@ export default function StrategyListScreen(props) {
 
   return (
     <View style = { styles.container }>
-      <Text style = { styles.title }>Liste des Stratégies</Text>
+
+    <Header
+        containerStyle={{ backgroundColor: '#2c2c2c' }}
+        leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+      />
+
+      <Text style = { styles.title, {marginTop:20} }>Liste des Stratégies</Text>
       <Text style = { styles.title }>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
 
@@ -248,7 +255,6 @@ export default function StrategyListScreen(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    paddingVertical: 30,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
