@@ -11,7 +11,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch('http://192.168.1.30:3000/portofolio')
+      const dataPortofolio = await fetch('http://192.168.1.13:3000/portofolio')
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -19,7 +19,7 @@ function PortfolioScreen(props) {
     findPortofolio()
   },[])
 
-  console.log("dataBDD :", dataBDD)
+  // console.log("dataBDD :", dataBDD)
 
   let passif = [];
   let actif = [];
@@ -69,6 +69,8 @@ function PortfolioScreen(props) {
     })
 
   }
+
+  // console.log(props.token)
 
   return (
     <View style={styles.container}>
