@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 
-export default function HomePageScreen(props) {
+function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
