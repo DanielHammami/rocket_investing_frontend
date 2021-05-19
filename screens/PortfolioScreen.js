@@ -14,7 +14,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.172:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -66,7 +66,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('http://192.168.1.13:3000/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.172:3000/wishlist', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `_idFront=${dataBDD._id}&token=${props.token}`
