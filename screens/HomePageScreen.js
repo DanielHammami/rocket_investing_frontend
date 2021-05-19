@@ -136,11 +136,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flex: 1,
     backgroundColor: '#fff',
-
   },
   title: {
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight:'bold'
   },
   text: {
     marginTop:-20,
