@@ -17,7 +17,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.30:3000/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -46,7 +46,7 @@ function WishListScreen(props) {
     // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
     // console.log("test1 :", dataPortofolio)
   } else {
-    portefeuille = <Text style={{ fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
 
   return (

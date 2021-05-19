@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight:'bold'
   },
   text: {
     marginTop:-20,

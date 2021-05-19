@@ -14,7 +14,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.30:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -29,7 +29,7 @@ function PortfolioScreen(props) {
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
 
-    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
@@ -46,7 +46,7 @@ function PortfolioScreen(props) {
 
   } else if (dataBDD.strategy === "active") {
 
-    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
@@ -87,15 +87,15 @@ function PortfolioScreen(props) {
     <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
       Portefeuille {"\n"}{dataBDD.name}
     </Text>
-      <ScrollView>
+      <ScrollView style={{width:440}}>
 
         <Badge status="error" value="Graphique" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>Graphique...</Text>
         </Card>
 
         <Badge status="error" value="Performances" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>1 an :  <Badge status="success" value={dataBDD.perf1} /></Text>
           <Text>2 ans :  <Badge status="success" value={dataBDD.perf2} /></Text>
           <Text>5 ans :  <Badge status="success" value={dataBDD.perf5} /></Text>
@@ -107,7 +107,7 @@ function PortfolioScreen(props) {
         </Card>
 
         <Badge status="error" value="Description" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>{dataBDD.description1}</Text>
           <Text>{dataBDD.description2}</Text>
           <Text>{dataBDD.description3}</Text>
