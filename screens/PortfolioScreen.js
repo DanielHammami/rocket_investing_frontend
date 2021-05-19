@@ -14,7 +14,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.172:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -66,7 +66,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('http://192.168.1.172:3000/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.13:3000/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `_idFront=${dataBDD._id}&token=${props.token}`
@@ -137,7 +137,7 @@ function PortfolioScreen(props) {
             title=" Enregistrer cette stratégie"
             titleStyle={{ paddingBottom: 5 }}
             type="solid"
-            onPress={() => { saveToWishlist(), setVisible(true) }}
+            onPress={() => { saveToWishlist(); setVisible(true) }}
           />
 
           <Button buttonStyle={{ backgroundColor: '#fff', width: 300, height: 50, alignSelf: 'center', borderColor: 'black'}}
@@ -163,7 +163,7 @@ function PortfolioScreen(props) {
             title="ok"
             titleStyle={{ color: "black" }}
             type="outline"
-            onPress={() => { props.navigation.navigate('WishListScreen'), setVisible(false) }}
+            onPress={() => { props.navigation.navigate('WishListScreen'); setVisible(false) }}
           />
 
         </Overlay>

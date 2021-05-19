@@ -5,82 +5,81 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { Entypo } from '@expo/vector-icons';
 
 const Stack = createStackNavigator()
 
 function WishListScreen(props) {
   const [dataUsers, setdataUsers] = useState('');
   const [dataPortofolio, setDataPortofolio] = useState('');
+  // const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [isToggled, setIsToggled] = React.useState(false);
 
   const isFocused = useIsFocused();
 
-useEffect(() => {
-  const findUsername = async () => {
-    // console.log("--------------------------Props.token:-----------------------------", props.token)
-    const dataUsers = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
-    const body = await dataUsers.json()
-    setdataUsers(body)
-    setDataPortofolio(body.portofolios.portofoliosId)
+  useEffect(() => {
+    const findUsername = async () => {
+      // console.log("--------------------------Props.token:-----------------------------", props.token)
+      const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
+      const body = await dataUsers.json()
+      setdataUsers(body)
+      setDataPortofolio(body.portofolios.portofoliosId)
+    }
+    findUsername()
+  }, [isFocused, isToggled])
+
+  // console.log("--------------------------Users:-----------------------------", dataUsers)
+
+  var deleteArticle = async (i) => {
+    const deleteReq = await fetch('http://192.168.1.13:3000/wishlist', {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `position=${i}&token=${props.token}`
+    })
+      const body = await deleteReq.json()
+      if (body.result) {
+        // setDeleteConfirm(true)
+        setIsToggled(!isToggled)
+      }
   }
-  findUsername()
-},[isFocused])
 
-// console.log("--------------------------Users:-----------------------------", dataUsers)
+  let portefeuille = [];
+  if (dataPortofolio && dataUsers.result && isFocused) {
 
-let portefeuille = [];
-if(dataPortofolio && dataUsers.result && isFocused) {
-
-  portefeuille = <View>
-                  {dataPortofolio.map((data, i) => {
-            return  <View  key={i}  style={styles.button3}>
-                      <Button
-                        style={styles.button3}
-                        title={data.name}
-                        type="outline"
-                        onPress={() => {props.onSave(data.name); props.navigation.navigate('PortfolioScreen')}}
-                      />
-                    </View>
-                    })}
-                  </View>
-// console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
-// console.log("test1 :", dataPortofolio)
-} else {
-  portefeuille = <Text style={{fontSize: 15, marginTop: 250, fontWeight: "bold"}}>Aucun portefeuille enregistré</Text>
-}
+    portefeuille = <View>
+      {dataPortofolio.map((data, i) => {
+        return <View key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+          <Button
+            buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d', marginBottom: 10 }}
+            title={data.name}
+            titleStyle={{ color: '#e1191d' }}
+            type="outline"
+            onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
+          />
+          <Entypo style={{marginBottom: 10}}
+            name="squared-cross" 
+            size={55} 
+            color="#e1191d"
+            onPress={() => deleteArticle(i)}
+            />         
+        </View>
+      })}
+    </View>
+    // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
+    // console.log("test1 :", dataPortofolio)
+  } else {
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Bonjour {dataUsers.username}, </Text>
+      <Text style={styles.titleText}>Bonjour {dataUsers.username}</Text>
       <Text style={styles.titleFavorite}>Mes portefeuilles favoris :</Text>
       <ScrollView style={{width:500, height:'auto'}}>
         <View style={styles.listButton}>
 
           {portefeuille}
 
-          {/* <View style={styles.button3}>
-                              <Button
-                                      style={styles.button3}
-                                      title="Portefeuille 1"
-                                      type="outline"
-                                      onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    />
-                        </View>
-                        <View style={styles.button3}>
-                              <Button
-                                       style={styles.button3}
-                                       title="Portefeuille 2"
-                                       type="outline"
-                                       onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    />
-                        </View>
-                        <View style={styles.button3}>
-                              <Button
-                                       style={styles.button3}
-                                       title="Portefeuille 3"
-                                       type="outline"
-                                       onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    />
-                        </View> */}
         </View>
       </ScrollView>
 

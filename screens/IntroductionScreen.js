@@ -13,11 +13,7 @@ function IntroductionScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-<<<<<<< HEAD
-      const dataUsers = await fetch(`http://192.168.1.172:3000/introduction?token=${props.token}`)
-=======
-      const dataUsers = await fetch(`http://192.168.1.10:3000/introduction?token=${props.token}`)
->>>>>>> 61490b6e6fbd38d53e41b4f0ca600fd0364ff32d
+      const dataUsers = await fetch(`http://192.168.1.13:3000/introduction?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body.username)
       // console.log("--------------------------Body:-----------------------------", body)
