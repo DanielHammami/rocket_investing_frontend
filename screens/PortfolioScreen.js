@@ -21,9 +21,9 @@ function PortfolioScreen(props) {
     findPortofolio()
   }, [isFocused])
 
-  // console.log("dataBDD :", dataBDD)
-  console.log("props.name :", props.name)
-  console.log("props.token :", props.token)
+  //console.log("dataBDD :", dataBDD)
+  //console.log("props.name :", props.name)
+  //console.log("props.token :", props.token)
 
   let passif = [];
   let actif = [];
@@ -137,7 +137,7 @@ function PortfolioScreen(props) {
             title=" Enregistrer cette stratégie"
             titleStyle={{ paddingBottom: 5 }}
             type="solid"
-            onPress={() => { saveToWishlist(), setVisible(true) }}
+            onPress={() => { saveToWishlist(); setVisible(true) }}
           />
 
           <Button buttonStyle={{ backgroundColor: '#fff', width: 300, height: 50, alignSelf: 'center', borderColor: 'black'}}
@@ -163,7 +163,7 @@ function PortfolioScreen(props) {
             title="ok"
             titleStyle={{ color: "black" }}
             type="outline"
-            onPress={() => { props.navigation.navigate('WishListScreen'), setVisible(false) }}
+            onPress={() => { props.navigation.navigate('WishListScreen'); setVisible(false) }}
           />
 
         </Overlay>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  console.log("state", state)
+  //console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 

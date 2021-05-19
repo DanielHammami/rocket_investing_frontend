@@ -50,7 +50,7 @@ function WishListScreen(props) {
       {dataPortofolio.map((data, i) => {
         return <View key={i} style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
           <Button
-            buttonStyle={{ backgroundColor: '#fff', width: 200, height: 50, alignSelf: 'center', borderColor: '#e1191d', marginBottom: 10 }}
+            buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d', marginBottom: 10 }}
             title={data.name}
             titleStyle={{ color: '#e1191d' }}
             type="outline"

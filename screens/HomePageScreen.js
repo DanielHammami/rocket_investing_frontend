@@ -7,7 +7,8 @@ function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
-  const [errorIsVisible, setErrorIsVisible] = useState(false);
+  const [errorSignUpVisible, setErrorSignUpVisible] = useState(false);
+  const [errorSignInVisible, setErrorSignInVisible] = useState(false);
 
   // ------------------------------------- ETATS SignUp/In -----------------------------------
   const [signUpUsername, setSignUpUsername] = useState('')
@@ -35,7 +36,7 @@ function HomePageScreen(props) {
       props.navigation.navigate('IntroductionScreen')
     } else {
       setErrorsSignUp(body.error)
-      // console.log("SIGN UP ERROR", body.error)
+      console.log("SIGN UP ERROR", body.error)
     }
   }
 
@@ -56,16 +57,26 @@ function HomePageScreen(props) {
       props.navigation.navigate('WishListScreen')
     } else {
       setErrorsSignIn(body.error)
-      // console.log("SIGN IN ERROR", body.error)
+      console.log("SIGN IN ERROR", body.error)
     }
   }
+
+  var errorsSignIn = <View>
+    {listErrorsSignUp.map((error, i) => {
+      return (<Text key={i} style={{ color: 'red', alignSelf: 'center'}}>{error}</Text>)
+    })}</View>
+  var errorsSignUp = <View>
+    {listErrorsSignIn.map((error, i) => {
+      return (<Text key={i} style={{ color: 'red', alignSelf: 'center'}}>{error}</Text>)
+    })}</View>
+
 
   // -------------------------------------- Overlay setter -----------------------------------------
   const toggleOverlaySignUp = () => {
     setSignUpVisible(false);
   };
 
-  const toggleOverlaySignin = () => {
+  const toggleOverlaySignIn = () => {
     setSignInVisible(false);
   };
 
@@ -82,10 +93,13 @@ function HomePageScreen(props) {
       <Text style={styles.text}>L'application boursière qui facilite vos investissements long termes</Text>
 
       <Image source={require('../assets/Rocket_logo.png')} style={styles.image} />
-      <View style={{marginBottom:80}}>
+      {errorsSignIn}
+      {errorsSignUp}
+      <View style={{ marginBottom: 70 }}>
+
         {/* ----------------------------------- BOUTON SIGN UP -------------------------------------- */}
         <Button
-          buttonStyle={{ backgroundColor: "#e1191d", marginBottom:15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
+          buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
           title="Sign Up"
           titleStyle={{ paddingTop: 5 }}
           onPress={() => setSignUpVisible(true)}
@@ -95,7 +109,7 @@ function HomePageScreen(props) {
           <Text>Entrez votre nom et mot de passe</Text>
           <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
           <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
-          {listErrorsSignUp}
+
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
@@ -111,12 +125,12 @@ function HomePageScreen(props) {
           titleStyle={{ color: '#e1191d' }}
           onPress={() => setSignInVisible(true)}
         />
-        <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignin}>
+        <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignIn}>
           <Text h4>Sign In</Text>
           <Text>Entrez votre nom et mot de passe</Text>
           <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
           <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
-          {listErrorsSignIn}
+
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
@@ -124,6 +138,7 @@ function HomePageScreen(props) {
           />
         </Overlay>
       </View>
+
     </View>
   )
 }
@@ -140,14 +155,14 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 20,
     textAlign: 'center',
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
   text: {
-    marginTop:-20,
+    marginTop: -20,
     marginLeft: 75,
     marginRight: 75,
     textAlign: 'center',
-    fontSize:18
+    fontSize: 18
   },
   image: {
     alignSelf: 'center',
