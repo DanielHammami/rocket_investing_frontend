@@ -53,7 +53,7 @@ function WishListScreen(props) {
     <View style={styles.container}>
       <Text style={styles.titleText}>Bonjour {dataUsers.username}, </Text>
       <Text style={styles.titleFavorite}>Mes portefeuilles favoris :</Text>
-      <ScrollView style={styles.paragraphs}>
+      <ScrollView style={{width:500, height:'auto'}}>
         <View style={styles.listButton}>
 
           {portefeuille}
@@ -85,15 +85,15 @@ function WishListScreen(props) {
         </View>
       </ScrollView>
 
-      <View style={{marginBottom: 100}}>
-        <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
+      <View style={{marginBottom:100}}>
+        <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
           title="Ajouter un nouveau produit"
           titleStyle={{ paddingTop: 5 }}
           type="solid"
           onPress={() => props.navigation.navigate('StrategyListScreen')}
         />
         <Button
-          buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
+          buttonStyle={{ backgroundColor: '#fff', width: 300, height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
           title="Déconnexion"
           titleStyle={{ color: '#e1191d' }}
           type="outline"

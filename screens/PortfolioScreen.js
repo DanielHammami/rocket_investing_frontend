@@ -148,20 +148,21 @@ function PortfolioScreen(props) {
             onPress={() => props.navigation.navigate('StrategyListScreen')}
           />
         </View>
-        <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{ width: '80%', alignItems: 'center' }}>
+        <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{ width: '80%',alignItems: 'center' }}>
 
           <FontAwesome5 style={{ marginTop: 30, marginBottom: 20 }}
             name="medal"
             size={100}
-            color="red"
+            color="#f6b93b"
           />
 
           <Text h4 style={{ textAlign: 'center', marginTop: 15 }}>Félicitation {username}</Text>
           <Text style={{ textAlign: 'center', marginTop: 15 }}>Votre stratégie est enregistrée !</Text>
 
-          <Button style={{ width: 50, marginTop: 30, marginBottom: 20 }}
+          <Button buttonStyle={{ backgroundColor: '#fff', width: 100, alignSelf: 'center', borderColor: 'black', marginTop:20, marginBottom: 20}}
             title="ok"
-            type="solid"
+            titleStyle={{ color: "black" }}
+            type="outline"
             onPress={() => { props.navigation.navigate('WishListScreen'), setVisible(false) }}
           />
 
