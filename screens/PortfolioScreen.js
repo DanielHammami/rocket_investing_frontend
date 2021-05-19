@@ -14,7 +14,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=60/40`)
+      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -22,7 +22,7 @@ function PortfolioScreen(props) {
   },[isFocused])
 
   // console.log("dataBDD :", dataBDD)
-  console.log("props.wishlist :", props.wishlist)
+  console.log("props.name :", props.name)
   console.log("props.token :", props.token)
 
   let passif = [];
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
+  console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 
