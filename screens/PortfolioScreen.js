@@ -41,7 +41,7 @@ function PortfolioScreen(props) {
                           </Text>
                   })}
                   <Text>Total répartition des actifs = 100% {"\n"}</Text>
-                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les même proportions.</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
             </Card>
 
   } else if (dataBDD.strategy === "active") {
@@ -85,7 +85,7 @@ function PortfolioScreen(props) {
       rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
     />
     <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
-      Portfefeuille {"\n"}{dataBDD.name}
+      Portefeuille {"\n"}{dataBDD.name}
     </Text>
       <ScrollView>
 
