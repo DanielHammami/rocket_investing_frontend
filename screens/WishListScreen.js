@@ -169,6 +169,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch) {
   return {
     onSave: function (name) {
+      console.log("test1", name)
       dispatch({ type: 'saveWishlist', name : name })
     }
   }
