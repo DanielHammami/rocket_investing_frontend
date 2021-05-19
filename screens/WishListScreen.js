@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -14,50 +14,51 @@ function WishListScreen(props) {
 
   const isFocused = useIsFocused();
 
-useEffect(() => {
-  const findUsername = async () => {
-    // console.log("--------------------------Props.token:-----------------------------", props.token)
-    const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
-    const body = await dataUsers.json()
-    setdataUsers(body)
-    setDataPortofolio(body.portofolios.portofoliosId)
+  useEffect(() => {
+    const findUsername = async () => {
+      // console.log("--------------------------Props.token:-----------------------------", props.token)
+      const dataUsers = await fetch(`http://192.168.1.30:3000/wishList?token=${props.token}`)
+      const body = await dataUsers.json()
+      setdataUsers(body)
+      setDataPortofolio(body.portofolios.portofoliosId)
+    }
+    findUsername()
+  }, [isFocused])
+
+  // console.log("--------------------------Users:-----------------------------", dataUsers)
+
+  let portefeuille = [];
+  if (dataPortofolio && dataUsers.result && isFocused) {
+
+    portefeuille = <View>
+      {dataPortofolio.map((data, i) => {
+        return <View key={i}>
+          <Button
+            buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d', marginBottom: 10 }}
+            title={data.name}
+            titleStyle={{ color: '#e1191d' }}
+            type="outline"
+            onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
+          />
+        </View>
+      })}
+    </View>
+    // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
+    // console.log("test1 :", dataPortofolio)
+  } else {
+    portefeuille = <Text style={{ fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
-  findUsername()
-},[isFocused])
-
-// console.log("--------------------------Users:-----------------------------", dataUsers)
-
-let portefeuille = [];
-if(dataPortofolio && dataUsers.result && isFocused) {
-
-  portefeuille = <View>
-                  {dataPortofolio.map((data, i) => {
-            return  <View  key={i}  style={styles.button3}>
-                      <Button 
-                        style={styles.button3}
-                        title={data.name}
-                        type="outline"
-                        onPress={() => {props.onSave(data.name); props.navigation.navigate('PortfolioScreen')}}
-                      />
-                    </View>
-                    })}
-                  </View>
-// console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
-// console.log("test1 :", dataPortofolio)
-} else {
-  portefeuille = <Text style={{fontSize: 15, marginTop: 250, fontWeight: "bold"}}>Aucun portefeuille enregistré</Text>
-}
 
   return (
-    <View style={ styles.container }>
-      <Text style={ styles.titleText }>Bonjour {dataUsers.username}, </Text>
-          <ScrollView style={ styles.paragraphs }>
-          <Text style={ styles.titleFavorite }>Mes portefeuilles favoris :</Text>
-                <View style={ styles.listButton}>
+    <View style={styles.container}>
+      <Text style={styles.titleText}>Bonjour {dataUsers.username}, </Text>
+      <Text style={styles.titleFavorite}>Mes portefeuilles favoris :</Text>
+      <ScrollView style={styles.paragraphs}>
+        <View style={styles.listButton}>
 
-                        {portefeuille}
+          {portefeuille}
 
-                        {/* <View style={styles.button3}>  
+          {/* <View style={styles.button3}>  
                               <Button  
                                       style={styles.button3}
                                       title="Portefeuille 1"
@@ -81,52 +82,42 @@ if(dataPortofolio && dataUsers.result && isFocused) {
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
                                     /> 
                         </View> */}
-                </View>
-          </ScrollView>
+        </View>
+      </ScrollView>
 
-          <View   style={styles.button1}>
-                <Button  
-                  title="Ajouter un nouveau produit"
-                  type="solid"
-                  onPress={() => props.navigation.navigate('StrategyListScreen')}
-                />
-          </View>
-
-          <View style={styles.button2}>
-                <Button
-                  title="Déconnexion"
-                  type="outline"
-                  onPress={() => props.navigation.navigate('HomePageScreen')}
-                />
-          </View> 
+      <View style={{marginBottom: 100}}>
+        <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
+          title="Ajouter un nouveau produit"
+          titleStyle={{ paddingTop: 5 }}
+          type="solid"
+          onPress={() => props.navigation.navigate('StrategyListScreen')}
+        />
+        <Button
+          buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
+          title="Déconnexion"
+          titleStyle={{ color: '#e1191d' }}
+          type="outline"
+          onPress={() => props.navigation.navigate('HomePageScreen')}
+        />
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'center',
-    margin: 20,
+    backgroundColor: '#fff',
   },
 
-  button1 : {
-    marginTop: 20,
-    padding: 10,
-    width: "80%",
-  },
-
-  button2 : {
-    padding: 10,
-    width: "80%",
-    marginBottom: 20,
-  },
-
-  button3 : {
-    padding: 5,
-    width: 270,
-  },
+  // button3: {
+  //   padding: 5,
+  //   width: 270,
+  // },
 
   // listButton : {
   //   flexDirection: "column",
@@ -134,16 +125,16 @@ const styles = StyleSheet.create({
   //   paddingBottom: 20,
   // },
 
-  titleFavorite : {
+  titleFavorite: {
     fontSize: 20,
     paddingBottom: 15,
     textAlign: 'center',
   },
 
   titleText: {
-    padding: 10,
+
     fontSize: 20,
-    marginTop: 15,
+    marginTop: 100,
     marginBottom: 30,
     fontWeight: "bold",
   },
@@ -157,13 +148,13 @@ const styles = StyleSheet.create({
 
   paragraph: {
     padding: 15,
-    fontSize : 15,
+    fontSize: 15,
   },
 })
 
 
-function mapStateToProps(state){
-  return {token: state.token}
+function mapStateToProps(state) {
+  return { token: state.token }
 }
 
 function mapDispatchToProps(dispatch) {

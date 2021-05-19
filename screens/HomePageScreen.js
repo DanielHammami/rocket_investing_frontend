@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flex: 1,
     backgroundColor: '#fff',
-    fontFamily: 'open sans'
+
   },
   title: {
     marginTop: 20,
