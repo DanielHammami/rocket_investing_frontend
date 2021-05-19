@@ -14,7 +14,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.30:3000/portofolio?name=60/40`)
+      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
