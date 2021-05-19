@@ -17,7 +17,7 @@ function WishListScreen(props) {
 useEffect(() => {
   const findUsername = async () => {
     // console.log("--------------------------Props.token:-----------------------------", props.token)
-    const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
+    const dataUsers = await fetch(`http://192.168.1.10:3000/wishList?token=${props.token}`)
     const body = await dataUsers.json()
     setdataUsers(body)
     setDataPortofolio(body.portofolios.portofoliosId)
@@ -33,7 +33,7 @@ if(dataPortofolio && dataUsers.result && isFocused) {
   portefeuille = <View>
                   {dataPortofolio.map((data, i) => {
             return  <View  key={i}  style={styles.button3}>
-                      <Button 
+                      <Button
                         style={styles.button3}
                         title={data.name}
                         type="outline"
@@ -57,35 +57,35 @@ if(dataPortofolio && dataUsers.result && isFocused) {
 
                         {portefeuille}
 
-                        {/* <View style={styles.button3}>  
-                              <Button  
+                        {/* <View style={styles.button3}>
+                              <Button
                                       style={styles.button3}
                                       title="Portefeuille 1"
                                       type="outline"
                                       onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
+                                    />
                         </View>
-                        <View style={styles.button3}>  
-                              <Button  
+                        <View style={styles.button3}>
+                              <Button
                                        style={styles.button3}
                                        title="Portefeuille 2"
                                        type="outline"
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
-                        </View>                                               
-                        <View style={styles.button3}>  
-                              <Button  
+                                    />
+                        </View>
+                        <View style={styles.button3}>
+                              <Button
                                        style={styles.button3}
                                        title="Portefeuille 3"
                                        type="outline"
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
+                                    />
                         </View> */}
                 </View>
           </ScrollView>
 
           <View   style={styles.button1}>
-                <Button  
+                <Button
                   title="Ajouter un nouveau produit"
                   type="solid"
                   onPress={() => props.navigation.navigate('StrategyListScreen')}
@@ -98,14 +98,14 @@ if(dataPortofolio && dataUsers.result && isFocused) {
                   type="outline"
                   onPress={() => props.navigation.navigate('HomePageScreen')}
                 />
-          </View> 
+          </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,

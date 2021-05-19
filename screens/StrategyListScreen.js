@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { StyleSheet, Text, View } from 'react-native'
@@ -11,6 +11,7 @@ export default function StrategyListScreen(props) {
   const [visibleAudacieux, setVisibleAudacieux] = useState(false)
 
   const [strategyValue, setStrategyValue] = useState('')
+  const [profilType, setProfilType] = useState('')
 
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
@@ -28,16 +29,25 @@ export default function StrategyListScreen(props) {
     setVisibleAudacieux(!visibleAudacieux)
   }
 
+  var profilTypeFromButton
+  const handleProfilType = profil => {
+    profilTypeFromButton = setProfilType(profil)
+  }
+
+  console.log('profilTypeFromButton =>', profilTypeFromButton)
+
   // Send Strategy to backend
-  var handleStrategy = async () => {
-    const data = await fetch('http://192.168.1.13:3000/strategy', {
+  const handleStrategy = async () => {
+    await fetch('http://192.168.1.10:3000/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `strategy=${ strategyValue }`
+      body: `strategy=${ strategyValue }&profil=${ profilTypeFromButton }`
     })
-
-    //const body = await data.json()
+    //console.log('strategyValue => ', strategyValue)
   }
+    //console.log('profilType => ', profilType)
+
+  //console.log('strategyValue => ',  strategyValue)
 
   return (
     <View style = { styles.container }>
@@ -63,7 +73,7 @@ export default function StrategyListScreen(props) {
           { label: "Stratégie ACTIVE", value: "active" },
           { label: "Stratégie PASSIVE", value: "passive" },
         ]}
-        onDonePress={ () => handleStrategy() }
+        //onDonePress={ () => handleStrategy() }
       />
 
       <Text
@@ -84,7 +94,7 @@ export default function StrategyListScreen(props) {
           alignItems: 'center'
         }}
       >
-        <Text>Stratégie ACTIVE</Text>
+        <Text>Stratégie { strategyValue.toUpperCase() }</Text>
         <Text>récurrence : 1 fois par mois</Text>
         <Text>Type : DMA</Text>
         <Text>détails</Text>
@@ -145,7 +155,11 @@ export default function StrategyListScreen(props) {
               width: 80,
               height: 50
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={ () => {
+              //props.navigation.navigate('PortfolioScreen');
+              handleProfilType('prudent');
+              handleStrategy()
+            }}
           />
         </View>
       </View>
