@@ -14,40 +14,39 @@ function WishListScreen(props) {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    const findUsername = async () => {
-      // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.30:3000/wishList?token=${props.token}`)
-      const body = await dataUsers.json()
-      setdataUsers(body)
-      setDataPortofolio(body.portofolios.portofoliosId)
-    }
-    findUsername()
-  }, [isFocused])
-
-  // console.log("--------------------------Users:-----------------------------", dataUsers)
-
-  let portefeuille = [];
-  if (dataPortofolio && dataUsers.result && isFocused) {
-
-    portefeuille = <View>
-      {dataPortofolio.map((data, i) => {
-        return <View key={i}>
-          <Button
-            buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d', marginBottom: 10 }}
-            title={data.name}
-            titleStyle={{ color: '#e1191d' }}
-            type="outline"
-            onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
-          />
-        </View>
-      })}
-    </View>
-    // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
-    // console.log("test1 :", dataPortofolio)
-  } else {
-    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+useEffect(() => {
+  const findUsername = async () => {
+    // console.log("--------------------------Props.token:-----------------------------", props.token)
+    const dataUsers = await fetch(`http://192.168.1.10:3000/wishList?token=${props.token}`)
+    const body = await dataUsers.json()
+    setdataUsers(body)
+    setDataPortofolio(body.portofolios.portofoliosId)
   }
+  findUsername()
+},[isFocused])
+
+// console.log("--------------------------Users:-----------------------------", dataUsers)
+
+let portefeuille = [];
+if(dataPortofolio && dataUsers.result && isFocused) {
+
+  portefeuille = <View>
+                  {dataPortofolio.map((data, i) => {
+            return  <View  key={i}  style={styles.button3}>
+                      <Button
+                        style={styles.button3}
+                        title={data.name}
+                        type="outline"
+                        onPress={() => {props.onSave(data.name); props.navigation.navigate('PortfolioScreen')}}
+                      />
+                    </View>
+                    })}
+                  </View>
+// console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
+// console.log("test1 :", dataPortofolio)
+} else {
+  portefeuille = <Text style={{fontSize: 15, marginTop: 250, fontWeight: "bold"}}>Aucun portefeuille enregistré</Text>
+}
 
   return (
     <View style={styles.container}>
@@ -58,29 +57,29 @@ function WishListScreen(props) {
 
           {portefeuille}
 
-          {/* <View style={styles.button3}>  
-                              <Button  
+          {/* <View style={styles.button3}>
+                              <Button
                                       style={styles.button3}
                                       title="Portefeuille 1"
                                       type="outline"
                                       onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
+                                    />
                         </View>
-                        <View style={styles.button3}>  
-                              <Button  
+                        <View style={styles.button3}>
+                              <Button
                                        style={styles.button3}
                                        title="Portefeuille 2"
                                        type="outline"
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
-                        </View>                                               
-                        <View style={styles.button3}>  
-                              <Button  
+                                    />
+                        </View>
+                        <View style={styles.button3}>
+                              <Button
                                        style={styles.button3}
                                        title="Portefeuille 3"
                                        type="outline"
                                        onPress={() => props.navigation.navigate('StrategyListScreen')}
-                                    /> 
+                                    />
                         </View> */}
         </View>
       </ScrollView>

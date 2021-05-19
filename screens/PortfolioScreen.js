@@ -14,16 +14,16 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.30:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.10:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
     findPortofolio()
   }, [isFocused])
 
-  // console.log("dataBDD :", dataBDD)
-  console.log("props.name :", props.name)
-  console.log("props.token :", props.token)
+  //console.log("dataBDD :", dataBDD)
+  //console.log("props.name :", props.name)
+  //console.log("props.token :", props.token)
 
   let passif = [];
   let actif = [];
@@ -66,7 +66,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('http://192.168.1.30:3000/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.10:3000/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `_idFront=${dataBDD._id}&token=${props.token}`
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  console.log("state", state)
+  //console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 
