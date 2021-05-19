@@ -4,6 +4,12 @@ import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-e
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { Foundation } from '@expo/vector-icons'; 
+
 
 function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
@@ -75,54 +81,54 @@ function PortfolioScreen(props) {
     setUsername(body.userName)
   }
 
-  // console.log(props.token)
+ 
 
   return (
     <View style={styles.container}>
-    <Header
-      containerStyle={{ backgroundColor: '#2c2c2c' }}
-      leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
-      rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
-    />
-    <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
-      Portefeuille {"\n"}{dataBDD.name}
-    </Text>
-      <ScrollView style={{width:440}}>
+      <Header
+        containerStyle={{ backgroundColor: '#2c2c2c' }}
+        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
+      />
+      <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15 }}>
+        Portefeuille {"\n"}{dataBDD.name}
+      </Text>
+              <ScrollView>
 
-        <Badge status="error" value="Graphique" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
-          <Text>Graphique...</Text>
-        </Card>
+                <Text style={{alignSelf:'center'}}>Graphique <Entypo name="area-graph" size={15} color="black" /></Text>
+                <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+                <Text>Graphique</Text>
+                </Card>
 
-        <Badge status="error" value="Performances" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
-          <Text>1 an :  <Badge status="success" value={dataBDD.perf1} /></Text>
-          <Text>2 ans :  <Badge status="success" value={dataBDD.perf2} /></Text>
-          <Text>5 ans :  <Badge status="success" value={dataBDD.perf5} /></Text>
-          <Text>Max :  <Badge status="success" value={dataBDD.perfmax} /></Text>
-          <Text>Type de stratégie:  <Badge status="success" value={dataBDD.strategy} /></Text>
-          <Text>Type de profil:  <Badge status="success" value={dataBDD.risk} /></Text>
-          <Text>Perte maximum:  <Badge status="success" value={dataBDD.maxloss} /></Text>
-          <Text>Volatilité:  <Badge status="success" value={dataBDD.volatility} /></Text>
-        </Card>
+                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text> 
+                <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+                  <Text>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
+                  <Text>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
+                  <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
+                  <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
+                  <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
+                  <Text>Profil de risque : {dataBDD.risk}</Text>  
+                  <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
+                  <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
+                </Card>
 
-        <Badge status="error" value="Description" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
-          <Text>{dataBDD.description1}</Text>
-          <Text>{dataBDD.description2}</Text>
-          <Text>{dataBDD.description3}</Text>
-          <Text>{dataBDD.description4}</Text>
-          <Text>{dataBDD.description5}</Text>
-          <Text>{dataBDD.description6}</Text>
-          <Text>{dataBDD.description7}</Text>
-          <Text>{dataBDD.description8}</Text>
-        </Card>
+                
+                <Text style={{alignSelf:'center'}}>Description <MaterialIcons name="description" size={15} color="black" /></Text>
+                <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description1} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description2} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description3} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description4} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description5} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description6} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description7} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify'}}>{dataBDD.description8} {"\n"}</Text>
+                </Card>
 
-        <Badge status="error" value="Allocation d'actif" />
-        {passif}
-        {actif}
+                <Text style={{alignSelf:'center'}}>Allocation d'actifs <Foundation name="graph-horizontal" size={15} color="black" /></Text>
+                <Card>{passif}{actif}</Card>
 
-        </ScrollView>
+                </ScrollView>
 
         <View style={{marginBottom:50}}>
           <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
