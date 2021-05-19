@@ -14,22 +14,22 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.172:3000/portofolio?name=60/40`)
+      const dataPortofolio = await fetch(`http://192.168.1.172:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
     findPortofolio()
   }, [isFocused])
 
-  // console.log("dataBDD :", dataBDD)
-  console.log("props.name :", props.name)
-  console.log("props.token :", props.token)
+  //console.log("dataBDD :", dataBDD)
+  //console.log("props.name :", props.name)
+  //console.log("props.token :", props.token)
 
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
 
-    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
@@ -38,15 +38,15 @@ function PortfolioScreen(props) {
                                           Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
-        </Text>
-      })}
-      <Text>Total répartition des actifs = 100% {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Rééquilibrage chaque trimestre pour conserver les même proportions.</Text>
-    </Card>
+                          </Text>
+                  })}
+                  <Text>Total répartition des actifs = 100% {"\n"}</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
+            </Card>
 
   } else if (dataBDD.strategy === "active") {
 
-    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
       <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
@@ -79,23 +79,23 @@ function PortfolioScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Header
-        containerStyle={{ backgroundColor: '#2c2c2c' }}
-        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
-        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
-      />
-      <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15 }}>
-        Portfefeuille {"\n"}{dataBDD.name}
-      </Text>
-      <ScrollView>
+    <Header
+      containerStyle={{ backgroundColor: '#2c2c2c' }}
+      leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
+      rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+    />
+    <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
+      Portefeuille {"\n"}{dataBDD.name}
+    </Text>
+      <ScrollView style={{width:440}}>
 
         <Badge status="error" value="Graphique" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>Graphique...</Text>
         </Card>
 
         <Badge status="error" value="Performances" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>1 an :  <Badge status="success" value={dataBDD.perf1} /></Text>
           <Text>2 ans :  <Badge status="success" value={dataBDD.perf2} /></Text>
           <Text>5 ans :  <Badge status="success" value={dataBDD.perf5} /></Text>
@@ -107,7 +107,7 @@ function PortfolioScreen(props) {
         </Card>
 
         <Badge status="error" value="Description" />
-        <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+        <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350 }}>
           <Text>{dataBDD.description1}</Text>
           <Text>{dataBDD.description2}</Text>
           <Text>{dataBDD.description3}</Text>
@@ -148,20 +148,21 @@ function PortfolioScreen(props) {
             onPress={() => props.navigation.navigate('StrategyListScreen')}
           />
         </View>
-        <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{ width: '80%', alignItems: 'center' }}>
+        <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{ width: '80%',alignItems: 'center' }}>
 
           <FontAwesome5 style={{ marginTop: 30, marginBottom: 20 }}
             name="medal"
             size={100}
-            color="red"
+            color="#f6b93b"
           />
 
           <Text h4 style={{ textAlign: 'center', marginTop: 15 }}>Félicitation {username}</Text>
           <Text style={{ textAlign: 'center', marginTop: 15 }}>Votre stratégie est enregistrée !</Text>
 
-          <Button style={{ width: 50, marginTop: 30, marginBottom: 20 }}
+          <Button buttonStyle={{ backgroundColor: '#fff', width: 100, alignSelf: 'center', borderColor: 'black', marginTop:20, marginBottom: 20}}
             title="ok"
-            type="solid"
+            titleStyle={{ color: "black" }}
+            type="outline"
             onPress={() => { props.navigation.navigate('WishListScreen'), setVisible(false) }}
           />
 
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  console.log("state", state)
+  //console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 
