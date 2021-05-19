@@ -1,8 +1,8 @@
 export default function(wishlist = null, action) {
 
   if(action.type == 'saveWishlist') {
-      // console.log("action.data_id reducer :", action.data_id)
-      return action.data_id;
+      console.log("action.data_id reducer :", action.name)
+      return action.name;
 
   } else {
       return wishlist;

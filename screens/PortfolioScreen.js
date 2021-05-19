@@ -10,17 +10,20 @@ function PortfolioScreen(props) {
   const [dataBDD, setdataBDD] = useState([]);
   const [username, setUsername] = useState("");
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch('http://192.168.1.13:3000/portofolio')
+      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=60/40`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
-
     findPortofolio()
-  },[])
+  },[isFocused])
 
   // console.log("dataBDD :", dataBDD)
+  console.log("props.wishlist :", props.wishlist)
+  console.log("props.token :", props.token)
 
   let passif = [];
   let actif = [];
@@ -151,7 +154,7 @@ function PortfolioScreen(props) {
             <Button style={{ width: 50, marginTop: 30, marginBottom: 20}}
             title="ok"
             type="solid"
-            onPress={() => {props.onSave(dataBDD._id), props.navigation.navigate('WishListScreen'), setVisible(false)}}
+            onPress={() => {props.navigation.navigate('WishListScreen'), setVisible(false)}}
             />
 
         </Overlay>
@@ -171,18 +174,10 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  return {token: state.token}
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onSave: function (data_id) {
-      dispatch({ type: 'saveWishlist', data_id : data_id })
-    }
-  }
+  return {token: state.token, name: state.wishlist}
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(PortfolioScreen);

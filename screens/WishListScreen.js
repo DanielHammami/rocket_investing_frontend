@@ -37,7 +37,7 @@ if(dataPortofolio && dataUsers.result && isFocused) {
                         style={styles.button3}
                         title={data.name}
                         type="outline"
-                        onPress={() => props.navigation.navigate('StrategyListScreen')}
+                        onPress={() => {props.onSave(data.name); props.navigation.navigate('PortfolioScreen')}}
                       />
                     </View>
                     })}
@@ -166,15 +166,15 @@ function mapStateToProps(state){
   return {token: state.token}
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     onSave: function (data_id) {
-//       dispatch({ type: 'saveWishlist', data_id : data_id })
-//     }
-//   }
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    onSave: function (name) {
+      dispatch({ type: 'saveWishlist', name : name })
+    }
+  }
+}
 
 export default connect(
   mapStateToProps,    //state//
-  null   //dispatch//
+  mapDispatchToProps   //dispatch//
 )(WishListScreen);

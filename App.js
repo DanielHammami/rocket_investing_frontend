@@ -18,7 +18,7 @@ import { Provider } from 'react-redux';
 import wishlist from './reducers/wishlist';
 import token from './reducers/token';
 
-const store = createStore(combineReducers({ wishlist, token }));
+const store = createStore(combineReducers({ token, wishlist }));
 
 const Stack = createStackNavigator()
 
