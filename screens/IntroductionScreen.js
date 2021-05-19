@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator()
@@ -19,85 +19,72 @@ function IntroductionScreen(props) {
       // console.log("--------------------------Body:-----------------------------", body)
     }
     findUsername()
-  },[props.token])
+  }, [props.token])
 
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   return (
-    <View style={ styles.container }>
-      <Text style={ styles.titleText }> Bonjour {dataUsers} ! </Text>
-          <View style={ styles.paragraphs }>
-      <Text style={ styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
-      <Text style={ styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
-      <Text style={ styles.paragraph}>    Laissez-nous vous guider pas à pas dans la définition de votre stratégie boursière long terme et appliquez facilement nos conseils pour placer votre argent.</Text>
-          </View>
+    <View style={styles.container}>
+      <Text style={styles.titleText}> Bonjour {dataUsers} ! </Text>
+      <Text style={styles.paragraph}>    Bienvenue sur l'application Rocket Investing. La première application boursière qui facilite tes investissements long terme.</Text>
+      <Text style={styles.paragraph}>    Cette application a été conçue pour faciliter l'investissements boursier des particuliers qui ne possèdent aucune connaissance en finance de marché.</Text>
+      <Text style={styles.paragraph}>    Laissez-nous vous guider pas à pas dans la définition de votre stratégie boursière long terme et appliquez facilement nos conseils pour placer votre argent.</Text>
 
-          <View   style={styles.button1}>
-                <Button
-                  title="Accès aux portefeuilles"
-                  type="solid"
-                  onPress={() => props.navigation.navigate('StrategyListScreen')}
-                />
-          </View>
+      <View style={{marginBottom: 100}}>
+        <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 250, height: 50, alignSelf: 'center' }}
+          title="Accès aux portefeuilles"
+          titleStyle={{ paddingTop: 5 }}
+          type="solid"
+          onPress={() => props.navigation.navigate('StrategyListScreen')}
+        />
 
-          <View style={styles.button2}>
-                <Button
-                  title="Déconnexion"
-                  type="outline"
-                  onPress={() => props.navigation.navigate('HomePageScreen')}
-                />
-          </View>
+        <Button
+          type="outline"
+          buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
+          title="Déconnexion"
+          titleStyle={{ color: '#e1191d' }}
+          onPress={() => props.navigation.navigate('HomePageScreen')}
+        />
+      </View>
     </View>
+
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'center',
-    margin: 20,
+    backgroundColor: '#fff',
   },
 
-
-  // ----------------------------- bouton Accès aux portefeuilles -----------------------------//
-  button1 : {
-    width: "80%",
-    padding: 10,
-  },
-
-  // ----------------------------- bouton Deconnexion -----------------------------//
-  button2 : {
-    width: "80%",
-    padding: 10,
-  },
-
-   // ----------------------------- titre de la page -----------------------------//
+  // ----------------------------- titre de la page -----------------------------//
   titleText: {
-    padding: 10,
+    marginTop: 100,
     fontSize: 20,
-    marginBottom: 10,
     fontWeight: "bold",
   },
 
-   // ----------------------------- div contenant les paragraphes -----------------------------//
+  // ----------------------------- div contenant les paragraphes -----------------------------//
   paragraphs: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 15,
   },
 
-   // ----------------------------- paragraphes -----------------------------//
+  // ----------------------------- paragraphes -----------------------------//
   paragraph: {
-    padding: 15,
-    fontSize : 15,
+    width: 300,
+    fontSize: 15,
     textAlign: 'justify',
   },
 })
 
 
-function mapStateToProps(state){
-  return {token: state.token}
+function mapStateToProps(state) {
+  return { token: state.token }
 }
 
 // function mapDispatchToProps(dispatch) {

@@ -32,24 +32,24 @@ export default function StrategyListScreen(props) {
   var handleStrategy = async () => {
     const data = await fetch('http://192.168.1.172:3000/strategy', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `strategy=${ strategyValue }`
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `strategy=${strategyValue}`
     })
 
     //const body = await data.json()
   }
 
   return (
-    <View style = { styles.container }>
+    <View style={styles.container}>
 
       <Header
         containerStyle={{ backgroundColor: '#2c2c2c' }}
-        leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
-        rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
       />
 
-      <Text style = { styles.title, {marginTop:20} }>Liste des Stratégies</Text>
-      <Text style = { styles.title }>(Sélection manuelle)</Text>
+      <Text style={styles.title, { marginTop: 20 }}>Liste des Stratégies</Text>
+      <Text style={styles.title}>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
 
       <RNPickerSelect
@@ -58,24 +58,24 @@ export default function StrategyListScreen(props) {
           value: null
         }}
         style={{ ...pickerSelectStyles }}
-        onValueChange={ (value) => setStrategyValue(value) }
+        onValueChange={(value) => setStrategyValue(value)}
         items={[
           { label: "Stratégie ACTIVE", value: "active" },
           { label: "Stratégie PASSIVE", value: "passive" },
         ]}
-        onDonePress={ () => handleStrategy() }
+        onDonePress={() => handleStrategy()}
       />
 
       <Text
-        style = { styles.text }
-        onPress={ toggleOverlayStrategy }
+        style={styles.text}
+        onPress={toggleOverlayStrategy}
       >
         Voir détails stratégie
       </Text>
 
       <Overlay
-        isVisible={ visibleStrategy }
-        onBackdropPress={ toggleOverlayStrategy }
+        isVisible={visibleStrategy}
+        onBackdropPress={toggleOverlayStrategy}
         overlayStyle={{
           width: 300,
           height: 300,
@@ -96,7 +96,7 @@ export default function StrategyListScreen(props) {
             marginTop: 40,
             backgroundColor: '#e1191d'
           }}
-          onPress={ toggleOverlayStrategy }
+          onPress={toggleOverlayStrategy}
         />
       </Overlay>
 
@@ -106,14 +106,14 @@ export default function StrategyListScreen(props) {
             marginTop: 50,
             marginBottom: 10
           }}
-          onPress={ toggleOverlayPrudent }
+          onPress={toggleOverlayPrudent}
         >
           Profil prudent ?
         </Text>
 
         <Overlay
-          isVisible={ visiblePrudent }
-          onBackdropPress={ toggleOverlayPrudent }
+          isVisible={visiblePrudent}
+          onBackdropPress={toggleOverlayPrudent}
           overlayStyle={{
             width: 300,
             height: 300,
@@ -122,22 +122,22 @@ export default function StrategyListScreen(props) {
             alignItems: 'center'
           }}
         >
-        <Text>Profil PRUDENT</Text>
-        <Text>risque de perte 0 à 5%</Text>
-        <Button
-          title="OK"
-          buttonStyle={{
-            width: 80,
-            height: 50,
-            marginTop: 40,
-            backgroundColor: '#e1191d'
-          }}
-          onPress={ toggleOverlayPrudent }
-        />
-      </Overlay>
+          <Text>Profil PRUDENT</Text>
+          <Text>risque de perte 0 à 5%</Text>
+          <Button
+            title="OK"
+            buttonStyle={{
+              width: 80,
+              height: 50,
+              marginTop: 40,
+              backgroundColor: '#e1191d'
+            }}
+            onPress={toggleOverlayPrudent}
+          />
+        </Overlay>
 
-        <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 1 / perf / type...</Text>
+        <View style={styles.profilContainer}>
+          <Text style={styles.portefeuil}>Portefeuil 1 / perf / type...</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -145,7 +145,7 @@ export default function StrategyListScreen(props) {
               width: 80,
               height: 50
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={() => props.navigation.navigate('PortfolioScreen')}
           />
         </View>
       </View>
@@ -156,14 +156,14 @@ export default function StrategyListScreen(props) {
             marginTop: 20,
             marginBottom: 10
           }}
-          onPress={ toggleOverlayEquilibre }
+          onPress={toggleOverlayEquilibre}
         >
           Profil équilibré ?
         </Text>
 
         <Overlay
-          isVisible={ visibleEquilibre }
-          onBackdropPress={ toggleOverlayEquilibre }
+          isVisible={visibleEquilibre}
+          onBackdropPress={toggleOverlayEquilibre}
           overlayStyle={{
             width: 300,
             height: 300,
@@ -182,12 +182,12 @@ export default function StrategyListScreen(props) {
               marginTop: 40,
               backgroundColor: '#e1191d'
             }}
-            onPress={ toggleOverlayEquilibre }
+            onPress={toggleOverlayEquilibre}
           />
         </Overlay>
 
-        <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 2 / perf / type...</Text>
+        <View style={styles.profilContainer}>
+          <Text style={styles.portefeuil}>Portefeuil 2 / perf / type...</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -195,7 +195,7 @@ export default function StrategyListScreen(props) {
               width: 80,
               height: 50
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={() => props.navigation.navigate('PortfolioScreen')}
           />
         </View>
       </View>
@@ -206,14 +206,14 @@ export default function StrategyListScreen(props) {
             marginTop: 20,
             marginBottom: 10
           }}
-          onPress={ toggleOverlayAudacieux }
+          onPress={toggleOverlayAudacieux}
         >
           Profil audacieux ?
         </Text>
 
         <Overlay
-          isVisible={ visibleAudacieux }
-          onBackdropPress={ toggleOverlayAudacieux }
+          isVisible={visibleAudacieux}
+          onBackdropPress={toggleOverlayAudacieux}
           overlayStyle={{
             width: 300,
             height: 300,
@@ -222,22 +222,22 @@ export default function StrategyListScreen(props) {
             alignItems: 'center'
           }}
         >
-        <Text>Profil AUDATIEUX</Text>
-        <Text>risque de perte 0 à 5%</Text>
-        <Button
-          title="OK"
-          buttonStyle={{
-            width: 80,
-            height: 50,
-            marginTop: 40,
-            backgroundColor: '#e1191d'
-          }}
-          onPress={ toggleOverlayAudacieux }
-        />
-      </Overlay>
+          <Text>Profil AUDATIEUX</Text>
+          <Text>risque de perte 0 à 5%</Text>
+          <Button
+            title="OK"
+            buttonStyle={{
+              width: 80,
+              height: 50,
+              marginTop: 40,
+              backgroundColor: '#e1191d'
+            }}
+            onPress={toggleOverlayAudacieux}
+          />
+        </Overlay>
 
-        <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 3 / perf / type...</Text>
+        <View style={styles.profilContainer}>
+          <Text style={styles.portefeuil}>Portefeuil 3 / perf / type...</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -245,11 +245,11 @@ export default function StrategyListScreen(props) {
               width: 80,
               height: 50,
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={() => props.navigation.navigate('PortfolioScreen')}
           />
         </View>
       </View>
-
+      {/* 
       <Text
         style={{
           color: 'blue',
@@ -260,7 +260,14 @@ export default function StrategyListScreen(props) {
         onPress={ () => props.navigation.navigate('IntroductionScreen') }
       >
         Retour
-      </Text>
+      </Text> */}
+      <Button
+        buttonStyle={{ backgroundColor: '#fff', width: 200, height: 50, alignSelf: 'center', borderColor: 'black', marginTop: 50 }}
+        title="Retour"
+        titleStyle={{ color: 'black' }}
+        type="outline"
+        onPress={() => props.navigation.navigate('IntroductionScreen')}
+      />
     </View>
   )
 }
@@ -269,6 +276,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center'
