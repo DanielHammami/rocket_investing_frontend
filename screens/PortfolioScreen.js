@@ -38,11 +38,11 @@ function PortfolioScreen(props) {
                                           Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
-        </Text>
-      })}
-      <Text>Total répartition des actifs = 100% {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Rééquilibrage chaque trimestre pour conserver les même proportions.</Text>
-    </Card>
+                          </Text>
+                  })}
+                  <Text>Total répartition des actifs = 100% {"\n"}</Text>
+                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
+            </Card>
 
   } else if (dataBDD.strategy === "active") {
 
@@ -79,14 +79,14 @@ function PortfolioScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Header
-        containerStyle={{ backgroundColor: '#2c2c2c' }}
-        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
-        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
-      />
-      <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15 }}>
-        Portfefeuille {"\n"}{dataBDD.name}
-      </Text>
+    <Header
+      containerStyle={{ backgroundColor: '#2c2c2c' }}
+      leftComponent={ <Button title='Mes Favoris' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('WishListScreen')} />}
+      rightComponent={<Button title='Déconnexion' buttonStyle={{ width:130,color: '#fff',backgroundColor: '#2c2c2c'}} onPress={()=>props.navigation.navigate('HomePageScreen')} />}
+    />
+    <Text h4 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 15, marginBottom: 15  }}>
+      Portefeuille {"\n"}{dataBDD.name}
+    </Text>
       <ScrollView>
 
         <Badge status="error" value="Graphique" />
