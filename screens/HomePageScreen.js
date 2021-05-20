@@ -57,6 +57,7 @@ function HomePageScreen(props) {
       props.navigation.navigate('WishListScreen')
       setErrorsSignIn([])
       setErrorsSignUp([])
+      setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)
       console.log("SIGN IN ERROR", body.error)
@@ -115,7 +116,7 @@ function HomePageScreen(props) {
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
-            onPress={() => { handleSubmitSignUp(); setSignUpVisible(false) }}
+            onPress={() => handleSubmitSignUp()}
           />
         </Overlay>
 
@@ -136,7 +137,7 @@ function HomePageScreen(props) {
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
-            onPress={() => { handleSubmitSignIn(); setSignInVisible(false); errorsSignIn }}
+            onPress={() => { handleSubmitSignIn() ; errorsSignIn }}
           />
         </Overlay>
       </View>
