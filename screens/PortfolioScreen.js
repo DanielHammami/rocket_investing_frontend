@@ -4,11 +4,11 @@ import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-e
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons'; 
-import { Foundation } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
 
 function PortfolioScreen(props) {
@@ -22,7 +22,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.13:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.10:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -56,7 +56,7 @@ function PortfolioScreen(props) {
         // console.log("ButtonIsValid", ButtonIsValid)
       }
     }
-  } 
+  }
 
   let ButtonVisible;
   if(ButtonIsValid){
@@ -130,7 +130,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('http://192.168.1.13:3000/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.10:3000/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `_idFront=${dataBDD._id}&token=${props.token}`
@@ -156,19 +156,19 @@ function PortfolioScreen(props) {
                 <Text>Graphique</Text>
                 </Card>
 
-                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text> 
+                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
                   <Text>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
                   <Text>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
                   <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : {dataBDD.risk}</Text>  
+                  <Text>Profil de risque : {dataBDD.risk}</Text>
                   <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>
 
-                
+
                 <Text style={{alignSelf:'center'}}>Description <MaterialIcons name="description" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
                   <Text style={{textAlign: 'justify'}}>{dataBDD.description1} {"\n"}</Text>
