@@ -32,7 +32,7 @@ function StrategyListScreen(props) {
 
   // Send Strategy and profilType to backend
   const handleStrategy = async (profil) => {
-    const dataStrategy = await fetch('http://192.168.1.13:3000/strategy', {
+    const dataStrategy = await fetch('http://192.168.1.172:3000/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `strategy=${ strategyValue }&profil=${ profil }`
