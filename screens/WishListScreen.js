@@ -31,7 +31,7 @@ function WishListScreen(props) {
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('http://192.168.1.172:3000/wishlist', {
+    const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -57,18 +57,18 @@ function WishListScreen(props) {
             onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
           />
           <Entypo style={{marginBottom: 10}}
-            name="squared-cross" 
-            size={55} 
+            name="squared-cross"
+            size={55}
             color="#e1191d"
             onPress={() => deleteArticle(i)}
-            />         
+            />
         </View>
       })}
     </View>
     // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
     // console.log("test1 :", dataPortofolio)
   } else {
-    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 200, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
 
   return (
@@ -83,7 +83,7 @@ function WishListScreen(props) {
         </View>
       </ScrollView>
 
-      <View style={{marginBottom:100}}>
+      <View style={{marginBottom:70}}>
         <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
           title="Ajouter un nouveau produit"
           titleStyle={{ paddingTop: 5 }}
