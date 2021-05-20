@@ -44,118 +44,64 @@ function StrategyListScreen(props) {
     props.onSave(body.data)
   }
 
-  return (
-    <View style={styles.container}>
+  var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
 
-      <Header
-        containerStyle={{ backgroundColor: '#2c2c2c' }}
-        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
-        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
-      />
-
-      <Text style={styles.title, { marginTop: 20 }}>Liste des Stratégies</Text>
-      <Text style={styles.title}>(Sélection manuelle)</Text>
-      <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
-
-      <RNPickerSelect
-        placeholder={{
-          label: 'Select Stratégie...',
-          value: null
-        }}
-        style={{ ...pickerSelectStyles }}
-        onValueChange={(value) => setStrategyValue(value)}
-        items={[
-          { label: "Stratégie ACTIVE", value: "active" },
-          { label: "Stratégie PASSIVE", value: "passive" },
-        ]}
-      />
-
-      <Text
-        style={ styles.text }
-        onPress={ toggleOverlayStrategy }
-      >
-        Voir détails stratégie
-      </Text>
-
-      <Overlay
-        isVisible={ visibleStrategy }
-        onBackdropPress={ toggleOverlayStrategy }
-        overlayStyle={{
-          width: 300,
-          height: 300,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text>Stratégie { strategyValue.toUpperCase() }</Text>
-        <Text>récurrence : 1 fois par mois</Text>
-        <Text>Type : DMA</Text>
-        <Text>détails</Text>
-        <Button
-          title="OK"
-          buttonStyle={{
-            width: 80,
-            height: 50,
-            marginTop: 40,
-            backgroundColor: '#e1191d'
-          }}
-          onPress={ toggleOverlayStrategy }
-        />
-      </Overlay>
-
+  if (strategyValue !== '' && strategyValue !== 'null') {
+    strategySelected = <View>
       <View>
-        <Text
-          style={{
-            marginTop: 50,
-            marginBottom: 10
-          }}
-          onPress={ toggleOverlayPrudent }
-        >
-          Profil prudent ?
-        </Text>
-
-        <Overlay
-          isVisible={ visiblePrudent }
-          onBackdropPress={ toggleOverlayPrudent }
-          overlayStyle={{
-            width: 300,
-            height: 300,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Text>Profil PRUDENT</Text>
-          <Text>risque de perte 0 à 5%</Text>
-          <Button
-            title="OK"
-            buttonStyle={{
-              width: 80,
-              height: 50,
-              marginTop: 40,
-              backgroundColor: '#e1191d'
+          <Text
+            style={{
+              marginTop: 50,
+              marginBottom: 10
             }}
             onPress={ toggleOverlayPrudent }
-          />
-        </Overlay>
+          >
+            Profil prudent ?
+          </Text>
 
-        <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 1 / perf / type...</Text>
-          <Button
-            title="détails"
-            buttonStyle={{
-              backgroundColor: '#e1191d',
-              width: 80,
-              height: 50
+          <Overlay
+            isVisible={ visiblePrudent }
+            onBackdropPress={ toggleOverlayPrudent }
+            overlayStyle={{
+              width: 300,
+              height: 300,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
-            onPress={ () => {
-              props.navigation.navigate('PortfolioScreen');
-              handleStrategy('prudent');
-            }}
-          />
+          >
+            <Text>Profil PRUDENT</Text>
+            <Text>risque de perte 0 à 5%</Text>
+            <Button
+              title="OK"
+              buttonStyle={{
+                width: 80,
+                height: 50,
+                marginTop: 40,
+                backgroundColor: '#e1191d'
+              }}
+              onPress={ toggleOverlayPrudent }
+            />
+          </Overlay>
+
+          {/* ----------------------------- First Wallet ---------------------------- */}
+
+          <View style={ styles.profilContainer }>
+            <Text style={ styles.portefeuil }>Portefeuil 1 / perf / type...</Text>
+            <Button
+              title="détails"
+              buttonStyle={{
+                backgroundColor: '#e1191d',
+                width: 80,
+                height: 50
+              }}
+              onPress={ () => {
+                props.navigation.navigate('PortfolioScreen');
+                handleStrategy('prudent');
+              }}
+            />
+          </View>
         </View>
-      </View>
 
       <View>
         <Text
@@ -192,6 +138,8 @@ function StrategyListScreen(props) {
             onPress={ toggleOverlayEquilibre }
           />
         </Overlay>
+
+        {/* ----------------------------- Second Wallet ---------------------------- */}
 
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>Portefeuil 2 / perf / type...</Text>
@@ -246,6 +194,8 @@ function StrategyListScreen(props) {
           />
         </Overlay>
 
+        {/* ----------------------------- Third Wallet ---------------------------- */}
+
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>Portefeuil 3 / perf / type...</Text>
           <Button
@@ -271,6 +221,71 @@ function StrategyListScreen(props) {
         onPress={ () => props.navigation.navigate('IntroductionScreen') }
       />
     </View>
+  }
+
+  return (
+    <View style={ styles.container }>
+
+      <Header
+        containerStyle={{ backgroundColor: '#2c2c2c' }}
+        leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
+      />
+
+      <Text style={styles.title, { marginTop: 20 }}>Liste des Stratégies</Text>
+      <Text style={styles.title}>(Sélection manuelle)</Text>
+      <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
+
+      <RNPickerSelect
+        placeholder={{
+          label: 'Select Stratégie...',
+          value: 'null'
+        }}
+        style={{ ...pickerSelectStyles }}
+        onValueChange={(value) => setStrategyValue(value)}
+        items={[
+          { label: "Stratégie ACTIVE", value: "active" },
+          { label: "Stratégie PASSIVE", value: "passive" },
+        ]}
+      />
+
+      <Text
+        style={ styles.text }
+        onPress={ toggleOverlayStrategy }
+      >
+        Voir détails stratégie
+      </Text>
+
+      <Overlay
+        isVisible={ visibleStrategy }
+        onBackdropPress={ toggleOverlayStrategy }
+        overlayStyle={{
+          width: 300,
+          height: 300,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Text>Stratégie { strategyValue.toUpperCase() }</Text>
+        <Text>récurrence : 1 fois par mois</Text>
+        <Text>Type : DMA</Text>
+        <Text>détails</Text>
+        <Button
+          title="OK"
+          buttonStyle={{
+            width: 80,
+            height: 50,
+            marginTop: 40,
+            backgroundColor: '#e1191d'
+          }}
+          onPress={ toggleOverlayStrategy }
+        />
+      </Overlay>
+
+      { strategySelected }
+
+    </View>
   )
 }
 
@@ -290,6 +305,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: 'blue',
     textAlign: 'left',
+    fontSize: 16,
   },
   profilContainer: {
     display: 'flex',
@@ -303,6 +319,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 12,
     color: '#ccc'
+  },
+  message: {
+    marginTop: 130,
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 })
 
@@ -322,6 +343,8 @@ const pickerSelectStyles = StyleSheet.create({
   },
 })
 
+
+// Dispatch Wallet Name to Redux Store
 function mapDispatchToProps(dispatch) {
   return {
     onSave: function (name) {

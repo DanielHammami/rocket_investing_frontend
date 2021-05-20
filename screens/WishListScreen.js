@@ -57,11 +57,11 @@ function WishListScreen(props) {
             onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
           />
           <Entypo style={{marginBottom: 10}}
-            name="squared-cross" 
-            size={55} 
+            name="squared-cross"
+            size={55}
             color="#e1191d"
             onPress={() => deleteArticle(i)}
-            />         
+            />
         </View>
       })}
     </View>

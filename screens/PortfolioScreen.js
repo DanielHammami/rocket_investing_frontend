@@ -4,11 +4,11 @@ import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-e
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons'; 
-import { Foundation } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 
 
 function PortfolioScreen(props) {
@@ -56,7 +56,7 @@ function PortfolioScreen(props) {
         // console.log("ButtonIsValid", ButtonIsValid)
       }
     }
-  } 
+  }
 
   let ButtonVisible;
   if(ButtonIsValid){
@@ -94,7 +94,7 @@ function PortfolioScreen(props) {
   if (dataBDD && dataBDD.strategy === "passive") {
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
         return <Text key={i}>Actif {i + 1}: {"\n"}
@@ -105,14 +105,14 @@ function PortfolioScreen(props) {
                           </Text>
                   })}
                   <Text>Total répartition des actifs = 100% {"\n"}</Text>
-                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
+                  <Text style={{fontSize: 16,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
             </Card>
 
   } else if (dataBDD.strategy === "active") {
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.selectBS.map((data, i) => {
         return <Text key={i}>Actif à {data.action} {"\n"}
@@ -124,7 +124,7 @@ function PortfolioScreen(props) {
       })}
 
       <Text>Total répartition des actifs = 100% {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
     </Card>
   }
 
@@ -138,6 +138,17 @@ function PortfolioScreen(props) {
     const body = await reqWishlist.json()
     setUsername(body.userName)
   }
+
+
+  //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
+  var riskStyle = dataBDD.risk
+  var colorRisk;
+  console.log("---------------------------riskstyle---------------------", riskStyle)
+  if (riskStyle === 'audacieux') {colorRisk={color:'red'}} 
+  else if (riskStyle === 'prudent') {colorRisk={color:'orange'}} 
+  else {colorRisk={color:'green'}}; 
+//-----------------------------------------------------------------------------------------------------------//
+
 
   return (
     <View style={styles.container}>
@@ -156,19 +167,19 @@ function PortfolioScreen(props) {
                 <Text>Graphique</Text>
                 </Card>
 
-                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text> 
+                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
                   <Text>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
                   <Text>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
                   <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : {dataBDD.risk}</Text>  
+                  <Text>Profil de risque : <Text style={colorRisk}>{dataBDD.risk} </Text></Text>  
                   <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>
 
-                
+
                 <Text style={{alignSelf:'center'}}>Description <MaterialIcons name="description" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
                   <Text style={{textAlign: 'justify'}}>{dataBDD.description1} {"\n"}</Text>
