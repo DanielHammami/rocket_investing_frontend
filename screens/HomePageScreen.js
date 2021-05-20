@@ -21,11 +21,7 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
-<<<<<<< HEAD
-    var rawData = await fetch('http://192.168.1.172:3000/sign-up', {
-=======
     var rawData = await fetch('http://192.168.1.30:3000/sign-up', {
->>>>>>> 7462b6cc3788c004644a5c3d18669e3bf1664c4d
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
@@ -46,11 +42,7 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
-<<<<<<< HEAD
     const data = await fetch('http://192.168.1.172:3000/sign-in', {
-=======
-    const data = await fetch('http://192.168.1.30:3000/sign-in', {
->>>>>>> 7462b6cc3788c004644a5c3d18669e3bf1664c4d
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
