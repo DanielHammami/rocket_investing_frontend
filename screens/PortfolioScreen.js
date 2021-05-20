@@ -15,6 +15,8 @@ function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
   const [dataBDD, setdataBDD] = useState([]);
   const [username, setUsername] = useState("");
+  const [dataUsers, setdataUsers] = useState('');
+  const [dataPortofolio, setDataPortofolio] = useState('');
 
   const isFocused = useIsFocused();
 
@@ -30,6 +32,62 @@ function PortfolioScreen(props) {
   //console.log("dataBDD :", dataBDD)
   //console.log("props.name :", props.name)
   //console.log("props.token :", props.token)
+
+  useEffect(() => {
+    const findDouble = async () => {
+      const dataDouble = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
+      const body = await dataDouble.json()
+      setDataPortofolio(body.portofolios.portofoliosId)
+      setdataUsers(body)
+      // console.log("body double :",body.portofolios.portofoliosId)
+    }
+    findDouble()
+  }, [])
+
+  let ButtonIsValid = false
+  if (dataPortofolio && dataUsers.result && isFocused) {
+
+    for (let i=0; i<dataPortofolio.length; i++){
+      // console.log("dataPortofolio[i]", dataPortofolio[i]._id)
+      // console.log("dataBDD._id", dataBDD._id)
+
+      if(dataBDD._id == dataPortofolio[i]._id){
+        ButtonIsValid = true
+        // console.log("ButtonIsValid", ButtonIsValid)
+      }
+    }
+  } 
+
+  let ButtonVisible;
+  if(ButtonIsValid){
+    ButtonVisible = <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
+                    buttonStyle={{ backgroundColor: "#5DC803", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
+                    icon={{
+                      name: "check-circle",
+                      size: 30,
+                      color: "white",
+                      paddingBottom: 5
+                    }}
+                    title=" Retour à Mes Favoris"
+                    titleStyle={{ paddingBottom: 5 }}
+                    type="solid"
+                    onPress={() => props.navigation.navigate('WishListScreen')}
+                    />
+  } else {
+    ButtonVisible = <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
+                    buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
+                    icon={{
+                      name: "star",
+                      size: 30,
+                      color: "white",
+                      paddingBottom: 5
+                    }}
+                    title=" Enregistrer cette stratégie"
+                    titleStyle={{ paddingBottom: 5 }}
+                    type="solid"
+                    onPress={() => { saveToWishlist(); setVisible(true) }}
+    />
+  }
 
   let passif = [];
   let actif = [];
@@ -81,8 +139,6 @@ function PortfolioScreen(props) {
     setUsername(body.userName)
   }
 
- 
-
   return (
     <View style={styles.container}>
       <Header
@@ -126,32 +182,21 @@ function PortfolioScreen(props) {
                 </Card>
 
                 <Text style={{alignSelf:'center'}}>Allocation d'actifs <Foundation name="graph-horizontal" size={15} color="black" /></Text>
-                <Card>{passif}{actif}</Card>
+                {passif}
+                {actif}
 
                 </ScrollView>
 
         <View style={{marginBottom:50}}>
-          <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
-            // buttonStyle={{ backgroundColor: "#3F9ADB" }}
-            buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
-            icon={{
-              name: "check-circle",
-              size: 30,
-              color: "white",
-              paddingBottom: 5
-            }}
-            title=" Enregistrer cette stratégie"
-            titleStyle={{ paddingBottom: 5 }}
-            type="solid"
-            onPress={() => { saveToWishlist(); setVisible(true) }}
-          />
+
+          {ButtonVisible}
 
           <Button buttonStyle={{ backgroundColor: '#fff', width: 300, height: 50, alignSelf: 'center', borderColor: 'black'}}
             // containerStyle={{ width: '100%', marginTop: 15, marginBottom: 50 }}
             title="Retour"
             titleStyle={{ color: "black" }}
             type="outline"
-            onPress={() => props.navigation.navigate('StrategyListScreen')}
+            onPress={() => props.navigation.navigate('WishListScreen')}
           />
         </View>
         <Overlay isVisible={visible} width="auto" height="auto" overlayStyle={{ width: '80%',alignItems: 'center' }}>
@@ -185,10 +230,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
 
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'space-around',
+    // alignItems: 'center',
     backgroundColor: '#E7E6E6',
   },
 })
