@@ -27,7 +27,7 @@ function PortfolioScreen(props) {
       setdataBDD(body.portofolios)
     }
     findPortofolio()
-  }, [isFocused, props.name])
+  }, [isFocused, props.name, dataPortofolio])
 
   //console.log("dataBDD :", dataBDD)
   //console.log("props.name :", props.name)
@@ -92,8 +92,9 @@ function PortfolioScreen(props) {
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
+    console.log("test",dataBDD.strategy)
 
-    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center'}}>
+    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
@@ -109,8 +110,9 @@ function PortfolioScreen(props) {
             </Card>
 
   } else if (dataBDD.strategy === "active") {
+    console.log("test",dataBDD.strategy)
 
-    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center'}}>
+    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
@@ -143,7 +145,7 @@ function PortfolioScreen(props) {
   //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  console.log("---------------------------riskstyle---------------------", riskStyle)
+  // console.log("---------------------------riskstyle---------------------", riskStyle)
   if (riskStyle === 'audacieux') {colorRisk={color:'red'}} 
   else if (riskStyle === 'prudent') {colorRisk={color:'orange'}} 
   else {colorRisk={color:'green'}}; 
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  //console.log("state", state)
+  console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 
