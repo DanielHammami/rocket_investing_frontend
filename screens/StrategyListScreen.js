@@ -305,6 +305,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: 'blue',
     textAlign: 'left',
+    fontSize: 16,
   },
   profilContainer: {
     display: 'flex',
@@ -321,7 +322,8 @@ const styles = StyleSheet.create({
   },
   message: {
     marginTop: 130,
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 })
 
