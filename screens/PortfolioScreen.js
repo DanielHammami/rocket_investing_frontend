@@ -93,7 +93,7 @@ function PortfolioScreen(props) {
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
 
-    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
+    passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center'}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
@@ -110,7 +110,7 @@ function PortfolioScreen(props) {
 
   } else if (dataBDD.strategy === "active") {
 
-    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
+    actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center'}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
