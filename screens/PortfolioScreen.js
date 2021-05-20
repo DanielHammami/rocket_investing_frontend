@@ -29,18 +29,14 @@ function PortfolioScreen(props) {
     findPortofolio()
   }, [isFocused, props.name])
 
-  //console.log("dataBDD :", dataBDD)
-  //console.log("props.name :", props.name)
-  //console.log("props.token :", props.token)
-
   useEffect(() => {
     const findDouble = async () => {
       const dataDouble = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataDouble.json()
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
-      // console.log("body double :",body.portofolios.portofoliosId)
     }
+
     findDouble()
   }, [])
 
@@ -48,12 +44,8 @@ function PortfolioScreen(props) {
   if (dataPortofolio && dataUsers.result && isFocused) {
 
     for (let i=0; i<dataPortofolio.length; i++){
-      // console.log("dataPortofolio[i]", dataPortofolio[i]._id)
-      // console.log("dataBDD._id", dataBDD._id)
-
       if(dataBDD._id == dataPortofolio[i]._id){
         ButtonIsValid = true
-        // console.log("ButtonIsValid", ButtonIsValid)
       }
     }
   }
@@ -143,10 +135,10 @@ function PortfolioScreen(props) {
   //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  console.log("---------------------------riskstyle---------------------", riskStyle)
-  if (riskStyle === 'audacieux') {colorRisk={color:'red'}} 
-  else if (riskStyle === 'prudent') {colorRisk={color:'orange'}} 
-  else {colorRisk={color:'green'}}; 
+  //console.log("---------------------------riskstyle---------------------", riskStyle)
+  if (riskStyle === 'audacieux') {colorRisk={color:'red'}}
+  else if (riskStyle === 'prudent') {colorRisk={color:'orange'}}
+  else {colorRisk={color:'green'}};
 //-----------------------------------------------------------------------------------------------------------//
 
 
@@ -174,7 +166,7 @@ function PortfolioScreen(props) {
                   <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : <Text style={colorRisk}>{dataBDD.risk} </Text></Text>  
+                  <Text>Profil de risque : <Text style={colorRisk}>{dataBDD.risk} </Text></Text>
                   <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>
@@ -249,8 +241,7 @@ const styles = StyleSheet.create({
   },
 })
 
-function mapStateToProps(state){
-  //console.log("state", state)
+function mapStateToProps(state) {
   return {token: state.token, name: state.wishlist}
 }
 

@@ -42,6 +42,7 @@ function StrategyListScreen(props) {
 
     // Send Wallet Name to Redux Store
     props.onSave(body.data)
+    console.log('body.data => ', body.data)
   }
 
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
@@ -234,7 +235,7 @@ function StrategyListScreen(props) {
           value: 'null'
         }}
         style={{ ...pickerSelectStyles }}
-        onValueChange={(value) => setStrategyValue(value)}
+        onValueChange={ (value) => setStrategyValue(value) }
         items={[
           { label: "Stratégie ACTIVE", value: "active" },
           { label: "Stratégie PASSIVE", value: "passive" },

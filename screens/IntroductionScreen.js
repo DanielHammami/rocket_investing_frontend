@@ -16,12 +16,9 @@ function IntroductionScreen(props) {
       const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/introduction?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body.username)
-      // console.log("--------------------------Body:-----------------------------", body)
     }
     findUsername()
   }, [props.token])
-
-  // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   return (
     <View style={styles.container}>

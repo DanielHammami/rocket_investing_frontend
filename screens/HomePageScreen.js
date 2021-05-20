@@ -26,11 +26,9 @@ function HomePageScreen(props) {
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
     })
     const body = await rawData.json()
-    // console.log(body, 'SIGN UP')
 
     if (body.result == true) {
       props.addToken(body.token)
-      // console.log('TOKEN SIGN UP : ', body.token)
       setUserExists(true)
       props.navigation.navigate('IntroductionScreen')
     } else {
@@ -69,7 +67,7 @@ function HomePageScreen(props) {
     {listErrorsSignIn.map((error, i) => {
       return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
     })}</View>
-    
+
     errorsSignUp = <View>
     {listErrorsSignUp.map((error, i) => {
       return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
