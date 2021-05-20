@@ -144,9 +144,9 @@ function PortfolioScreen(props) {
   var riskStyle = dataBDD.risk
   var colorRisk;
   console.log("---------------------------riskstyle---------------------", riskStyle)
-  if (riskStyle === 'audacieux') {colorRisk={color:'red'}} 
-  else if (riskStyle === 'prudent') {colorRisk={color:'orange'}} 
-  else {colorRisk={color:'green'}}; 
+  if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>} 
+  else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>} 
+  else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
 //-----------------------------------------------------------------------------------------------------------//
 
 
@@ -174,7 +174,7 @@ function PortfolioScreen(props) {
                   <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : <Text style={colorRisk}>{dataBDD.risk} </Text></Text>  
+                  <Text>Profil de risque : {colorRisk}</Text>  
                   <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>
