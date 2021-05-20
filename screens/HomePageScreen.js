@@ -36,7 +36,7 @@ function HomePageScreen(props) {
       setErrorsSignIn([])
     } else {
       setErrorsSignUp(body.error)
-      console.log("SIGN UP ERROR", body.error)
+      // console.log("SIGN UP ERROR", body.error)
     }
   }
 
@@ -60,7 +60,7 @@ function HomePageScreen(props) {
       setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)
-      console.log("SIGN IN ERROR", body.error)
+      // console.log("SIGN IN ERROR", body.error)
     }
   }
 
