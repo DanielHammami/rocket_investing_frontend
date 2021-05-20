@@ -20,7 +20,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.30:3000/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.10:3000/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -31,7 +31,7 @@ function WishListScreen(props) {
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('http://192.168.1.30:3000/wishlist', {
+    const deleteReq = await fetch('http://192.168.1.10:3000/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -57,11 +57,11 @@ function WishListScreen(props) {
             onPress={() => { props.onSave(data.name); props.navigation.navigate('PortfolioScreen') }}
           />
           <Entypo style={{marginBottom: 10}}
-            name="squared-cross" 
-            size={55} 
+            name="squared-cross"
+            size={55}
             color="#e1191d"
             onPress={() => deleteArticle(i)}
-            />         
+            />
         </View>
       })}
     </View>
