@@ -20,7 +20,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.30:3000/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.13:3000/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -31,7 +31,7 @@ function WishListScreen(props) {
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('http://192.168.1.30:3000/wishlist', {
+    const deleteReq = await fetch('http://192.168.1.13:3000/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -68,7 +68,7 @@ function WishListScreen(props) {
     // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
     // console.log("test1 :", dataPortofolio)
   } else {
-    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 200, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
 
   return (
@@ -83,7 +83,7 @@ function WishListScreen(props) {
         </View>
       </ScrollView>
 
-      <View style={{marginBottom:100}}>
+      <View style={{marginBottom:70}}>
         <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
           title="Ajouter un nouveau produit"
           titleStyle={{ paddingTop: 5 }}
