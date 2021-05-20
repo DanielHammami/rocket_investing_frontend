@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { connect } from 'react-redux'
-
+import { Octicons } from '@expo/vector-icons'; 
 import { StyleSheet, Text, View } from 'react-native'
 import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
@@ -56,7 +56,7 @@ function StrategyListScreen(props) {
             }}
             onPress={ toggleOverlayPrudent }
           >
-            Profil prudent ?
+            Profil prudent <Octicons name="question" size={16} color="black" />
           </Text>
 
           <Overlay
@@ -111,7 +111,7 @@ function StrategyListScreen(props) {
           }}
           onPress={ toggleOverlayEquilibre }
         >
-          Profil équilibré ?
+          Profil équilibré <Octicons name="question" size={16} color="black" />
         </Text>
 
         <Overlay
@@ -166,7 +166,7 @@ function StrategyListScreen(props) {
           }}
           onPress={ toggleOverlayAudacieux }
         >
-          Profil audacieux ?
+          Profil audacieux <Octicons name="question" size={16} color="black" />
         </Text>
 
         <Overlay
@@ -180,7 +180,7 @@ function StrategyListScreen(props) {
             alignItems: 'center'
           }}
         >
-          <Text>Profil AUDATIEUX</Text>
+          <Text>Profil AUDACIEUX</Text>
           <Text>risque de perte 0 à 5%</Text>
           <Button
             title="OK"
