@@ -68,7 +68,7 @@ function WishListScreen(props) {
     // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
     // console.log("test1 :", dataPortofolio)
   } else {
-    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 200, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 16, marginTop: 200, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
 
   return (
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 
   paragraph: {
     padding: 15,
-    fontSize: 15,
+    fontSize: 16,
   },
 })
 
