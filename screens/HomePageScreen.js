@@ -78,6 +78,7 @@ function HomePageScreen(props) {
     errorsSignIn
     errorsSignUp
   }
+  
   // -------------------------------------- Overlay setter -----------------------------------------
 
   const toggleOverlaySignUp = () => {
