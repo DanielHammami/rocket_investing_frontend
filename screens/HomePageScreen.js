@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
-import { Text, Overlay, Input, Button } from 'react-native-elements';
+import { Text, Overlay, Input, Button, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
   const [signUpVisible, setSignUpVisible] = useState(false);
   const [signInVisible, setSignInVisible] = useState(false);
-  const [errorSignUpVisible, setErrorSignUpVisible] = useState(false);
-  const [errorSignInVisible, setErrorSignInVisible] = useState(false);
-
   // ------------------------------------- ETATS SignUp/In -----------------------------------
   const [signUpUsername, setSignUpUsername] = useState('')
   const [signUpPassword, setSignUpPassword] = useState('')
@@ -19,67 +17,79 @@ function HomePageScreen(props) {
   const [listErrorsSignIn, setErrorsSignIn] = useState([])
   const [listErrorsSignUp, setErrorsSignUp] = useState([])
 
+  const isFocused = useIsFocused();
   // ------------------------------------- Gestion Sign Up -------------------------------------
-  var handleSubmitSignUp = async () => {
-    var rawData = await fetch('http://192.168.1.30:3000/sign-up', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
-    })
-    const body = await rawData.json()
-    // console.log(body, 'SIGN UP')
+    var handleSubmitSignUp = async () => {
+      var rawData = await fetch('http://192.168.1.30:3000/sign-up', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
+      })
+      const body = await rawData.json()
+      // console.log(body, 'SIGN UP')
 
-    if (body.result == true) {
-      props.addToken(body.token)
-      // console.log('TOKEN SIGN UP : ', body.token)
-      setUserExists(true)
-      props.navigation.navigate('IntroductionScreen')
-    } else {
-      setErrorsSignUp(body.error)
-      console.log("SIGN UP ERROR", body.error)
+      if (body.result == true) {
+        props.addToken(body.token)
+        // console.log('TOKEN SIGN UP : ', body.token)
+        setUserExists(true)
+        props.navigation.navigate('IntroductionScreen')
+      } else {
+        setErrorsSignUp(body.error)
+        console.log("SIGN UP ERROR", body.error)
+      }
     }
-  }
+
 
   // ------------------------------------- Gestion Sign In -------------------------------------
-  var handleSubmitSignIn = async () => {
-    const data = await fetch('http://192.168.1.30:3000/sign-in', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
-    })
-    const body = await data.json()
-    // console.log(body, 'SIGN IN')
 
-    if (body.result == true) {
-      props.addToken(body.token)
-      // console.log('TOKEN SIGN IN : ', body.token)
-      setUserExists(true)
-      props.navigation.navigate('WishListScreen')
-    } else {
-      setErrorsSignIn(body.error)
-      console.log("SIGN IN ERROR", body.error)
+    var handleSubmitSignIn = async () => {
+      const data = await fetch('http://192.168.1.30:3000/sign-in', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
+      })
+      const body = await data.json()
+      // console.log(body, 'SIGN IN')
+
+      if (body.result == true) {
+        props.addToken(body.token)
+        // console.log('TOKEN SIGN IN : ', body.token)
+        setUserExists(true)
+        props.navigation.navigate('WishListScreen')
+      } else {
+        setErrorsSignIn(body.error)
+        console.log("SIGN IN ERROR", body.error)
+      }
+
     }
-  }
 
-  var errorsSignIn = <View>
-    {listErrorsSignUp.map((error, i) => {
-      return (<Text key={i} style={{ color: 'red', alignSelf: 'center'}}>{error}</Text>)
-    })}</View>
-  var errorsSignUp = <View>
+
+  // ------------------------------------- Msgs d'erreurs -------------------------------------
+  var errorsSignIn;
+  var errorsSignUp;
+
+  if(isFocused) {
+    errorsSignIn = <View>
     {listErrorsSignIn.map((error, i) => {
-      return (<Text key={i} style={{ color: 'red', alignSelf: 'center'}}>{error}</Text>)
+      return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
     })}</View>
-
-
+    
+    errorsSignUp = <View>
+    {listErrorsSignUp.map((error, i) => {
+      return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
+    })}</View>
+  }else{
+    errorsSignIn
+    errorsSignUp
+  }
   // -------------------------------------- Overlay setter -----------------------------------------
+
   const toggleOverlaySignUp = () => {
     setSignUpVisible(false);
   };
-
   const toggleOverlaySignIn = () => {
     setSignInVisible(false);
   };
-
 
   // -------------------------------------------------------------------------------------------------
   // -------------------------------------- RETURN ---------------------------------------------------
@@ -93,8 +103,7 @@ function HomePageScreen(props) {
       <Text style={styles.text}>L'application boursière qui facilite vos investissements long termes</Text>
 
       <Image source={require('../assets/Rocket_logo.png')} style={styles.image} />
-      {errorsSignIn}
-      {errorsSignUp}
+
       <View style={{ marginBottom: 70 }}>
 
         {/* ----------------------------------- BOUTON SIGN UP -------------------------------------- */}
@@ -109,7 +118,7 @@ function HomePageScreen(props) {
           <Text>Entrez votre nom et mot de passe</Text>
           <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
           <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
-
+          {errorsSignUp}
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
@@ -130,11 +139,11 @@ function HomePageScreen(props) {
           <Text>Entrez votre nom et mot de passe</Text>
           <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
           <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
-
+          {errorsSignIn}
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
             title="Go"
-            onPress={() => { handleSubmitSignIn(); setSignInVisible(false) }}
+            onPress={() => { handleSubmitSignIn(); setSignInVisible(false); errorsSignIn }}
           />
         </Overlay>
       </View>
