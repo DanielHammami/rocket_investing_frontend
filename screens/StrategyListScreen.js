@@ -212,14 +212,6 @@ function StrategyListScreen(props) {
           />
         </View>
       </View>
-
-      <Button
-        buttonStyle={{ backgroundColor: '#fff', width: 200, height: 50, alignSelf: 'center', borderColor: 'black', marginTop: 50 }}
-        title="Retour"
-        titleStyle={{ color: 'black' }}
-        type="outline"
-        onPress={ () => props.navigation.navigate('IntroductionScreen') }
-      />
     </View>
   }
 
@@ -285,6 +277,13 @@ function StrategyListScreen(props) {
 
       { strategySelected }
 
+      <Button
+        buttonStyle={{ backgroundColor: '#fff', width: 200, height: 50, alignSelf: 'center', borderColor: 'black', marginTop: 50 }}
+        title="Retour"
+        titleStyle={{ color: 'black' }}
+        type="outline"
+        onPress={ () => props.navigation.navigate('WishListScreen') }
+      />
     </View>
   )
 }
