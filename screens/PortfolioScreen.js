@@ -22,7 +22,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`http://192.168.1.172:3000/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`https://rocketinvesting.herokuapp.com/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -35,7 +35,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findDouble = async () => {
-      const dataDouble = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
+      const dataDouble = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataDouble.json()
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
@@ -94,7 +94,7 @@ function PortfolioScreen(props) {
   if (dataBDD && dataBDD.strategy === "passive") {
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
         return <Text key={i}>Actif {i + 1}: {"\n"}
@@ -105,14 +105,14 @@ function PortfolioScreen(props) {
                           </Text>
                   })}
                   <Text>Total répartition des actifs = 100% {"\n"}</Text>
-                  <Text style={{fontSize: 15,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
+                  <Text style={{fontSize: 16,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
             </Card>
 
   } else if (dataBDD.strategy === "active") {
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30, alignSelf:'center', width:350  }}>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.selectBS.map((data, i) => {
         return <Text key={i}>Actif à {data.action} {"\n"}
@@ -124,7 +124,7 @@ function PortfolioScreen(props) {
       })}
 
       <Text>Total répartition des actifs = 100% {"\n"}</Text>
-      <Text style={{ fontSize: 15, fontWeight: "bold" }}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
     </Card>
   }
 
@@ -138,6 +138,17 @@ function PortfolioScreen(props) {
     const body = await reqWishlist.json()
     setUsername(body.userName)
   }
+
+
+  //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
+  var riskStyle = dataBDD.risk
+  var colorRisk;
+  console.log("---------------------------riskstyle---------------------", riskStyle)
+  if (riskStyle === 'audacieux') {colorRisk={color:'red'}} 
+  else if (riskStyle === 'prudent') {colorRisk={color:'orange'}} 
+  else {colorRisk={color:'green'}}; 
+//-----------------------------------------------------------------------------------------------------------//
+
 
   return (
     <View style={styles.container}>
@@ -163,7 +174,7 @@ function PortfolioScreen(props) {
                   <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : {dataBDD.risk}</Text>  
+                  <Text>Profil de risque : <Text style={colorRisk}>{dataBDD.risk} </Text></Text>  
                   <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>

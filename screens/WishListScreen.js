@@ -20,7 +20,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.172:3000/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
