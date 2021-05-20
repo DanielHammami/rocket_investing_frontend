@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
-import { Text, Overlay, Input, Button, Header } from 'react-native-elements';
+import { Text, Overlay, Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { useIsFocused } from '@react-navigation/native';
 
 function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
@@ -17,7 +16,7 @@ function HomePageScreen(props) {
   const [listErrorsSignIn, setErrorsSignIn] = useState([])
   const [listErrorsSignUp, setErrorsSignUp] = useState([])
 
-  const isFocused = useIsFocused();
+
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
     var rawData = await fetch('https://rocketinvesting.herokuapp.com/sign-up', {
@@ -33,6 +32,8 @@ function HomePageScreen(props) {
       // console.log('TOKEN SIGN UP : ', body.token)
       setUserExists(true)
       props.navigation.navigate('IntroductionScreen')
+      setErrorsSignUp([])
+      setErrorsSignIn([])
     } else {
       setErrorsSignUp(body.error)
       console.log("SIGN UP ERROR", body.error)
@@ -54,6 +55,8 @@ function HomePageScreen(props) {
       // console.log('TOKEN SIGN IN : ', body.token)
       setUserExists(true)
       props.navigation.navigate('WishListScreen')
+      setErrorsSignIn([])
+      setErrorsSignUp([])
     } else {
       setErrorsSignIn(body.error)
       console.log("SIGN IN ERROR", body.error)
@@ -61,23 +64,17 @@ function HomePageScreen(props) {
   }
 
   // ------------------------------------- Msgs d'erreurs -------------------------------------
-  var errorsSignIn;
-  var errorsSignUp;
 
-  if(isFocused) {
-    errorsSignIn = <View>
+  var errorsSignIn = <View>
     {listErrorsSignIn.map((error, i) => {
       return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
     })}</View>
-    
-    errorsSignUp = <View>
+
+  var errorsSignUp = <View>
     {listErrorsSignUp.map((error, i) => {
       return (<Text key={i} style={{ color: 'red', alignSelf: 'center' }}>{error}</Text>)
     })}</View>
-  }else{
-    errorsSignIn
-    errorsSignUp
-  }
+
   // -------------------------------------- Overlay setter -----------------------------------------
 
   const toggleOverlaySignUp = () => {
@@ -112,8 +109,8 @@ function HomePageScreen(props) {
         <Overlay isVisible={signUpVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignUp}>
           <Text h4>Sign Up</Text>
           <Text>Entrez votre nom et mot de passe</Text>
-          <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} value={signUpUsername} />
-          <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} value={signUpPassword} />
+          <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignUpUsername(val)} />
+          <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignUpPassword(val)} />
           {errorsSignUp}
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
@@ -133,8 +130,8 @@ function HomePageScreen(props) {
         <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignIn}>
           <Text h4>Sign In</Text>
           <Text>Entrez votre nom et mot de passe</Text>
-          <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)} value={signInUsername} />
-          <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)} value={signInPassword} />
+          <Input containerStyle={{ marginTop: 30, width: 200 }} placeholder='John' onChangeText={(val) => setSignInUsername(val)}  />
+          <Input containerStyle={{ width: 200 }} secureTextEntry={true} placeholder='*********' onChangeText={(val) => setSignInPassword(val)}/>
           {errorsSignIn}
           <Button
             buttonStyle={{ backgroundColor: "#e1191d", marginTop: 40, width: 80, height: 50, alignSelf: 'center' }}
