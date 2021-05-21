@@ -34,6 +34,7 @@ function HomePageScreen(props) {
       props.navigation.navigate('IntroductionScreen')
       setErrorsSignUp([])
       setErrorsSignIn([])
+      setSignUpVisible(false)
     } else {
       setErrorsSignUp(body.error)
       // console.log("SIGN UP ERROR", body.error)
