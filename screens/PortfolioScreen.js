@@ -92,32 +92,32 @@ function PortfolioScreen(props) {
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
-    console.log("test",dataBDD.strategy)
+    // console.log("test",dataBDD.strategy)
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.actifs.map((data, i) => {
-        return <Text key={i}>Actif {i + 1}: {"\n"}
+        return <Text style={{fontSize: 16}} key={i}>Actif {i + 1}: {"\n"}
                                           Description: {data.description} {"\n"}
                                           Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
                                           type : {data.type} {"\n"}
                           </Text>
                   })}
-                  <Text>Total répartition des actifs = 100% {"\n"}</Text>
+                  <Text style={{fontSize: 16}}>Total répartition des actifs = 100% {"\n"}</Text>
                   <Text style={{fontSize: 16,fontWeight: "bold"}}>Rééquilibrage chaque trimestre pour conserver les mêmes proportions.</Text>
             </Card>
 
   } else if (dataBDD.strategy === "active") {
-    console.log("test",dataBDD.strategy)
+    // console.log("test",dataBDD.strategy)
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
 
       {dataBDD.selectBS.map((data, i) => {
-        return <Text key={i}>Actif à {data.action} {"\n"}
+        return <Text style={{fontSize: 16}} key={i}>Actif à {data.action} {"\n"}
                                           Description: {data.description} {"\n"}
                                           Ticker : ({data.ticker}) {"\n"}
                                           Répartition : {data.repartition} % {"\n"}
@@ -125,7 +125,7 @@ function PortfolioScreen(props) {
         </Text>
       })}
 
-      <Text>Total répartition des actifs = 100% {"\n"}</Text>
+      <Text style={{fontSize: 16}}>Total répartition des actifs = 100% {"\n"}</Text>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Rééquilibrage du portefeuille tous les débuts de mois</Text>
     </Card>
   }
@@ -144,7 +144,7 @@ function PortfolioScreen(props) {
   //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  console.log("---------------------------riskstyle---------------------", riskStyle)
+  // console.log("---------------------------riskstyle---------------------", riskStyle)
   if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>} 
   else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>} 
   else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
@@ -162,37 +162,37 @@ function PortfolioScreen(props) {
       </Text>
               <ScrollView>
 
-                <Text style={{alignSelf:'center'}}>Graphique <Entypo name="area-graph" size={15} color="black" /></Text>
+                <Text style={{alignSelf:'center', fontSize: 16}}>Graphique <Entypo name="area-graph" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
-                <Text>Graphique</Text>
+                <Text style={{ fontSize: 16 }}>Graphique</Text>
                 </Card>
 
-                <Text style={{alignSelf:'center'}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
+                <Text style={{alignSelf:'center', fontSize: 16}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
-                  <Text>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
-                  <Text>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
-                  <Text>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
-                  <Text>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
-                  <Text>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text>Profil de risque : {colorRisk}</Text>  
-                  <Text>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
-                  <Text>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
+                  <Text style={{ fontSize: 16 }}>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
+                  <Text style={{ fontSize: 16 }}>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
+                  <Text style={{ fontSize: 16 }}>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
+                  <Text style={{ fontSize: 16 }}>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
+                  <Text style={{ fontSize: 16 }}>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
+                  <Text style={{ fontSize: 16 }}>Profil de risque : {colorRisk}</Text>  
+                  <Text style={{ fontSize: 16 }}>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
+                  <Text style={{ fontSize: 16 }}>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>
 
 
-                <Text style={{alignSelf:'center'}}>Description <MaterialIcons name="description" size={15} color="black" /></Text>
+                <Text style={{alignSelf:'center', fontSize: 16}}>Description <MaterialIcons name="description" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description1} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description2} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description3} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description4} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description5} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description6} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description7} {"\n"}</Text>
-                  <Text style={{textAlign: 'justify'}}>{dataBDD.description8} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description1} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description2} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description3} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description4} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description5} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description6} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description7} {"\n"}</Text>
+                  <Text style={{textAlign: 'justify', fontSize: 16}}>{dataBDD.description8} {"\n"}</Text>
                 </Card>
 
-                <Text style={{alignSelf:'center'}}>Allocation d'actifs <Foundation name="graph-horizontal" size={15} color="black" /></Text>
+                <Text style={{alignSelf:'center', fontSize: 16}}>Allocation d'actifs <Foundation name="graph-horizontal" size={15} color="black" /></Text>
                 {passif}
                 {actif}
 
@@ -203,7 +203,6 @@ function PortfolioScreen(props) {
           {ButtonVisible}
 
           <Button buttonStyle={{ backgroundColor: '#fff', width: 300, height: 50, alignSelf: 'center', borderColor: 'black'}}
-            // containerStyle={{ width: '100%', marginTop: 15, marginBottom: 50 }}
             title="Retour"
             titleStyle={{ color: "black" }}
             type="outline"
@@ -218,8 +217,8 @@ function PortfolioScreen(props) {
             color="#f6b93b"
           />
 
-          <Text h4 style={{ textAlign: 'center', marginTop: 15 }}>Félicitation {username}</Text>
-          <Text style={{ textAlign: 'center', marginTop: 15 }}>Votre stratégie est enregistrée !</Text>
+          <Text h4 style={{ textAlign: 'center', marginTop: 15, fontSize: 16 }}>Félicitation {username}</Text>
+          <Text style={{ textAlign: 'center', marginTop: 15, fontSize: 16 }}>Votre stratégie est enregistrée !</Text>
 
           <Button buttonStyle={{ backgroundColor: '#e1191d', width: 100, alignSelf: 'center', borderColor: 'black', marginTop:20, marginBottom: 20}}
             title="ok"
@@ -236,21 +235,13 @@ function PortfolioScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-
     flex: 1,
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-around',
-    // alignItems: 'center',
     backgroundColor: '#E7E6E6',
   },
 })
 
 function mapStateToProps(state){
-  console.log("state", state)
+  // console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 
