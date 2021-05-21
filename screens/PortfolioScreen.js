@@ -16,7 +16,7 @@ function PortfolioScreen(props) {
   const [dataBDD, setdataBDD] = useState([]);
   const [username, setUsername] = useState("");
   const [dataUsers, setdataUsers] = useState('');
-  const [dataPortofolio, setDataPortofolio] = useState('');
+  const [dataPortofolio, setDataPortofolio] = useState([]);
 
   const isFocused = useIsFocused();
 
@@ -29,9 +29,9 @@ function PortfolioScreen(props) {
     findPortofolio()
   }, [isFocused, props.name, dataPortofolio])
 
-  //console.log("dataBDD :", dataBDD)
-  //console.log("props.name :", props.name)
-  //console.log("props.token :", props.token)
+  // console.log("dataBDD :", dataBDD)
+  // console.log("props.name :", props.name)
+  // console.log("props.token :", props.token)
 
   useEffect(() => {
     const findDouble = async () => {
@@ -39,10 +39,12 @@ function PortfolioScreen(props) {
       const body = await dataDouble.json()
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
-      // console.log("body double :",body.portofolios.portofoliosId)
     }
     findDouble()
-  }, [])
+  }, [isFocused])
+
+  // console.log("dataPortofolio",dataPortofolio)
+  // console.log("dataUsers",dataUsers)
 
   let ButtonIsValid = false
   if (dataPortofolio && dataUsers.result && isFocused) {
@@ -53,13 +55,12 @@ function PortfolioScreen(props) {
 
       if(dataBDD._id == dataPortofolio[i]._id){
         ButtonIsValid = true
-        // console.log("ButtonIsValid", ButtonIsValid)
       }
     }
   }
 
   let ButtonVisible;
-  if(ButtonIsValid){
+  if(ButtonIsValid && isFocused){
     ButtonVisible = <Button containerStyle={{ marginTop: 20, alignItems: 'center' }}
                     buttonStyle={{ backgroundColor: "#5DC803", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
                     icon={{
@@ -91,7 +92,7 @@ function PortfolioScreen(props) {
 
   let passif = [];
   let actif = [];
-  if (dataBDD && dataBDD.strategy === "passive") {
+  if (dataBDD && dataBDD.strategy === "passive" && isFocused) {
     // console.log("test",dataBDD.strategy)
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
