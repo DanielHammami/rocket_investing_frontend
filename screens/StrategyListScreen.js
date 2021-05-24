@@ -14,6 +14,7 @@ function StrategyListScreen(props) {
 
   const [strategyValue, setStrategyValue] = useState('')
   const [profilName, setProfilName] = useState([])
+  const [uniqueName, setUniqueName] = useState('')
 
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
@@ -42,8 +43,12 @@ function StrategyListScreen(props) {
     const body = await dataStrategy.json()
 
     // Send Wallet Name to Redux Store
-    props.onSave(body.profilName)
+    props.onSave(uniqueName)
     setProfilName(body.profilName)
+  }
+
+  const handleUniqueName = name => {
+    props.onSave(name)
   }
 
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
@@ -97,7 +102,10 @@ function StrategyListScreen(props) {
                 width: 80,
                 height: 50
               }}
-              onPress={ () => props.navigation.navigate('PortfolioScreen') }
+              onPress={ () => {
+                props.navigation.navigate('PortfolioScreen');
+                handleUniqueName(profilName[0])
+              }}
             />
           </View>
         </View>
@@ -149,7 +157,10 @@ function StrategyListScreen(props) {
               width: 80,
               height: 50
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={ () => {
+                props.navigation.navigate('PortfolioScreen');
+                handleUniqueName(profilName[1])
+              }}
           />
         </View>
       </View>
@@ -201,7 +212,10 @@ function StrategyListScreen(props) {
               width: 80,
               height: 50,
             }}
-            onPress={ () => props.navigation.navigate('PortfolioScreen') }
+            onPress={ () => {
+                props.navigation.navigate('PortfolioScreen');
+                handleUniqueName(profilName[2])
+              }}
           />
         </View>
       </View>
