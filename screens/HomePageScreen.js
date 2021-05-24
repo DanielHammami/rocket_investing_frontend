@@ -19,7 +19,7 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
-    var rawData = await fetch('http://192.168.1.11:3000/sign-up', {
+    var rawData = await fetch('https://rocketinvesting.herokuapp.com/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
@@ -41,7 +41,7 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
-    const data = await fetch('http://192.168.1.11:3000/sign-in', {
+    const data = await fetch('https://rocketinvesting.herokuapp.com/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`

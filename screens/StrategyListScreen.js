@@ -34,7 +34,7 @@ function StrategyListScreen(props) {
 
   // Send Strategy and profilType to backend
   const handleStrategy = async (param) => {
-    const dataStrategy = await fetch('http://192.168.1.11:3000/strategy', {
+    const dataStrategy = await fetch('https://rocketinvesting.herokuapp.com/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `strategy=${ param }`
