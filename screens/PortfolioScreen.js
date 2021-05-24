@@ -22,7 +22,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`https://rocketinvesting.herokuapp.com/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`http://192.168.1.11:3000/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -31,7 +31,7 @@ function PortfolioScreen(props) {
 
   useEffect(() => {
     const findDouble = async () => {
-      const dataDouble = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
+      const dataDouble = await fetch(`http://192.168.1.11:3000/wishList?token=${props.token}`)
       const body = await dataDouble.json()
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
@@ -84,7 +84,7 @@ function PortfolioScreen(props) {
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive") {
-    console.log("test",dataBDD.strategy)
+    {/*console.log("test",dataBDD.strategy)*/}
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
@@ -102,7 +102,7 @@ function PortfolioScreen(props) {
             </Card>
 
   } else if (dataBDD.strategy === "active") {
-    console.log("test",dataBDD.strategy)
+    {/*console.log("test",dataBDD.strategy)*/}
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
@@ -124,7 +124,7 @@ function PortfolioScreen(props) {
 
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
+    const reqWishlist = await fetch('http://192.168.1.11:3000/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `_idFront=${dataBDD._id}&token=${props.token}`
@@ -136,7 +136,6 @@ function PortfolioScreen(props) {
   //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  console.log("---------------------------riskstyle---------------------", riskStyle)
   if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>}
   else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>}
   else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 

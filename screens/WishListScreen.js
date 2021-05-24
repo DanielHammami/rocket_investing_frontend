@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native';
-import { NavigationContainer } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements';
@@ -20,7 +19,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.11:3000/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -31,7 +30,7 @@ function WishListScreen(props) {
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
+    const deleteReq = await fetch('http://192.168.1.11:3000/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -158,7 +157,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSave: function (name) {
-      console.log("test1", name)
       dispatch({ type: 'saveWishlist', name : name })
     }
   }
