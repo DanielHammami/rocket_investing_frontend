@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { connect } from 'react-redux'
-import { Octicons } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native'
 import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
@@ -13,6 +13,7 @@ function StrategyListScreen(props) {
   const [visibleAudacieux, setVisibleAudacieux] = useState(false)
 
   const [strategyValue, setStrategyValue] = useState('')
+  const [profilName, setProfilName] = useState([])
 
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
@@ -31,17 +32,18 @@ function StrategyListScreen(props) {
   }
 
   // Send Strategy and profilType to backend
-  const handleStrategy = async (profil) => {
-    const dataStrategy = await fetch('https://rocketinvesting.herokuapp.com/strategy', {
+  const handleStrategy = async (param) => {
+    const dataStrategy = await fetch('http://192.168.1.11:3000/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `strategy=${ strategyValue }&profil=${ profil }`
+      body: `strategy=${ param }`
     })
 
     const body = await dataStrategy.json()
 
     // Send Wallet Name to Redux Store
-    props.onSave(body.data)
+    //props.onSave(body.data)
+    setProfilName(body.profilName)
   }
 
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
@@ -87,7 +89,7 @@ function StrategyListScreen(props) {
           {/* ----------------------------- First Wallet ---------------------------- */}
 
           <View style={ styles.profilContainer }>
-            <Text style={ styles.portefeuil }>Portefeuil 1 / perf / type...</Text>
+            <Text style={ styles.portefeuil }>{ profilName[0] }</Text>
             <Button
               title="détails"
               buttonStyle={{
@@ -95,10 +97,7 @@ function StrategyListScreen(props) {
                 width: 80,
                 height: 50
               }}
-              onPress={ () => {
-                props.navigation.navigate('PortfolioScreen');
-                handleStrategy('prudent');
-              }}
+              onPress={ () => props.navigation.navigate('PortfolioScreen') }
             />
           </View>
         </View>
@@ -142,7 +141,7 @@ function StrategyListScreen(props) {
         {/* ----------------------------- Second Wallet ---------------------------- */}
 
         <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 2 / perf / type...</Text>
+          <Text style={ styles.portefeuil }>{ profilName[1] }</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -150,10 +149,7 @@ function StrategyListScreen(props) {
               width: 80,
               height: 50
             }}
-            onPress={ () => {
-              props.navigation.navigate('PortfolioScreen');
-              handleStrategy('equilibre');
-            }}
+            onPress={ () => props.navigation.navigate('PortfolioScreen') }
           />
         </View>
       </View>
@@ -197,7 +193,7 @@ function StrategyListScreen(props) {
         {/* ----------------------------- Third Wallet ---------------------------- */}
 
         <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 3 / perf / type...</Text>
+          <Text style={ styles.portefeuil }>{ profilName[2] }</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -205,10 +201,7 @@ function StrategyListScreen(props) {
               width: 80,
               height: 50,
             }}
-            onPress={ () => {
-              props.navigation.navigate('PortfolioScreen');
-              handleStrategy('audacieux');
-            }}
+            onPress={ () => props.navigation.navigate('PortfolioScreen') }
           />
         </View>
       </View>
@@ -234,7 +227,10 @@ function StrategyListScreen(props) {
           value: 'null'
         }}
         style={{ ...pickerSelectStyles }}
-        onValueChange={(value) => setStrategyValue(value)}
+        onValueChange={ (value) => {
+          setStrategyValue(value)
+          handleStrategy(value)
+        }}
         items={[
           { label: "Stratégie ACTIVE", value: "active" },
           { label: "Stratégie PASSIVE", value: "passive" },
@@ -309,15 +305,18 @@ const styles = StyleSheet.create({
   profilContainer: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent:'center'
   },
   portefeuil: {
+    width: '73%',
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: 'black',
     fontSize: 18,
     paddingTop: 13,
     paddingHorizontal: 10,
     paddingBottom: 12,
-    color: '#ccc'
+    color: '#e1191d',
+    textAlign: 'center'
   },
   message: {
     marginTop: 130,

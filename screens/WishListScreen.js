@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native';
-import { NavigationContainer } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements';
@@ -20,7 +19,7 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.11:3000/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -31,7 +30,7 @@ function WishListScreen(props) {
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
+    const deleteReq = await fetch('http://192.168.1.11:3000/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -68,7 +67,7 @@ function WishListScreen(props) {
     // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
     // console.log("test1 :", dataPortofolio)
   } else {
-    portefeuille = <Text style={{ alignSelf:'center',fontSize: 16, marginTop: 200, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
+    portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
 
   return (
@@ -83,7 +82,7 @@ function WishListScreen(props) {
         </View>
       </ScrollView>
 
-      <View style={{marginBottom:70}}>
+      <View style={{marginBottom:100}}>
         <Button buttonStyle={{ backgroundColor: "#e1191d", marginBottom: 15, alignItems: 'baseline', width: 300, height: 50, alignSelf: 'center' }}
           title="Ajouter un nouveau produit"
           titleStyle={{ paddingTop: 5 }}
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
 
   paragraph: {
     padding: 15,
-    fontSize: 16,
+    fontSize: 15,
   },
 })
 

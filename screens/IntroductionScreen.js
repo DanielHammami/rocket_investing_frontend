@@ -13,15 +13,12 @@ function IntroductionScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/introduction?token=${props.token}`)
+      const dataUsers = await fetch(`http://192.168.1.11:3000/introduction?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body.username)
-      // console.log("--------------------------Body:-----------------------------", body)
     }
     findUsername()
   }, [props.token])
-
-  // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   return (
     <View style={styles.container}>
