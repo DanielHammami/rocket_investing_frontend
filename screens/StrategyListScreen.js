@@ -42,7 +42,7 @@ function StrategyListScreen(props) {
     const body = await dataStrategy.json()
 
     // Send Wallet Name to Redux Store
-    //props.onSave(body.data)
+    props.onSave(body.profilName)
     setProfilName(body.profilName)
   }
 
@@ -125,7 +125,7 @@ function StrategyListScreen(props) {
           }}
         >
           <Text>Profil EQUILIBRE</Text>
-          <Text>risque de perte 0 à 5%</Text>
+          <Text>risque de perte 5% à 20%</Text>
           <Button
             title="OK"
             buttonStyle={{
@@ -177,7 +177,7 @@ function StrategyListScreen(props) {
           }}
         >
           <Text>Profil AUDACIEUX</Text>
-          <Text>risque de perte 0 à 5%</Text>
+          <Text>risque de perte 20% à 50%</Text>
           <Button
             title="OK"
             buttonStyle={{
@@ -256,9 +256,13 @@ function StrategyListScreen(props) {
         }}
       >
         <Text>Stratégie { strategyValue.toUpperCase() }</Text>
-        <Text>récurrence : 1 fois par mois</Text>
-        <Text>Type : DMA</Text>
-        <Text>détails</Text>
+        <Text style={ styles.popupStrategy }>
+        {
+          strategyValue === 'active'
+          ? 'Intervention 1 fois par MOIS sur le protefeuille'
+          : 'Intervention 1 fois par TRIMESTE sur le protefeuille'
+        }
+        </Text>
         <Button
           title="OK"
           buttonStyle={{
@@ -322,6 +326,10 @@ const styles = StyleSheet.create({
     marginTop: 130,
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  popupStrategy: {
+    marginTop: 30,
+    textAlign: 'center'
   }
 })
 
