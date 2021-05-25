@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
 import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
@@ -9,16 +9,33 @@ import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
+import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
 
 
 function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
-  const [dataBDD, setdataBDD] = useState([]);
+  const [dataBDD, setdataBDD] = useState({});
   const [username, setUsername] = useState("");
   const [dataUsers, setdataUsers] = useState('');
   const [dataPortofolio, setDataPortofolio] = useState([]);
+  const [dataAPI, setDataAPI] = useState({});
+  const [ticker, setTicker] = useState("SPY");
 
   const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const findAPI = async () => {
+      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=dd62a27db1860da653545a9bdee0bdce&symbols=${ticker}`)
+      const body = await API.json()
+      // console.log("body", body)
+      setDataAPI(body)
+      }
+    if(dataBDD.selectBS) {
+    setTicker(dataBDD.selectBS[0].ticker)
+    findAPI()
+    }
+  }, [isFocused, dataPortofolio])
 
   useEffect(() => {
     const findPortofolio = async () => {
@@ -40,6 +57,7 @@ function PortfolioScreen(props) {
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
     }
+
     findDouble()
   }, [isFocused])
 
@@ -50,9 +68,6 @@ function PortfolioScreen(props) {
   if (dataPortofolio && dataUsers.result && isFocused) {
 
     for (let i=0; i<dataPortofolio.length; i++){
-      // console.log("dataPortofolio[i]", dataPortofolio[i]._id)
-      // console.log("dataBDD._id", dataBDD._id)
-
       if(dataBDD._id == dataPortofolio[i]._id){
         ButtonIsValid = true
       }
@@ -93,7 +108,7 @@ function PortfolioScreen(props) {
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive" && isFocused) {
-    // console.log("test",dataBDD.strategy)
+    {/*console.log("test",dataBDD.strategy)*/}
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
@@ -111,7 +126,7 @@ function PortfolioScreen(props) {
             </Card>
 
   } else if (dataBDD.strategy === "active") {
-    // console.log("test",dataBDD.strategy)
+    {/*console.log("test",dataBDD.strategy)*/}
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
@@ -146,10 +161,87 @@ function PortfolioScreen(props) {
   var riskStyle = dataBDD.risk
   var colorRisk;
   // console.log("---------------------------riskstyle---------------------", riskStyle)
-  if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>} 
-  else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>} 
+  if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>}
+  else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>}
   else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
 //-----------------------------------------------------------------------------------------------------------//
+
+let date = [];
+let price = [];
+var monthValid;
+if (dataAPI.data && isFocused) {
+  // console.log("APIdata", dataAPI.data[0].close)
+  // console.log(dataAPI.data[0].date.toLocaleDateString())
+
+  for (let i=0; i<dataAPI.data.length; i++){
+
+    var now = new Date(dataAPI.data[i].date) 
+    // console.log(now) //  format: 2021-05-24T11:46:22.692Z
+    // console.log(now.toLocaleDateString()) //  format: 24/05/2021
+    var nowToString = now.getMonth();
+    // console.log("nowToString", nowToString)
+    
+    if(nowToString != monthValid){
+      var months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+      months = months[nowToString]
+      date.push(months)
+      price.push(dataAPI.data[i].close)
+    }
+    monthValid = nowToString
+    // console.log("monthValid", monthValid)
+  }
+  // console.log("APIdata-date", date)
+  // console.log("APIdata-price", price)
+  date = date.reverse();
+  price = price.reverse();
+}
+
+let graph;
+console.log("dataAPI",dataAPI)
+if(dataAPI.data && isFocused){
+  graph = <LineChart
+            data={{
+              // labels: ["January", "February"],
+              labels: date,
+              datasets: [
+                {
+                  // data: [ Math.random() * 100, Math.random() * 100,]
+                  data: price
+                }
+              ]
+            }}
+            // width={Dimensions.get("window").width} // from react-native
+            width={315} // from react-native
+            height={250}
+            yAxisLabel="€"
+            yAxisSuffix=""
+            yAxisInterval={1} // optional, defaults to 1
+            chartConfig={{
+              backgroundColor: "#3f9adb",
+              backgroundGradientFrom: "#3f9adb",
+              backgroundGradientTo: "#007ed9",
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: "#007ed9"
+              }
+            }}
+            bezier
+            style={{
+              marginVertical: 4,
+              borderRadius: 1
+            }}
+          />
+} 
+else {
+  graph = <ActivityIndicator size="large" color="#e26a00" />
+}
 
   return (
     <View style={styles.container}>
@@ -165,7 +257,7 @@ function PortfolioScreen(props) {
 
                 <Text style={{alignSelf:'center', fontSize: 16}}>Graphique <Entypo name="area-graph" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
-                <Text style={{ fontSize: 16 }}>Graphique</Text>
+                  {graph}
                 </Card>
 
                 <Text style={{alignSelf:'center', fontSize: 16}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
@@ -175,7 +267,7 @@ function PortfolioScreen(props) {
                   <Text style={{ fontSize: 16 }}>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>
                   <Text style={{ fontSize: 16 }}>Max :  <Text style={{color:'green'}}>{dataBDD.perfmax}</Text></Text>
                   <Text style={{ fontSize: 16 }}>Type de stratégie : <Text style={ (dataBDD.strategy == 'passive') ? styles.passif={color:'blue'} : styles.actif={color:'red'}}>{dataBDD.strategy} </Text></Text>
-                  <Text style={{ fontSize: 16 }}>Profil de risque : {colorRisk}</Text>  
+                  <Text style={{ fontSize: 16 }}>Profil de risque : {colorRisk}</Text>
                   <Text style={{ fontSize: 16 }}>Perte maximum : <Text style={{color:'red'}}>{dataBDD.maxloss}</Text></Text>
                   <Text style={{ fontSize: 16 }}>Volatilité : <Text style={{color:'red'}}>{dataBDD.volatility}</Text></Text>
                 </Card>

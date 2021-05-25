@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
 import { connect } from 'react-redux'
-import { Octicons } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native'
 import { Header, Button, Divider, Overlay } from 'react-native-elements'
 
@@ -13,6 +13,8 @@ function StrategyListScreen(props) {
   const [visibleAudacieux, setVisibleAudacieux] = useState(false)
 
   const [strategyValue, setStrategyValue] = useState('')
+  const [profilName, setProfilName] = useState([])
+  const [uniqueName, setUniqueName] = useState('')
 
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
@@ -31,17 +33,22 @@ function StrategyListScreen(props) {
   }
 
   // Send Strategy and profilType to backend
-  const handleStrategy = async (profil) => {
+  const handleStrategy = async (param) => {
     const dataStrategy = await fetch('https://rocketinvesting.herokuapp.com/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: `strategy=${ strategyValue }&profil=${ profil }`
+      body: `strategy=${ param }`
     })
 
     const body = await dataStrategy.json()
 
     // Send Wallet Name to Redux Store
-    props.onSave(body.data)
+    props.onSave(uniqueName)
+    setProfilName(body.profilName)
+  }
+
+  const handleUniqueName = name => {
+    props.onSave(name)
   }
 
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
@@ -87,7 +94,7 @@ function StrategyListScreen(props) {
           {/* ----------------------------- First Wallet ---------------------------- */}
 
           <View style={ styles.profilContainer }>
-            <Text style={ styles.portefeuil }>Portefeuil 1 / perf / type...</Text>
+            <Text style={ styles.portefeuil }>{ profilName[0] }</Text>
             <Button
               title="détails"
               buttonStyle={{
@@ -97,7 +104,7 @@ function StrategyListScreen(props) {
               }}
               onPress={ () => {
                 props.navigation.navigate('PortfolioScreen');
-                handleStrategy('prudent');
+                handleUniqueName(profilName[0])
               }}
             />
           </View>
@@ -126,7 +133,7 @@ function StrategyListScreen(props) {
           }}
         >
           <Text>Profil EQUILIBRE</Text>
-          <Text>risque de perte 0 à 5%</Text>
+          <Text>risque de perte 5% à 20%</Text>
           <Button
             title="OK"
             buttonStyle={{
@@ -142,7 +149,7 @@ function StrategyListScreen(props) {
         {/* ----------------------------- Second Wallet ---------------------------- */}
 
         <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 2 / perf / type...</Text>
+          <Text style={ styles.portefeuil }>{ profilName[1] }</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -151,9 +158,9 @@ function StrategyListScreen(props) {
               height: 50
             }}
             onPress={ () => {
-              props.navigation.navigate('PortfolioScreen');
-              handleStrategy('equilibre');
-            }}
+                props.navigation.navigate('PortfolioScreen');
+                handleUniqueName(profilName[1])
+              }}
           />
         </View>
       </View>
@@ -181,7 +188,7 @@ function StrategyListScreen(props) {
           }}
         >
           <Text>Profil AUDACIEUX</Text>
-          <Text>risque de perte 0 à 5%</Text>
+          <Text>risque de perte 20% à 50%</Text>
           <Button
             title="OK"
             buttonStyle={{
@@ -197,7 +204,7 @@ function StrategyListScreen(props) {
         {/* ----------------------------- Third Wallet ---------------------------- */}
 
         <View style={ styles.profilContainer }>
-          <Text style={ styles.portefeuil }>Portefeuil 3 / perf / type...</Text>
+          <Text style={ styles.portefeuil }>{ profilName[2] }</Text>
           <Button
             title="détails"
             buttonStyle={{
@@ -206,9 +213,9 @@ function StrategyListScreen(props) {
               height: 50,
             }}
             onPress={ () => {
-              props.navigation.navigate('PortfolioScreen');
-              handleStrategy('audacieux');
-            }}
+                props.navigation.navigate('PortfolioScreen');
+                handleUniqueName(profilName[2])
+              }}
           />
         </View>
       </View>
@@ -234,7 +241,10 @@ function StrategyListScreen(props) {
           value: 'null'
         }}
         style={{ ...pickerSelectStyles }}
-        onValueChange={(value) => setStrategyValue(value)}
+        onValueChange={ (value) => {
+          setStrategyValue(value)
+          handleStrategy(value)
+        }}
         items={[
           { label: "Stratégie ACTIVE", value: "active" },
           { label: "Stratégie PASSIVE", value: "passive" },
@@ -260,9 +270,13 @@ function StrategyListScreen(props) {
         }}
       >
         <Text>Stratégie { strategyValue.toUpperCase() }</Text>
-        <Text>récurrence : 1 fois par mois</Text>
-        <Text>Type : DMA</Text>
-        <Text>détails</Text>
+        <Text style={ styles.popupStrategy }>
+        {
+          strategyValue === 'active'
+          ? 'Intervention 1 fois par MOIS sur le protefeuille'
+          : 'Intervention 1 fois par TRIMESTE sur le protefeuille'
+        }
+        </Text>
         <Button
           title="OK"
           buttonStyle={{
@@ -309,20 +323,27 @@ const styles = StyleSheet.create({
   profilContainer: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent:'center'
   },
   portefeuil: {
+    width: '73%',
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: 'black',
     fontSize: 18,
     paddingTop: 13,
     paddingHorizontal: 10,
     paddingBottom: 12,
-    color: '#ccc'
+    color: '#e1191d',
+    textAlign: 'center'
   },
   message: {
     marginTop: 130,
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  popupStrategy: {
+    marginTop: 30,
+    textAlign: 'center'
   }
 })
 

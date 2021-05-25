@@ -25,11 +25,9 @@ function HomePageScreen(props) {
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
     })
     const body = await rawData.json()
-    // console.log(body, 'SIGN UP')
 
     if (body.result == true) {
       props.addToken(body.token)
-      // console.log('TOKEN SIGN UP : ', body.token)
       setUserExists(true)
       props.navigation.navigate('IntroductionScreen')
       setErrorsSignUp([])
@@ -37,7 +35,7 @@ function HomePageScreen(props) {
       setSignUpVisible(false)
     } else {
       setErrorsSignUp(body.error)
-      // console.log("SIGN UP ERROR", body.error)
+      //console.log("SIGN UP ERROR", body.error)
     }
   }
 
@@ -61,7 +59,7 @@ function HomePageScreen(props) {
       setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)
-      // console.log("SIGN IN ERROR", body.error)
+      //console.log("SIGN IN ERROR", body.error)
     }
   }
 
