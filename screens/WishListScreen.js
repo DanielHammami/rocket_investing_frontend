@@ -96,7 +96,8 @@ function WishListScreen(props) {
           title="Déconnexion"
           titleStyle={{ color: '#e1191d' }}
           type="outline"
-          onPress={() => props.navigation.navigate('HomePageScreen')}
+          onPress={() => { props.addToken(null);
+                           props.navigation.navigate('HomePageScreen')}}
         />
       </View>
     </View>
@@ -161,11 +162,14 @@ function mapDispatchToProps(dispatch) {
     onSave: function (name) {
       // console.log("test1", name)
       dispatch({ type: 'saveWishlist', name : name })
+    },
+    addToken: function (token) {
+      dispatch({ type: 'saveToken', token: token })
     }
   }
 }
 
 export default connect(
-  mapStateToProps,    //state//
-  mapDispatchToProps   //dispatch//
+  mapStateToProps,
+  mapDispatchToProps
 )(WishListScreen);
