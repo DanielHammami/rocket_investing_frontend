@@ -86,8 +86,8 @@ function mapStateToProps(state) {
 
 // function mapDispatchToProps(dispatch) {
 //   return {
-//     onSave: function (data_id) {
-//       dispatch({ type: 'saveWishlist', data_id : data_id })
+//     addToken: function (token) {
+//       dispatch({ type: 'saveToken', token: token })
 //     }
 //   }
 // }
