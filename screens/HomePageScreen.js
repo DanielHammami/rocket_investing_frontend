@@ -42,6 +42,7 @@ function HomePageScreen(props) {
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
     const data = await fetch('https://rocketinvesting.herokuapp.com/sign-in', {
+          // const data = await fetch('http://192.168.1.30:3000/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
