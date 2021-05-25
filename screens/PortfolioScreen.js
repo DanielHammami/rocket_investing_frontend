@@ -12,7 +12,6 @@ import { Foundation } from '@expo/vector-icons';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
 import { Dimensions } from "react-native";
 
-
 function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
   const [dataBDD, setdataBDD] = useState({});
@@ -24,18 +23,22 @@ function PortfolioScreen(props) {
 
   const isFocused = useIsFocused();
 
+  APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
+  APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+
   useEffect(() => {
     const findAPI = async () => {
-      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=dd62a27db1860da653545a9bdee0bdce&symbols=${ticker}`)
+      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey2}&symbols=${ticker}`)
       const body = await API.json()
       // console.log("body", body)
       setDataAPI(body)
       }
     if(dataBDD.selectBS) {
     setTicker(dataBDD.selectBS[0].ticker)
+    console.log(ticker)
     findAPI()
     }
-  }, [isFocused, dataPortofolio])
+  }, [dataBDD])
 
   useEffect(() => {
     const findPortofolio = async () => {
@@ -43,8 +46,10 @@ function PortfolioScreen(props) {
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
+    if(props.name) {
     findPortofolio()
-  }, [isFocused, props.name, dataPortofolio])
+    }
+  }, [props.name, dataPortofolio])
 
   // console.log("dataBDD :", dataBDD)
   // console.log("props.name :", props.name)
@@ -57,8 +62,9 @@ function PortfolioScreen(props) {
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
     }
-
+    if(props.token) {
     findDouble()
+    }
   }, [isFocused])
 
   // console.log("dataPortofolio",dataPortofolio)
@@ -102,7 +108,7 @@ function PortfolioScreen(props) {
                     titleStyle={{ paddingBottom: 5 }}
                     type="solid"
                     onPress={() => { saveToWishlist(); setVisible(true) }}
-    />
+                    />
   }
 
   let passif = [];
@@ -169,6 +175,7 @@ function PortfolioScreen(props) {
 let date = [];
 let price = [];
 var monthValid;
+let perf6M = 0;
 if (dataAPI.data && isFocused) {
   // console.log("APIdata", dataAPI.data[0].close)
   // console.log(dataAPI.data[0].date.toLocaleDateString())
@@ -190,14 +197,19 @@ if (dataAPI.data && isFocused) {
     monthValid = nowToString
     // console.log("monthValid", monthValid)
   }
-  // console.log("APIdata-date", date)
-  // console.log("APIdata-price", price)
   date = date.reverse();
   price = price.reverse();
+  // console.log("APIdata-date", date)
+  // console.log("APIdata-price", price)
+
+  // Performances sur 6 mois :
+  perf6M = 100-((price[0]*100)/price[5])
+  perf6M = perf6M.toFixed(2)
+  // console.log("performance 6 Mois :", perf6M)
 }
 
 let graph;
-console.log("dataAPI",dataAPI)
+// console.log("dataAPI",dataAPI)
 if(dataAPI.data && isFocused){
   graph = <LineChart
             data={{
@@ -262,6 +274,7 @@ else {
 
                 <Text style={{alignSelf:'center', fontSize: 16}}>Performances <Ionicons name="rocket-outline" size={15} color="black" /></Text>
                 <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+                  <Text style={{ fontSize: 16 }}>6 mois :  <Text style={{color:'green'}}>{perf6M} %</Text></Text>
                   <Text style={{ fontSize: 16 }}>1 an :  <Text style={{color:'green'}}>{dataBDD.perf1} </Text></Text>
                   <Text style={{ fontSize: 16 }}>2 ans :  <Text style={{color:'green'}}>{dataBDD.perf2}</Text></Text>
                   <Text style={{ fontSize: 16 }}>5 ans :  <Text style={{color:'green'}}>{dataBDD.perf5}</Text></Text>

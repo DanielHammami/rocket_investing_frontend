@@ -24,7 +24,9 @@ function WishListScreen(props) {
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
     }
+    if(props.token) {
     findUsername()
+    }
   }, [isFocused, isToggled])
 
   // console.log("--------------------------Users:-----------------------------", dataUsers)
