@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
@@ -15,6 +16,7 @@ function HomePageScreen(props) {
   const [userExists, setUserExists] = useState(false)
   const [listErrorsSignIn, setErrorsSignIn] = useState([])
   const [listErrorsSignUp, setErrorsSignUp] = useState([])
+  const isFocused = useIsFocused();
 
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
@@ -32,6 +34,8 @@ function HomePageScreen(props) {
       props.navigation.navigate('IntroductionScreen')
       setErrorsSignUp([])
       setErrorsSignIn([])
+      setSignInUsername("")
+      setSignInPassword("")
       setSignUpVisible(false)
     } else {
       setErrorsSignUp(body.error)
@@ -47,7 +51,7 @@ function HomePageScreen(props) {
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
     })
     const body = await data.json()
-    // console.log(body, 'SIGN IN')
+    console.log(body, 'SIGN IN')
 
     if (body.result == true) {
       props.addToken(body.token)
@@ -56,6 +60,8 @@ function HomePageScreen(props) {
       props.navigation.navigate('WishListScreen')
       setErrorsSignIn([])
       setErrorsSignUp([])
+      setSignInUsername("")
+      setSignInPassword("")
       setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)
