@@ -23,12 +23,13 @@ function PortfolioScreen(props) {
 
   const isFocused = useIsFocused();
 
-  APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
-  APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  var APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
+  var APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  var APIkey3 = "bd943945515e4ccec711630fb3df5069";
 
   useEffect(() => {
     const findAPI = async () => {
-      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey2}&symbols=${ticker}`)
+      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey3}&symbols=${ticker}`)
       const body = await API.json()
       // console.log("body", body)
       setDataAPI(body)
@@ -182,12 +183,12 @@ if (dataAPI.data && isFocused) {
 
   for (let i=0; i<dataAPI.data.length; i++){
 
-    var now = new Date(dataAPI.data[i].date) 
+    var now = new Date(dataAPI.data[i].date)
     // console.log(now) //  format: 2021-05-24T11:46:22.692Z
     // console.log(now.toLocaleDateString()) //  format: 24/05/2021
     var nowToString = now.getMonth();
     // console.log("nowToString", nowToString)
-    
+
     if(nowToString != monthValid){
       var months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
       months = months[nowToString]
@@ -250,7 +251,7 @@ if(dataAPI.data && isFocused){
               borderRadius: 1
             }}
           />
-} 
+}
 else {
   graph = <ActivityIndicator size="large" color="#e26a00" />
 }
