@@ -23,12 +23,13 @@ function PortfolioScreen(props) {
 
   const isFocused = useIsFocused();
 
-  APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
-  APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  // APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
+  // APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  APIkey3 = "bd943945515e4ccec711630fb3df5069";
 
   useEffect(() => {
     const findAPI = async () => {
-      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey2}&symbols=${ticker}`)
+      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey3}&symbols=${ticker}`)
       const body = await API.json()
       // console.log("body", body)
       setDataAPI(body)
