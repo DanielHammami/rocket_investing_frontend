@@ -34,7 +34,7 @@ function StrategyListScreen(props) {
 
   // Send Strategy and profilType to backend
   const handleStrategy = async (param) => {
-    const dataStrategy = await fetch('http://192.168.1.11:3000/strategy', {
+    const dataStrategy = await fetch('https://rocketinvesting.herokuapp.com/strategy', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `strategy=${ param }`
@@ -228,7 +228,7 @@ function StrategyListScreen(props) {
       <Header
         containerStyle={{ backgroundColor: '#2c2c2c' }}
         leftComponent={<Button title='Mes Favoris' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('WishListScreen')} />}
-        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => props.navigation.navigate('HomePageScreen')} />}
+        rightComponent={<Button title='Déconnexion' buttonStyle={{ width: 130, color: '#fff', backgroundColor: '#2c2c2c' }} onPress={() => {props.addToken(null); props.navigation.navigate('HomePageScreen')}} />}
       />
 
       <Text style={styles.title, { marginTop: 20 }}>Liste des Stratégies</Text>
@@ -372,6 +372,9 @@ function mapDispatchToProps(dispatch) {
         type: 'saveWishlist',
         name: name
       })
+    },
+    addToken: function (token) {
+      dispatch({ type: 'saveToken', token: token })
     }
   }
 }

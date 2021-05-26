@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 import { Text, Overlay, Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
 function HomePageScreen(props) {
   // ------------------------------------- ETATS Overlay -------------------------------------
@@ -15,11 +16,12 @@ function HomePageScreen(props) {
   const [userExists, setUserExists] = useState(false)
   const [listErrorsSignIn, setErrorsSignIn] = useState([])
   const [listErrorsSignUp, setErrorsSignUp] = useState([])
+  const isFocused = useIsFocused();
 
 
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
-    var rawData = await fetch('http://192.168.1.11:3000/sign-up', {
+    var rawData = await fetch('https://rocketinvesting.herokuapp.com/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
@@ -32,6 +34,8 @@ function HomePageScreen(props) {
       props.navigation.navigate('IntroductionScreen')
       setErrorsSignUp([])
       setErrorsSignIn([])
+      setSignInUsername("")
+      setSignInPassword("")
       setSignUpVisible(false)
     } else {
       setErrorsSignUp(body.error)
@@ -41,13 +45,13 @@ function HomePageScreen(props) {
 
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
-    const data = await fetch('http://192.168.1.11:3000/sign-in', {
+    const data = await fetch('https://rocketinvesting.herokuapp.com/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
     })
     const body = await data.json()
-    // console.log(body, 'SIGN IN')
+    console.log(body, 'SIGN IN')
 
     if (body.result == true) {
       props.addToken(body.token)
@@ -56,6 +60,8 @@ function HomePageScreen(props) {
       props.navigation.navigate('WishListScreen')
       setErrorsSignIn([])
       setErrorsSignUp([])
+      setSignInUsername("")
+      setSignInPassword("")
       setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)

@@ -19,18 +19,20 @@ function WishListScreen(props) {
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
-      const dataUsers = await fetch(`http://192.168.1.11:3000/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
     }
+    if(props.token) {
     findUsername()
+    }
   }, [isFocused, isToggled])
 
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('http://192.168.1.11:3000/wishlist', {
+    const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
@@ -94,7 +96,8 @@ function WishListScreen(props) {
           title="Déconnexion"
           titleStyle={{ color: '#e1191d' }}
           type="outline"
-          onPress={() => props.navigation.navigate('HomePageScreen')}
+          onPress={() => { props.addToken(null);
+                           props.navigation.navigate('HomePageScreen')}}
         />
       </View>
     </View>
@@ -159,11 +162,14 @@ function mapDispatchToProps(dispatch) {
     onSave: function (name) {
       // console.log("test1", name)
       dispatch({ type: 'saveWishlist', name : name })
+    },
+    addToken: function (token) {
+      dispatch({ type: 'saveToken', token: token })
     }
   }
 }
 
 export default connect(
-  mapStateToProps,    //state//
-  mapDispatchToProps   //dispatch//
+  mapStateToProps,
+  mapDispatchToProps
 )(WishListScreen);

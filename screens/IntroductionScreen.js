@@ -13,7 +13,7 @@ function IntroductionScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch(`http://192.168.1.11:3000/introduction?token=${props.token}`)
+      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/introduction?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body.username)
     }
@@ -40,7 +40,8 @@ function IntroductionScreen(props) {
           buttonStyle={{ backgroundColor: '#fff', width: 250, height: 50, alignSelf: 'center', borderColor: '#e1191d' }}
           title="Déconnexion"
           titleStyle={{ color: '#e1191d' }}
-          onPress={() => props.navigation.navigate('HomePageScreen')}
+          onPress={() => { props.addToken(null);
+                           props.navigation.navigate('HomePageScreen')}}
         />
       </View>
     </View>
@@ -84,15 +85,15 @@ function mapStateToProps(state) {
   return { token: state.token }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     onSave: function (data_id) {
-//       dispatch({ type: 'saveWishlist', data_id : data_id })
-//     }
-//   }
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    addToken: function (token) {
+      dispatch({ type: 'saveToken', token: token })
+    }
+  }
+}
 
 export default connect(
-  mapStateToProps,    //state//
-  null   //dispatch//
+  mapStateToProps,
+  mapDispatchToProps
 )(IntroductionScreen);
