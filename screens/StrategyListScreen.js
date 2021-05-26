@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
-
 import { connect } from 'react-redux'
 import { Octicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native'
