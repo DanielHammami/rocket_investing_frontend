@@ -12,7 +12,7 @@ function WishListScreen(props) {
   const [dataUsers, setdataUsers] = useState('');
   const [dataPortofolio, setDataPortofolio] = useState('');
   // const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const [isToggled, setIsToggled] = React.useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -24,7 +24,7 @@ function WishListScreen(props) {
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
     }
-    if(props.token) {
+    if(props.token && isFocused) {
     findUsername()
     }
   }, [isFocused, isToggled])

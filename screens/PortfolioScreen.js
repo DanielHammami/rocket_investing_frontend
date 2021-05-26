@@ -47,10 +47,10 @@ function PortfolioScreen(props) {
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
-    if(props.name) {
+    if(props.name && isFocused) {
     findPortofolio()
     }
-  }, [props.name, dataPortofolio])
+  }, [isFocused, dataPortofolio])
 
   // console.log("dataBDD :", dataBDD)
   // console.log("props.name :", props.name)
@@ -63,7 +63,7 @@ function PortfolioScreen(props) {
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
     }
-    if(props.token) {
+    if(props.token && isFocused) {
     findDouble()
     }
   }, [isFocused])
