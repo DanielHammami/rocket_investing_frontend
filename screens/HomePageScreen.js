@@ -95,7 +95,7 @@ function HomePageScreen(props) {
 
       <Text h1 style={styles.title}>Rocket Investing</Text>
 
-      <Text style={styles.text}>L'application boursière qui facilite vos investissements long termes</Text>
+      <Text style={styles.text}>L'application boursière qui facilite vos investissements à long terme</Text>
 
       <Image source={require('../assets/Rocket_logo.png')} style={styles.image} />
 

@@ -173,7 +173,7 @@ function PortfolioScreen(props) {
   //------------changement de couleur pour la catégorie Risque du portefeuille -----------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  
+
   if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>}
   else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>}
   else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
@@ -206,7 +206,7 @@ function PortfolioScreen(props) {
     price = price.reverse();
 
     // Analyse performances sur 6 mois : (exploitation des données maximum gratuites de l'API)
-    perf6M = 100-((price[0]*100)/price[5])
+    perf6M = 100-((price[0]*100)/price[4])
     perf6M = perf6M.toFixed(2)
   }
 
