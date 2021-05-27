@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native'
-import { Header, Text, Card, Overlay, Button, Icon, Badge } from 'react-native-elements';
+import { Header, Text, Card, Overlay, Button } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons';
-import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
-import { Dimensions } from "react-native";
+import { LineChart } from "react-native-chart-kit";
 
 function PortfolioScreen(props) {
   const [visible, setVisible] = useState(false);
@@ -23,19 +21,18 @@ function PortfolioScreen(props) {
 
   const isFocused = useIsFocused();
 
-  APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
-  APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  // var APIkey1 = "dd62a27db1860da653545a9bdee0bdce";
+  // var APIkey2 = "233b0ce2bd6d0973636042250c2ccc3d";
+  var APIkey3 = "bd943945515e4ccec711630fb3df5069";
 
   useEffect(() => {
     const findAPI = async () => {
-      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey2}&symbols=${ticker}`)
+      const API = await fetch(`http://api.marketstack.com/v1/eod?access_key=${APIkey3}&symbols=${ticker}`)
       const body = await API.json()
-      // console.log("body", body)
       setDataAPI(body)
       }
     if(dataBDD.selectBS) {
     setTicker(dataBDD.selectBS[0].ticker)
-    console.log(ticker)
     findAPI()
     }
   }, [dataBDD])
@@ -46,14 +43,10 @@ function PortfolioScreen(props) {
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
-    if(props.name) {
+    if(props.name && isFocused) {
     findPortofolio()
     }
-  }, [props.name, dataPortofolio])
-
-  // console.log("dataBDD :", dataBDD)
-  // console.log("props.name :", props.name)
-  // console.log("props.token :", props.token)
+  }, [isFocused, dataPortofolio])
 
   useEffect(() => {
     const findDouble = async () => {
@@ -62,13 +55,10 @@ function PortfolioScreen(props) {
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
     }
-    if(props.token) {
+    if(props.token && isFocused) {
     findDouble()
     }
   }, [isFocused])
-
-  // console.log("dataPortofolio",dataPortofolio)
-  // console.log("dataUsers",dataUsers)
 
   let ButtonIsValid = false
   if (dataPortofolio && dataUsers.result && isFocused) {
@@ -114,7 +104,6 @@ function PortfolioScreen(props) {
   let passif = [];
   let actif = [];
   if (dataBDD && dataBDD.strategy === "passive" && isFocused) {
-    {/*console.log("test",dataBDD.strategy)*/}
 
     passif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Composition du portefeuille : {"\n"}</Text>
@@ -132,7 +121,6 @@ function PortfolioScreen(props) {
             </Card>
 
   } else if (dataBDD.strategy === "active") {
-    {/*console.log("test",dataBDD.strategy)*/}
 
     actif = <Card containerStyle={{ marginTop: 15, marginBottom: 30}}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Mois en cours : {"\n"}Du 01/05/21 au 30/05/21 {"\n"}</Text>
@@ -166,7 +154,7 @@ function PortfolioScreen(props) {
   //---------------------------------changement de couleur pour la catégorie Risque--------------------------------//
   var riskStyle = dataBDD.risk
   var colorRisk;
-  // console.log("---------------------------riskstyle---------------------", riskStyle)
+
   if (riskStyle === 'audacieux') {colorRisk=<Text style={{color:'red'}}>{dataBDD.risk} <FontAwesome5 name="chess-king" size={16} color="black" /> </Text>}
   else if (riskStyle === 'prudent') {colorRisk=<Text style={{color:'orange'}}>{dataBDD.risk} <FontAwesome5 name="chess-rook" size={16} color="black" /></Text>}
   else {colorRisk=<Text style={{color:'green'}}>{dataBDD.risk} <FontAwesome5 name="chess-knight" size={16} color="black" /></Text>}
@@ -177,17 +165,12 @@ let price = [];
 var monthValid;
 let perf6M = 0;
 if (dataAPI.data && isFocused) {
-  // console.log("APIdata", dataAPI.data[0].close)
-  // console.log(dataAPI.data[0].date.toLocaleDateString())
 
   for (let i=0; i<dataAPI.data.length; i++){
 
-    var now = new Date(dataAPI.data[i].date) 
-    // console.log(now) //  format: 2021-05-24T11:46:22.692Z
-    // console.log(now.toLocaleDateString()) //  format: 24/05/2021
+    var now = new Date(dataAPI.data[i].date) //  format: 2021-05-24T11:46:22.692Z
     var nowToString = now.getMonth();
-    // console.log("nowToString", nowToString)
-    
+
     if(nowToString != monthValid){
       var months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
       months = months[nowToString]
@@ -195,44 +178,36 @@ if (dataAPI.data && isFocused) {
       price.push(dataAPI.data[i].close)
     }
     monthValid = nowToString
-    // console.log("monthValid", monthValid)
   }
   date = date.reverse();
   price = price.reverse();
-  // console.log("APIdata-date", date)
-  // console.log("APIdata-price", price)
 
   // Performances sur 6 mois :
   perf6M = 100-((price[0]*100)/price[5])
   perf6M = perf6M.toFixed(2)
-  // console.log("performance 6 Mois :", perf6M)
 }
 
 let graph;
-// console.log("dataAPI",dataAPI)
 if(dataAPI.data && isFocused){
   graph = <LineChart
             data={{
-              // labels: ["January", "February"],
               labels: date,
               datasets: [
                 {
-                  // data: [ Math.random() * 100, Math.random() * 100,]
                   data: price
                 }
               ]
             }}
-            // width={Dimensions.get("window").width} // from react-native
-            width={315} // from react-native
+            width={315}
             height={250}
             yAxisLabel="€"
             yAxisSuffix=""
-            yAxisInterval={1} // optional, defaults to 1
+            yAxisInterval={1}
             chartConfig={{
               backgroundColor: "#3f9adb",
               backgroundGradientFrom: "#3f9adb",
               backgroundGradientTo: "#007ed9",
-              decimalPlaces: 2, // optional, defaults to 2dp
+              decimalPlaces: 2,
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               style: {
@@ -250,7 +225,7 @@ if(dataAPI.data && isFocused){
               borderRadius: 1
             }}
           />
-} 
+}
 else {
   graph = <ActivityIndicator size="large" color="#e26a00" />
 }
@@ -347,7 +322,6 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(state){
-  // console.log("state", state)
   return {token: state.token, name: state.wishlist}
 }
 

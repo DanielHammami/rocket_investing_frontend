@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
-
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements';
-
-const Stack = createStackNavigator()
 
 function IntroductionScreen(props) {
   const [dataUsers, setdataUsers] = useState("");

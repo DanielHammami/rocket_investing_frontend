@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
-
 import { connect } from 'react-redux'
 import { Octicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native'
@@ -273,8 +272,8 @@ function StrategyListScreen(props) {
         <Text style={ styles.popupStrategy }>
         {
           strategyValue === 'active'
-          ? 'Intervention 1 fois par MOIS sur le protefeuille'
-          : 'Intervention 1 fois par TRIMESTE sur le protefeuille'
+          ? 'Intervention 1 fois par MOIS sur le portefeuille'
+          : 'Intervention 1 fois par TRIMESTRE sur le portefeuille'
         }
         </Text>
         <Button

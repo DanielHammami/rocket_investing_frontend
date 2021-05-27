@@ -39,7 +39,6 @@ function HomePageScreen(props) {
       setSignUpVisible(false)
     } else {
       setErrorsSignUp(body.error)
-      //console.log("SIGN UP ERROR", body.error)
     }
   }
 
@@ -51,11 +50,9 @@ function HomePageScreen(props) {
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`
     })
     const body = await data.json()
-    console.log(body, 'SIGN IN')
 
     if (body.result == true) {
       props.addToken(body.token)
-      // console.log('TOKEN SIGN IN : ', body.token)
       setUserExists(true)
       props.navigation.navigate('WishListScreen')
       setErrorsSignIn([])
@@ -65,7 +62,6 @@ function HomePageScreen(props) {
       setSignInVisible(false)
     } else {
       setErrorsSignIn(body.error)
-      //console.log("SIGN IN ERROR", body.error)
     }
   }
 
@@ -99,7 +95,7 @@ function HomePageScreen(props) {
 
       <Text h1 style={styles.title}>Rocket Investing</Text>
 
-      <Text style={styles.text}>L'application boursière qui facilite vos investissements long termes</Text>
+      <Text style={styles.text}>L'application boursière qui facilite vos investissements à long terme</Text>
 
       <Image source={require('../assets/Rocket_logo.png')} style={styles.image} />
 
