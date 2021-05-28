@@ -243,7 +243,7 @@ else {
               <ScrollView>
 
                 <Text style={{alignSelf:'center', fontSize: 16}}>Graphique <Entypo name="area-graph" size={15} color="black" /></Text>
-                <Card containerStyle={{ marginTop: 15, marginBottom: 30 }}>
+                <Card containerStyle={{ marginTop: 15, marginBottom: 30, display: 'flex', alignItems: 'center'}}>
                   {graph}
                 </Card>
 
