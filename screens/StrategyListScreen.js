@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
-
 import { connect } from 'react-redux'
 import { Octicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native'
@@ -16,18 +15,22 @@ function StrategyListScreen(props) {
   const [profilName, setProfilName] = useState([])
   const [uniqueName, setUniqueName] = useState('')
 
+  // Show or Hide Strategy Popup
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
   }
 
+  // Show or Hide Prudent Profil Popup
   const toggleOverlayPrudent = () => {
     setVisiblePrudent(!visiblePrudent)
   }
 
+  // Show or Hide Equilibre Profil Popup
   const toggleOverlayEquilibre = () => {
     setVisibleEquilibre(!visibleEquilibre)
   }
 
+  // Show or Hide Audacieux Profil Popup
   const toggleOverlayAudacieux = () => {
     setVisibleAudacieux(!visibleAudacieux)
   }
@@ -48,11 +51,14 @@ function StrategyListScreen(props) {
   }
 
   const handleUniqueName = name => {
+    // Send unique Name to Reducer
     props.onSave(name)
   }
 
+  // Text if no strategy selected
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
 
+  // Show list of wallets
   if (strategyValue !== '' && strategyValue !== 'null') {
     strategySelected = <View>
       <View>
@@ -66,6 +72,7 @@ function StrategyListScreen(props) {
             Profil prudent <Octicons name="question" size={16} color="black" />
           </Text>
 
+          // Popup
           <Overlay
             isVisible={ visiblePrudent }
             onBackdropPress={ toggleOverlayPrudent }
@@ -93,6 +100,7 @@ function StrategyListScreen(props) {
 
           {/* ----------------------------- First Wallet ---------------------------- */}
 
+          // Wallet Name
           <View style={ styles.profilContainer }>
             <Text style={ styles.portefeuil }>{ profilName[0] }</Text>
             <Button
@@ -121,6 +129,7 @@ function StrategyListScreen(props) {
           Profil équilibré <Octicons name="question" size={16} color="black" />
         </Text>
 
+        // Popup
         <Overlay
           isVisible={ visibleEquilibre }
           onBackdropPress={ toggleOverlayEquilibre }
@@ -148,6 +157,7 @@ function StrategyListScreen(props) {
 
         {/* ----------------------------- Second Wallet ---------------------------- */}
 
+        // Wallet Name
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>{ profilName[1] }</Text>
           <Button
@@ -176,6 +186,7 @@ function StrategyListScreen(props) {
           Profil audacieux <Octicons name="question" size={16} color="black" />
         </Text>
 
+        // Popup
         <Overlay
           isVisible={ visibleAudacieux }
           onBackdropPress={ toggleOverlayAudacieux }
@@ -203,6 +214,7 @@ function StrategyListScreen(props) {
 
         {/* ----------------------------- Third Wallet ---------------------------- */}
 
+        // Wallet Name
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>{ profilName[2] }</Text>
           <Button
@@ -235,6 +247,7 @@ function StrategyListScreen(props) {
       <Text style={styles.title}>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
 
+      // Select Strategy
       <RNPickerSelect
         placeholder={{
           label: 'Select Stratégie...',
@@ -258,6 +271,7 @@ function StrategyListScreen(props) {
         Voir détails stratégie
       </Text>
 
+      // Popup
       <Overlay
         isVisible={ visibleStrategy }
         onBackdropPress={ toggleOverlayStrategy }
@@ -273,8 +287,8 @@ function StrategyListScreen(props) {
         <Text style={ styles.popupStrategy }>
         {
           strategyValue === 'active'
-          ? 'Intervention 1 fois par MOIS sur le protefeuille'
-          : 'Intervention 1 fois par TRIMESTE sur le protefeuille'
+          ? 'Intervention 1 fois par MOIS sur le portefeuille'
+          : 'Intervention 1 fois par TRIMESTRE sur le portefeuille'
         }
         </Text>
         <Button

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Entypo } from '@expo/vector-icons';
 
-const Stack = createStackNavigator()
-
 function WishListScreen(props) {
   const [dataUsers, setdataUsers] = useState('');
   const [dataPortofolio, setDataPortofolio] = useState('');
-  // const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const [isToggled, setIsToggled] = React.useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -21,18 +17,15 @@ function WishListScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-      // console.log("--------------------------Props.token:-----------------------------", props.token)
       const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
     }
-    if(props.token) {
+    if(props.token && isFocused) {
     findUsername()
     }
   }, [isFocused, isToggled])
-
-  // console.log("--------------------------Users:-----------------------------", dataUsers)
 
   // ----------------------------- Supprimer un article -----------------------------//
   var deleteArticle = async (i) => {
@@ -43,7 +36,6 @@ function WishListScreen(props) {
     })
       const body = await deleteReq.json()
       if (body.result) {
-        // setDeleteConfirm(true)
         setIsToggled(!isToggled)
       }
   }
@@ -70,8 +62,6 @@ function WishListScreen(props) {
         </View>
       })}
     </View>
-    // console.log("test1 :", dataUsers.portofolios.portofoliosId[0].name)
-    // console.log("test1 :", dataPortofolio)
   } else {
     portefeuille = <Text style={{ alignSelf:'center',fontSize: 15, marginTop: 250, fontWeight: "bold" }}>Aucun portefeuille enregistré</Text>
   }
@@ -118,17 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  // button3: {
-  //   padding: 5,
-  //   width: 270,
-  // },
-
-  // listButton : {
-  //   flexDirection: "column",
-  //   justifyContent: "space-around",
-  //   paddingBottom: 20,
-  // },
-
   // ----------------------------- style titre des favoris -----------------------------//
 
   titleFavorite: {
@@ -140,19 +119,11 @@ const styles = StyleSheet.create({
   // ----------------------------- style titre de la page -----------------------------//
 
   titleText: {
-
     fontSize: 20,
     marginTop: 100,
     marginBottom: 30,
     fontWeight: "bold",
   },
-
-  // paragraphs: {
-  //   alignItems: 'baseline',
-  //   justifyContent: 'center',
-  //   paddingBottom: 15,
-  //   width: "80%",
-  // },
 
   paragraph: {
     padding: 15,
@@ -168,7 +139,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSave: function (name) {
-      // console.log("test1", name)
       dispatch({ type: 'saveWishlist', name : name })
     },
     addToken: function (token) {
