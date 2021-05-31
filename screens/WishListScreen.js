@@ -16,6 +16,9 @@ function WishListScreen(props) {
 
   const isFocused = useIsFocused();
 
+
+// ----------------------------- Ajout du prénom de l'utilisateur dans la page d'introduction -----------------------------//
+
   useEffect(() => {
     const findUsername = async () => {
       // console.log("--------------------------Props.token:-----------------------------", props.token)
@@ -31,6 +34,7 @@ function WishListScreen(props) {
 
   // console.log("--------------------------Users:-----------------------------", dataUsers)
 
+  // ----------------------------- Supprimer un article -----------------------------//
   var deleteArticle = async (i) => {
     const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
       method: 'DELETE',
@@ -125,11 +129,15 @@ const styles = StyleSheet.create({
   //   paddingBottom: 20,
   // },
 
+  // ----------------------------- style titre des favoris -----------------------------//
+
   titleFavorite: {
     fontSize: 20,
     paddingBottom: 15,
     textAlign: 'center',
   },
+
+  // ----------------------------- style titre de la page -----------------------------//
 
   titleText: {
 

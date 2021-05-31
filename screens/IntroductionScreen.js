@@ -11,6 +11,9 @@ const Stack = createStackNavigator()
 function IntroductionScreen(props) {
   const [dataUsers, setdataUsers] = useState("");
 
+
+
+// ----------------------------- Ajout du prénom de l'utilisateur dans la page d'introduction -----------------------------//
   useEffect(() => {
     const findUsername = async () => {
       const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/introduction?token=${props.token}`)
@@ -20,6 +23,8 @@ function IntroductionScreen(props) {
     findUsername()
   }, [props.token])
 
+
+  // ----------------------------- RETURN -----------------------------//
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}> Bonjour {dataUsers} ! </Text>
@@ -59,20 +64,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 
-  // ----------------------------- titre de la page -----------------------------//
+  // ----------------------------- style titre de la page -----------------------------//
   titleText: {
     marginTop: 100,
     fontSize: 20,
     fontWeight: "bold",
   },
 
-  // ----------------------------- div contenant les paragraphes -----------------------------//
+  // ----------------------------- style div contenant les paragraphes -----------------------------//
   paragraphs: {
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  // ----------------------------- paragraphes -----------------------------//
+  // ----------------------------- style paragraphes -----------------------------//
   paragraph: {
     width: 300,
     fontSize: 15,
