@@ -13,7 +13,6 @@ function StrategyListScreen(props) {
 
   const [strategyValue, setStrategyValue] = useState('')
   const [profilName, setProfilName] = useState([])
-  const [uniqueName, setUniqueName] = useState('')
 
   {/* ----------------------------- Show or Hide Strategy Popup ---------------------------- */}
   const toggleOverlayStrategy = () => {
@@ -46,7 +45,6 @@ function StrategyListScreen(props) {
     const body = await dataStrategy.json()
 
     {/* -------------------------- Send Wallet Name to Redux Store ------------------------- */}
-    props.onSave(uniqueName)
     setProfilName(body.profilName)
   }
 
