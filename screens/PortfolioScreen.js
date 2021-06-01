@@ -35,7 +35,7 @@ function PortfolioScreen(props) {
       const body = await API.json()
       setDataAPI(body)
       }
-    if(dataBDD.selectBS) {    // Consition pour valider la présence des données du "Ticker"
+    if(dataBDD.selectBS) {    // Condition pour valider la présence des données du "Ticker"
     setTicker(dataBDD.selectBS[0].ticker)
     findAPI()
     }

@@ -124,7 +124,7 @@ function HomePageScreen(props) {
           titleStyle={{ paddingTop: 5 }}
           onPress={() => setSignUpVisible(true)}
         />
-        {/* ----------------------------------- Overlay Sign In -------------------------------------- */}
+        {/* ----------------------------------- Overlay Sign Up -------------------------------------- */}
         <Overlay isVisible={signUpVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignUp}>
           <Text h4>Sign Up</Text>
           <Text>Entrez votre nom et mot de passe</Text>
@@ -146,7 +146,7 @@ function HomePageScreen(props) {
           titleStyle={{ color: '#e1191d' }}
           onPress={() => setSignInVisible(true)}
         />
-        {/* ----------------------------------- Overlay Sign Up -------------------------------------- */}
+        {/* ----------------------------------- Overlay Sign In -------------------------------------- */}
         <Overlay isVisible={signInVisible} overlayStyle={{ marginTop: -60, alignItems: 'center', justifyContent: 'center', width: 300, height: 350 }} onBackdropPress={toggleOverlaySignIn}>
           <Text h4>Sign In</Text>
           <Text>Entrez votre nom et mot de passe</Text>
