@@ -15,27 +15,27 @@ function StrategyListScreen(props) {
   const [profilName, setProfilName] = useState([])
   const [uniqueName, setUniqueName] = useState('')
 
-  // Show or Hide Strategy Popup
+  {/* ----------------------------- Show or Hide Strategy Popup ---------------------------- */}
   const toggleOverlayStrategy = () => {
     setVisibleStrategy(!visibleStrategy)
   }
 
-  // Show or Hide Prudent Profil Popup
+  {/* ------------------------- Show or Hide Prudent Profil Popup -------------------------- */}
   const toggleOverlayPrudent = () => {
     setVisiblePrudent(!visiblePrudent)
   }
 
-  // Show or Hide Equilibre Profil Popup
+  {/* ------------------------- Show or Hide Equilibre Profil Popup ------------------------ */}
   const toggleOverlayEquilibre = () => {
     setVisibleEquilibre(!visibleEquilibre)
   }
 
-  // Show or Hide Audacieux Profil Popup
+  {/* ------------------------- Show or Hide Audacieux Profil Popup ------------------------ */}
   const toggleOverlayAudacieux = () => {
     setVisibleAudacieux(!visibleAudacieux)
   }
 
-  // Send Strategy and profilType to backend
+  {/* ---------------------- Send Strategy and profilType to backend ----------------------- */}
   const handleStrategy = async (param) => {
     const dataStrategy = await fetch('https://rocketinvesting.herokuapp.com/strategy', {
       method: 'POST',
@@ -45,20 +45,20 @@ function StrategyListScreen(props) {
 
     const body = await dataStrategy.json()
 
-    // Send Wallet Name to Redux Store
+    {/* -------------------------- Send Wallet Name to Redux Store ------------------------- */}
     props.onSave(uniqueName)
     setProfilName(body.profilName)
   }
 
   const handleUniqueName = name => {
-    // Send unique Name to Reducer
+    {/* -------------------------- Send unique Name to Reducer ----------------------------- */}
     props.onSave(name)
   }
 
-  // Text if no strategy selected
+  {/* -------------------------- Text if no strategy selected ------------------------------ */}
   var strategySelected = <Text style={ styles.message }>Pas de Stratégie selectionnée</Text>
 
-  // Show list of wallets
+  {/* ------------------------------ Show list of wallets ---------------------------------- */}
   if (strategyValue !== '' && strategyValue !== 'null') {
     strategySelected = <View>
       <View>
@@ -71,8 +71,8 @@ function StrategyListScreen(props) {
           >
             Profil prudent <Octicons name="question" size={16} color="black" />
           </Text>
-
-          // Popup
+          
+          {/*--------------- Popup -------------------*/}
           <Overlay
             isVisible={ visiblePrudent }
             onBackdropPress={ toggleOverlayPrudent }
@@ -99,8 +99,8 @@ function StrategyListScreen(props) {
           </Overlay>
 
           {/* ----------------------------- First Wallet ---------------------------- */}
-
-          // Wallet Name
+          
+          {/*--------------- Wallet Name -------------------*/}
           <View style={ styles.profilContainer }>
             <Text style={ styles.portefeuil }>{ profilName[0] }</Text>
             <Button
@@ -128,8 +128,8 @@ function StrategyListScreen(props) {
         >
           Profil équilibré <Octicons name="question" size={16} color="black" />
         </Text>
-
-        // Popup
+        
+        {/*--------------- Popup -------------------*/}
         <Overlay
           isVisible={ visibleEquilibre }
           onBackdropPress={ toggleOverlayEquilibre }
@@ -157,7 +157,7 @@ function StrategyListScreen(props) {
 
         {/* ----------------------------- Second Wallet ---------------------------- */}
 
-        // Wallet Name
+        {/*--------------- Wallet Name -------------------*/}
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>{ profilName[1] }</Text>
           <Button
@@ -186,7 +186,7 @@ function StrategyListScreen(props) {
           Profil audacieux <Octicons name="question" size={16} color="black" />
         </Text>
 
-        // Popup
+        {/*----------------------- Popup -------------------------*/}
         <Overlay
           isVisible={ visibleAudacieux }
           onBackdropPress={ toggleOverlayAudacieux }
@@ -213,8 +213,8 @@ function StrategyListScreen(props) {
         </Overlay>
 
         {/* ----------------------------- Third Wallet ---------------------------- */}
-
-        // Wallet Name
+        
+        {/* ------------------- Wallet Name -------------------- */}
         <View style={ styles.profilContainer }>
           <Text style={ styles.portefeuil }>{ profilName[2] }</Text>
           <Button
@@ -247,7 +247,7 @@ function StrategyListScreen(props) {
       <Text style={styles.title}>(Sélection manuelle)</Text>
       <Divider style={{ backgroundColor: 'gray', marginTop: 30 }} />
 
-      // Select Strategy
+      {/*------------------------ Select Strategy ------------------------ */}
       <RNPickerSelect
         placeholder={{
           label: 'Select Stratégie...',
@@ -270,8 +270,8 @@ function StrategyListScreen(props) {
       >
         Voir détails stratégie
       </Text>
-
-      // Popup
+      
+      {/*------------------------ Popup ------------------------ */}
       <Overlay
         isVisible={ visibleStrategy }
         onBackdropPress={ toggleOverlayStrategy }
@@ -378,7 +378,7 @@ const pickerSelectStyles = StyleSheet.create({
 })
 
 
-// Dispatch Wallet Name to Redux Store
+{/*---------------- Dispatch Wallet Name to Redux Store -------------- */} 
 function mapDispatchToProps(dispatch) {
   return {
     onSave: function (name) {
