@@ -22,7 +22,7 @@ function HomePageScreen(props) {
   // ------------------------------------- Gestion Sign Up -------------------------------------
   var handleSubmitSignUp = async () => {
     // Création du user sur la BDD via le POST
-    var rawData = await fetch('https://rocketinvesting.herokuapp.com/sign-up', {
+    var rawData = await fetch('https://rocketinvestingback.herokuapp.com/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signUpUsername}&passwordFromFront=${signUpPassword}`
@@ -52,7 +52,7 @@ function HomePageScreen(props) {
   // ------------------------------------- Gestion Sign In -------------------------------------
   var handleSubmitSignIn = async () => {
     // Recherche du user dans la BDD via le POST
-    const data = await fetch('https://rocketinvesting.herokuapp.com/sign-in', {
+    const data = await fetch('https://rocketinvestingback.herokuapp.com/sign-in', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `usernameFromFront=${signInUsername}&passwordFromFront=${signInPassword}`

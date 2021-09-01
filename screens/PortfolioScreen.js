@@ -45,7 +45,7 @@ function PortfolioScreen(props) {
   // Pour récupération du portefeuille défini en BDD
   useEffect(() => {
     const findPortofolio = async () => {
-      const dataPortofolio = await fetch(`https://rocketinvesting.herokuapp.com/portofolio?name=${props.name}`)
+      const dataPortofolio = await fetch(`https://rocketinvestingback.herokuapp.com/portofolio?name=${props.name}`)
       const body = await dataPortofolio.json()
       setdataBDD(body.portofolios)
     }
@@ -58,7 +58,7 @@ function PortfolioScreen(props) {
   // Pour récupération de la liste des portefeuilles déjà enregistrés dans User afin de comparer avec le nouveau portefeuille
   useEffect(() => {
     const findDouble = async () => {
-      const dataDouble = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
+      const dataDouble = await fetch(`https://rocketinvestingback.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataDouble.json()
       setDataPortofolio(body.portofolios.portofoliosId)
       setdataUsers(body)
@@ -161,7 +161,7 @@ function PortfolioScreen(props) {
   // Pour l'enregistrement en BDD de l'_ID du portefeuille sélectionné avec appui sur le bouton "enregistrer le portefeuille"
   var saveToWishlist = async () => {
 
-    const reqWishlist = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
+    const reqWishlist = await fetch('https://rocketinvestingback.herokuapp.com/wishlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: `_idFront=${dataBDD._id}&token=${props.token}`

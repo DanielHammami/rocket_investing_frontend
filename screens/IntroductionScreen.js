@@ -11,7 +11,7 @@ function IntroductionScreen(props) {
 // ----------------------------- Ajout du prénom de l'utilisateur dans la page d'introduction -----------------------------//
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/introduction?token=${props.token}`)
+      const dataUsers = await fetch(`https://rocketinvestingback.herokuapp.com/introduction?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body.username)
     }

@@ -17,7 +17,7 @@ function WishListScreen(props) {
 
   useEffect(() => {
     const findUsername = async () => {
-      const dataUsers = await fetch(`https://rocketinvesting.herokuapp.com/wishList?token=${props.token}`)
+      const dataUsers = await fetch(`https://rocketinvestingback.herokuapp.com/wishList?token=${props.token}`)
       const body = await dataUsers.json()
       setdataUsers(body)
       setDataPortofolio(body.portofolios.portofoliosId)
@@ -29,7 +29,7 @@ function WishListScreen(props) {
 
   // ----------------------------- Supprimer un article -----------------------------//
   var deleteArticle = async (i) => {
-    const deleteReq = await fetch('https://rocketinvesting.herokuapp.com/wishlist', {
+    const deleteReq = await fetch('https://rocketinvestingback.herokuapp.com/wishlist', {
       method: 'DELETE',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: `position=${i}&token=${props.token}`
